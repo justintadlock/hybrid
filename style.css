@@ -1,0 +1,45 @@
+/**
+ * Theme Name: Hybrid
+ * Theme URI: http://themehybrid.com/themes/hybrid
+ * Description: A user-friendly, search-engine optimized theme framework, featuring 15 custom page templates and multiple widget-ready areas, allowing you to create any type of site you want. 
+ * Version: 0.8 Bleeding Edge
+ * Author: Justin Tadlock
+ * Author URI: http://justintadlock.com
+ * Tags: buddypress, theme-options, threaded-comments, sticky-post, microformats, translation-ready, rtl-language-support, one-column, two-columns, three-columns, fixed-width
+ * Status: publish
+ *
+ * Copyright (c) 2008 - 2010 Justin Tadlock.  All rights reserved.
+ * http://justintadlock.com
+ *
+ * Hybrid is released under the GNU General Public License, version 2 (GPL).
+ * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
+/* Get base CSS */
+@import url('library/css/21px.css');
+
+/* Get layout CSS */
+@import url('library/css/2c-l-fixed.css');
+
+/* Get plugins CSS */
+@import url('library/css/plugins.css');
+
+/* Get drop-downs CSS */
+@import url('library/css/drop-downs.css');
+
+/* Get default CSS */
+@import url('library/css/screen.css');
+
+/* Make sure theme clears WP.org theme repository checklist */
+.alignright {}
+.alignleft {}
+.alignnone {}
+.aligncenter {}
+.avatar {}
+.wp-caption {}
+.gallery {}
+.wp-smiley {}
