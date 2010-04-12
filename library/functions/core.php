@@ -72,13 +72,12 @@ function do_atomic( $tag = '' ) {
 	/* Get the theme prefix. */
 	$pre = hybrid_get_prefix();
 
-	$args = func_get_args();
-	array_splice( $args, 0, 1 );
+	/* Do actions on the basic hook. */
+	do_action( "{$pre}_{$tag}" );
 
-	do_action_ref_array( hybrid_format_hook( $tag ), $args );
-
-	foreach ( hybrid_get_context() as $context )
-		do_action_ref_array( hybrid_format_hook( $tag, $context ), $args );
+	/* Loop through context array and fire actions on a contextual scale. */
+	foreach ( (array)hybrid_get_context() as $context )
+		do_action( "{$pre}_{$context}_{$tag}" );
 }
 
 /**
@@ -103,13 +102,12 @@ function apply_atomic( $tag = '', $value = '' ) {
 	/* Get theme prefix. */
 	$pre = hybrid_get_prefix();
 
-	$args = func_get_args();
-	array_splice( $args, 0, 1 );
+	/* Apply filters on the basic hook. */
+	$value = apply_filters( "{$pre}_{$tag}", $value );
 
-	$value = apply_filters_ref_array( "{$pre}_{$tag}", $args );
-
-	foreach ( hybrid_get_context() as $context )
-		$value = apply_filters_ref_array( "{$pre}_{$context}_{$tag}", $args );
+	/* Loop through context array and apply filters on a contextual scale. */
+	foreach ( (array)hybrid_get_context() as $context )
+		$value = apply_filters( "{$pre}_{$context}_{$tag}", $value );
 
 	/* Return the final value once all filters have been applied. */
 	return $value;
