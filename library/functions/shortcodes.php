@@ -39,6 +39,7 @@ function hybrid_add_shortcodes() {
 	add_shortcode( 'entry-comments-link', 'hybrid_entry_comments_link_shortcode' );
 	add_shortcode( 'entry-published', 'hybrid_entry_published_shortcode' );
 	add_shortcode( 'entry-edit-link', 'hybrid_entry_edit_link_shortcode' );
+	add_shortcode( 'entry-shortlink', 'hybrid_entry_shortlink_shortcode' );
 
 	/* Add comment-specific shortcodes. */
 	add_shortcode( 'comment-published', 'hybrid_comment_published_shortcode' );
@@ -265,6 +266,31 @@ function hybrid_entry_title_shortcode() {
 		$title = the_title( '<h2 class="entry-title"><a href="' . get_permalink() . '" title="' . the_title_attribute( 'echo=0' ) . '" rel="bookmark">', '</a></h2>', false );
 
 	return $title;
+}
+
+/**
+ * Displays the shortlinke of an individual entry.
+ *
+ * @since 0.8
+ */
+function hybrid_entry_shortlink_shortcode( $attr ) {
+	global $post;
+
+	$domain = hybrid_get_textdomain();
+
+	$attr = shortcode_atts(
+		array(
+			'text' => __( 'Shortlink', $domain ),
+			'title' => the_title_attribute( array( 'echo' => false ) ),
+			'before' => '',
+			'after' => ''
+		),
+		$attr
+	);
+
+	$shortlink = wp_get_shortlink( $post->ID );
+
+	return "{$attr['before']}<a class='shortlink' href='{$shortlink}' title='{$attr['title']}' rel='shortlink'>{$attr['text']}</a>{$attr['after']}";
 }
 
 /**
