@@ -360,9 +360,7 @@ function hybrid_other_feed_link( $link ) {
  * @since 0.1
  */
 function hybrid_breadcrumb() {
-	$args = apply_filters( 'hybrid_breadcrumb_args', $args ); // Deprecated. Use breadcrumb_trail_args.
-	$args = wp_parse_args( $args, array( 'front_page' => false ) );
-	breadcrumb_trail( $args );
+	breadcrumb_trail( array( 'front_page' => false, 'singular_post_taxonomy' => 'category' ) );
 }
 
 ?>
