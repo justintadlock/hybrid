@@ -295,8 +295,8 @@ function display_the_image( $args = array(), $image = false ) {
 	$image_alt = ( ( $image['alt'] ) ? $image['alt'] : get_post_field( 'post_title', $post_id ) );
 
 	/* If there is a width or height, set them as HMTL-ready attributes. */
-	$width = ( ( $width ) ? ' width="' . $width . '"' : '' );
-	$height = ( ( $height ) ? ' height="' . $height . '"' : '' );
+	$width = ( ( $width ) ? ' width="' . esc_attr( $width ) . '"' : '' );
+	$height = ( ( $height ) ? ' height="' . esc_attr( $height ) . '"' : '' );
 
 	/* Loop through the custom field keys and add them as classes. */
 	if ( is_array( $custom_key ) ) {
@@ -316,7 +316,7 @@ function display_the_image( $args = array(), $image = false ) {
 		do_action( 'begin_fetch_post_thumbnail_html', $post_id, $image['post_thumbnail_id'], $size );
 
 	/* Add the image attributes to the <img /> element. */
-	$html = '<img src="' . $image['url'] . '" alt="' . esc_attr( strip_tags( $image_alt ) ) . '" class="' . $class . '"' . $width . $height . ' />';
+	$html = '<img src="' . esc_url( $image['url'] ) . '" alt="' . esc_attr( strip_tags( $image_alt ) ) . '" class="' . esc_attr( $class ) . '"' . $width . $height . ' />';
 
 	/* If $link_to_post is set to true, link the image to its post. */
 	if ( $link_to_post )
