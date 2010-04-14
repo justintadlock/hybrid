@@ -48,7 +48,7 @@ function get_the_image( $args = array() ) {
 		'post_id' => $post->ID,
 		'attachment' => true,
 		'the_post_thumbnail' => true, // WP 2.9+ image function
-		'default_size' => false, // Deprecated 0.4.1 in favor of $size
+		'default_size' => false, // Deprecated 0.5 in favor of $size
 		'size' => 'thumbnail',
 		'default_image' => false,
 		'order_of_image' => 1,
@@ -71,16 +71,21 @@ function get_the_image( $args = array() ) {
 	if ( !empty( $args['default_size'] ) )
 		$args['size'] = $args['default_size'];
 
-	/* Check for a cached image. */
-	$cache = wp_cache_get( 'get_the_image' );
+	/* If $format is set to 'array', don't link to the post. */
+	if ( 'array' == $args['format'] )
+		$args['link_to_post'] = false;
 
 	/* Extract the array to allow easy use of variables. */
 	extract( $args );
 
+	/* Check for a cached image. */
+	$cache = wp_cache_get( 'get_the_image' );
+
 	if ( !is_array( $cache ) )
 		$cache = array();
 
-	if ( !isset( $cache[$post_id][$size] ) || 'array' == $format ) {
+	/* If there is no cached image, let's see if one exists. */
+	if ( !isset( $cache[$post_id][$size] ) ) {
 
 		/* If a custom field key (array) is defined, check for images by custom field. */
 		if ( $custom_key )
@@ -117,7 +122,16 @@ function get_the_image( $args = array() ) {
 	$image = apply_filters( 'get_the_image', $image );
 
 	/* Display the image if $echo is set to true and the $format isn't an array. Else, return the image. */
-	if ( $echo && 'array' !== $format )
+	if ( 'array' == $format ) {
+		$atts = wp_kses_hair( $image, array( 'http' ) );
+
+		foreach ( $atts as $att )
+			$out[$att['name']] = $att['value'];
+
+		$out['url'] = $out['src']; // @deprecated 0.5 Use 'src' instead of 'url'.
+		return $out;
+	}
+	elseif ( $echo )
 		echo $image;
 	else
 		return $image;
@@ -296,10 +310,6 @@ function display_the_image( $args = array(), $image = false ) {
 
 	/* Join all the classes into a single string and make sure there are no duplicates. */
 	$class = join( ' ', array_unique( $classes ) );
-
-	/* If $format should be an array, return the attributes in array format. */
-	if ( 'array' == $format )
-		return array( 'url' => $image['url'], 'alt' => esc_attr( strip_tags( $image_alt ) ), 'class' => $class, 'link' => get_permalink( $post_id ) );
 
 	/* If there is a $post_thumbnail_id, apply the WP filters normally associated with get_the_post_thumbnail(). */
 	if ( $image['post_thumbnail_id'] )
