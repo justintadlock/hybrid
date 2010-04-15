@@ -141,10 +141,10 @@ function hybrid_singular_template( $template ) {
  * their custom child themes.
  *
  * @since 0.2
- * @uses locate_template() Checks for template in child and parent theme.
+ * @uses get_template_part() Checks for template in child and parent theme.
  */
 function hybrid_navigation_links() {
-	locate_template( array( 'navigation-links.php' ), true );
+	get_template_part( 'navigation-links' );
 }
 
 /**
