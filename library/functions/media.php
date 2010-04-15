@@ -23,9 +23,12 @@ function hybrid_enqueue_style() {
 	if ( is_admin() )
 		return;
 
+	/* Get the theme prefix. */
+	$prefix = hybrid_get_prefix();
+
 	/* Load the print stylesheet. */
 	if ( hybrid_get_setting( 'print_style' ) )
-		wp_enqueue_style( 'hybrid-print', esc_url( apply_atomic( 'print_style', THEME_CSS . '/print.css' ) ), false, 0.7, 'print' );
+		wp_enqueue_style( "{$prefix}-print", esc_url( apply_atomic( 'print_style', THEME_CSS . '/print.css' ) ), false, 0.7, 'print' );
 }
 
 /**
