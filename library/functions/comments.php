@@ -22,7 +22,7 @@ function hybrid_comment_form_args( $args ) {
 		'fields' => apply_filters( 'comment_form_default_fields', array(
 			'author' => '<p class="form-author"><label for="author">' . __( 'Name', 'hybrid' ) . $req . '</label> <input type="text" class="text-input" name="author" id="author" value="' . esc_attr( $commenter['comment_author'] ) . '" size="40" tabindex="1" /></p>',
 			'email' => '<p class="form-email"><label for="email">' . __( 'Email', 'hybrid' ) . $req . '</label> <input type="text" class="text-input" name="email" id="email" value="' . esc_attr( $commenter['comment_author_email'] ) . '" size="40" tabindex="2" /></p>',
-			'url' => '<p class="form-url"><label for="url">' . __( 'Website', 'hybrid' ) . '</label><input type="text" name="url" id="url" value="' . esc_attr( $commenter['comment_author_url'] ) . '" size="40" tabindex="3" /></p>'
+			'url' => '<p class="form-url"><label for="url">' . __( 'Website', 'hybrid' ) . '</label><input type="text" class="text-input" name="url" id="url" value="' . esc_attr( $commenter['comment_author_url'] ) . '" size="40" tabindex="3" /></p>'
 		) ),
 		'comment_field' => '<p class="form-textarea"><label for="comment">' . __( 'Comment', 'hybrid' ) . '</label><textarea name="comment" id="comment" cols="60" rows="10" tabindex="4"></textarea></p>',
 		'must_log_in' => '<p class="alert">' . sprintf( __( 'You must be <a href="%1$s" title="Log in">logged in</a> to post a comment.', 'hybrid' ), wp_login_url( get_permalink() ) ) . '</p><!-- .alert -->',
