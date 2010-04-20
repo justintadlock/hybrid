@@ -41,13 +41,14 @@ class Hybrid_Widget_Nav_Menu extends WP_Widget {
 		$args = array();
 
 		$args['menu'] = $instance['menu'];
-		$args['format'] = $instance['format'];
+		$args['container'] = $instance['container'];
 		$args['menu_class'] = $instance['menu_class'];
-		$args['ul_class'] = $instance['ul_class'];
+		$args['container_class'] = $instance['container_class'];
 		$args['link_before'] = $instance['link_before'];
 		$args['link_after'] = $instance['link_after'];
-		$args['before_link'] = $instance['before_link'];
-		$args['after_link'] = $instance['after_link'];
+		$args['before'] = $instance['before'];
+		$args['after'] = $instance['after'];
+		$args['depth'] = intval( $instance['depth'] );
 		$args['fallback_cb'] = $instance['fallback_cb'];
 		$args['echo'] = false;
 
@@ -71,6 +72,8 @@ class Hybrid_Widget_Nav_Menu extends WP_Widget {
 		$instance = $new_instance;
 
 		$instance['title'] = strip_tags( $new_instance['title'] );
+		$instance['depth'] = strip_tags( $new_instance['depth'] );
+		$instance['container_class'] = strip_tags( $new_instance['container_class'] );
 		$instance['menu_class'] = strip_tags( $new_instance['menu_class'] );
 		$instance['ul_class'] = strip_tags( $new_instance['ul_class'] );
 		$instance['fallback_cb'] = strip_tags( $new_instance['fallback_cb'] );
@@ -91,7 +94,11 @@ class Hybrid_Widget_Nav_Menu extends WP_Widget {
 			'menu_class' => 'nav-menu',
 			'fallback_cb' => 'wp_page_menu'
 		);
-		$instance = wp_parse_args( (array) $instance, $defaults ); ?>
+		$instance = wp_parse_args( (array) $instance, $defaults );
+
+		$container = array( '' => '', 'div' => 'div', 'nav' => 'nav', 'p' => 'p' );
+
+		?>
 
 		<div class="hybrid-widget-controls columns-2">
 		<p>
@@ -107,24 +114,36 @@ class Hybrid_Widget_Nav_Menu extends WP_Widget {
 			</select>
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'format' ); ?>"><code>format</code></label> 
-			<select class="smallfat" id="<?php echo $this->get_field_id( 'format' ); ?>" name="<?php echo $this->get_field_name( 'format' ); ?>">
-				<?php foreach ( array( '' => '', 'div' => 'div' ) as $option_value => $option_label ) { ?>
-					<option value="<?php echo $option_value; ?>" <?php selected( $instance['format'], $option_value ); ?>><?php echo $option_label; ?></option>
+			<label for="<?php echo $this->get_field_id( 'container' ); ?>"><code>container</code></label> 
+			<select class="smallfat" id="<?php echo $this->get_field_id( 'container' ); ?>" name="<?php echo $this->get_field_name( 'container' ); ?>">
+				<?php foreach ( $container as $option_value => $option_label ) { ?>
+					<option value="<?php echo $option_value; ?>" <?php selected( $instance['container'], $option_value ); ?>><?php echo $option_label; ?></option>
 				<?php } ?>
 			</select>
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id( 'container_class' ); ?>"><code>container_class</code></label>
+			<input type="text" class="smallfat code" id="<?php echo $this->get_field_id( 'container_class' ); ?>" name="<?php echo $this->get_field_name( 'container_class' ); ?>" value="<?php echo $instance['container_class']; ?>" />
 		</p>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'menu_class' ); ?>"><code>menu_class</code></label>
 			<input type="text" class="smallfat code" id="<?php echo $this->get_field_id( 'menu_class' ); ?>" name="<?php echo $this->get_field_name( 'menu_class' ); ?>" value="<?php echo $instance['menu_class']; ?>" />
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'ul_class' ); ?>"><code>ul_class</code></label>
-			<input type="text" class="smallfat code" id="<?php echo $this->get_field_id( 'ul_class' ); ?>" name="<?php echo $this->get_field_name( 'ul_class' ); ?>" value="<?php echo $instance['ul_class']; ?>" />
+			<label for="<?php echo $this->get_field_id( 'depth' ); ?>"><code>depth</code></label>
+			<input type="text" class="smallfat code" id="<?php echo $this->get_field_id( 'depth' ); ?>" name="<?php echo $this->get_field_name( 'depth' ); ?>" value="<?php echo $instance['depth']; ?>" />
 		</p>
 		</div>
 
 		<div class="hybrid-widget-controls columns-2 column-last">
+		<p>
+			<label for="<?php echo $this->get_field_id( 'before' ); ?>"><code>before</code></label>
+			<input type="text" class="smallfat code" id="<?php echo $this->get_field_id( 'before' ); ?>" name="<?php echo $this->get_field_name( 'before' ); ?>" value="<?php echo $instance['before']; ?>" />
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id( 'after' ); ?>"><code>after</code></label>
+			<input type="text" class="smallfat code" id="<?php echo $this->get_field_id( 'after' ); ?>" name="<?php echo $this->get_field_name( 'after' ); ?>" value="<?php echo $instance['after']; ?>" />
+		</p>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'link_before' ); ?>"><code>link_before</code></label>
 			<input type="text" class="smallfat code" id="<?php echo $this->get_field_id( 'link_before' ); ?>" name="<?php echo $this->get_field_name( 'link_before' ); ?>" value="<?php echo $instance['link_before']; ?>" />
@@ -132,14 +151,6 @@ class Hybrid_Widget_Nav_Menu extends WP_Widget {
 		<p>
 			<label for="<?php echo $this->get_field_id( 'link_after' ); ?>"><code>link_after</code></label>
 			<input type="text" class="smallfat code" id="<?php echo $this->get_field_id( 'link_after' ); ?>" name="<?php echo $this->get_field_name( 'link_after' ); ?>" value="<?php echo $instance['link_after']; ?>" />
-		</p>
-		<p>
-			<label for="<?php echo $this->get_field_id( 'before_link' ); ?>"><code>before_link</code></label>
-			<input type="text" class="smallfat code" id="<?php echo $this->get_field_id( 'before_link' ); ?>" name="<?php echo $this->get_field_name( 'before_link' ); ?>" value="<?php echo $instance['before_link']; ?>" />
-		</p>
-		<p>
-			<label for="<?php echo $this->get_field_id( 'after_link' ); ?>"><code>after_link</code></label>
-			<input type="text" class="smallfat code" id="<?php echo $this->get_field_id( 'after_link' ); ?>" name="<?php echo $this->get_field_name( 'after_link' ); ?>" value="<?php echo $instance['after_link']; ?>" />
 		</p>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'fallback_cb' ); ?>"><code>fallback_cb</code></label>

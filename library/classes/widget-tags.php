@@ -39,63 +39,44 @@ class Hybrid_Widget_Tags extends WP_Widget {
 	function widget( $args, $instance ) {
 		extract( $args );
 
-		/* Set up some variables. */
-		$largest = (int)$instance['largest'];
-		$smallest = (int)$instance['smallest'];
-		$number = (int)$instance['number'];
-		$child_of = (int)$instance['child_of'];
-		$parent = ( $instance['parent'] ) ? (int)$instance['parent'] : '';
-		$separator = ( $instance['separator'] ) ? $instance['separator'] : "\n";
-		$pad_counts = isset( $instance['pad_counts'] ) ? $instance['pad_counts'] : false;
-		$hide_empty = isset( $instance['hide_empty'] ) ? $instance['hide_empty'] : false;
+		$args = array();
 
-		/* If no $largest or $smallest is given, set them to the default. */
-		if ( !$largest )
-			$largest = 22;
-		if ( !$smallest )
-			$smallest = 8;
-
-		/* Set up the array of arguments to pass to wp_tag_cloud(). */
-		$args = array(
-			'taxonomy' => $instance['taxonomy'],
-			'smallest' => $smallest,
-			'largest' => $largest,
-			'unit' => $instance['unit'],
-			'number' => $number,
-			'format' => $instance['format'],
-			'orderby' => $instance['orderby'],
-			'order' => $instance['order'],
-			'exclude' => $instance['exclude'],
-			'include' => $instance['include'],
-			'link' => $instance['link'],
-			'separator' => $separator,
-			'search' => $instance['search'],
-			'pad_counts' => $pad_counts,
-			'child_of' => $child_of,
-			'parent' => $parent,
-			'name__like' => $instance['name__like'],
-			'hide_empty' => $hide_empty,
-			'echo' => 0,
-		);
+		$args['taxonomy'] = $instance['taxonomy'];
+		$args['largest'] = ( ( $instance['largest'] ) ? absint( $instance['largest'] ) : 22 );
+		$args['smallest'] = ( ( $instance['smallest'] ) ? absint( $instance['smallest'] ) : 8 );
+		$args['number'] = intval( $instance['number'] );
+		$args['child_of'] = intval( $instance['child_of'] );
+		$args['parent'] = intval( $instance['parent'] );
+		$args['separator'] = ( $instance['separator'] ) ? $instance['separator'] : "\n";
+		$args['pad_counts'] = isset( $instance['pad_counts'] ) ? $instance['pad_counts'] : false;
+		$args['hide_empty'] = isset( $instance['hide_empty'] ) ? $instance['hide_empty'] : false;
+		$args['unit'] = $instance['unit'];
+		$args['format'] = $instance['format'];
+		$args['include'] = ( is_array( $instance['include'] ) ? join( ', ', $instance['include'] ) : $instance['include'] );
+		$args['exclude'] = ( is_array( $instance['exclude'] ) ? join( ', ', $instance['exclude'] ) : $instance['exclude'] );
+		$args['order'] = $instance['order'];
+		$args['orderby'] = $instance['orderby'];
+		$args['link'] = $instance['link'];
+		$args['search'] = $instance['search'];
+		$args['name__like'] = $instance['name__like'];
+		$args['echo'] = false;
 
 		/* Open the output of the widget. */
 		echo $before_widget;
 
 		/* If there is a title given, add it along with the $before_title and $after_title variables. */
 		if ( $instance['title'] )
-			echo $before_title . apply_filters( 'widget_title', $instance['title'] ) . $after_title;
+			echo $before_title . apply_filters( 'widget_title',  $instance['title'], $instance, $this->id_base ) . $after_title;
+
+		/* Get the tag cloud. */
+		$tags = str_replace( array( "\r", "\n", "\t" ), ' ', wp_tag_cloud( $args ) );
 
 		/* If $format should be flat, wrap it in the <p> element. */
-		if ( 'flat' == $instance['format'] ) {
-			echo '<p class="' . $instance['taxonomy'] . '-cloud term-cloud">';
-			echo str_replace( array( "\r", "\n", "\t" ), ' ', wp_tag_cloud( $args ) );
-			echo '</p><!-- .term-cloud -->';
-		}
+		if ( 'flat' == $instance['format'] )
+			$tags = '<p class="' . $instance['taxonomy'] . '-cloud term-cloud">' . $tags . '</p>';
 
-		/* If $format is not flat, just output the terms list. */
-		else {
-			echo str_replace( array( "\r", "\n", "\t" ), ' ', wp_tag_cloud( $args ) );
-		}
+		/* Output the tag cloud. */
+		echo $tags;
 
 		/* Close the output of the widget. */
 		echo $after_widget;
@@ -107,12 +88,20 @@ class Hybrid_Widget_Tags extends WP_Widget {
 	 */
 	function update( $new_instance, $old_instance ) {
 		$instance = $old_instance;
+
+		/* Set the instance to the new instance. */
+		$instance = $new_instance;
+
+		/* If new taxonomy is chosen, reset includes and excludes. */
+		if ( $instance['taxonomy'] !== $old_instance['taxonomy'] ) {
+			$instance['include'] = array();
+			$instance['exclude'] = array();
+		}
+
 		$instance['title'] = strip_tags( $new_instance['title'] );
 		$instance['smallest'] = strip_tags( $new_instance['smallest'] );
 		$instance['largest'] = strip_tags( $new_instance['largest'] );
 		$instance['number'] = strip_tags( $new_instance['number'] );
-		$instance['exclude'] = strip_tags( $new_instance['exclude'] );
-		$instance['include'] = strip_tags( $new_instance['include'] );
 		$instance['separator'] = strip_tags( $new_instance['separator'] );
 		$instance['name__like'] = strip_tags( $new_instance['name__like'] );
 		$instance['search'] = strip_tags( $new_instance['search'] );
@@ -137,108 +126,137 @@ class Hybrid_Widget_Tags extends WP_Widget {
 	function form( $instance ) {
 
 		/* Set up some defaults for the widget. */
-		$defaults = array( 'title' => __( 'Tags', $this->textdomain ), 'format' => 'flat', 'unit' => 'pt', 'smallest' => 8, 'largest' => 22, 'link' => 'view', 'number' => 45, 'taxonomy' => 'post_tag', 'hide_empty' => 1 );
-		$instance = wp_parse_args( (array) $instance, $defaults ); ?>
+		$defaults = array(
+			'title' => __( 'Tags', $this->textdomain ),
+			'order' => 'ASC',
+			'orderby' => 'name',
+			'format' => 'flat',
+			'unit' => 'pt', 'smallest' => 8,
+			'largest' => 22,
+			'link' => 'view',
+			'number' => 45,
+			'taxonomy' => 'post_tag',
+			'hide_empty' => 1
+		);
+		$instance = wp_parse_args( (array) $instance, $defaults );
 
-		<div style="float:left;width:31%;">
+		/* <select> element options. */
+		$taxonomies = get_taxonomies( array( 'show_tagcloud' => true ), 'objects' );
+		$terms = get_terms( $instance['taxonomy'] );
+		$link = array( 'view' => __( 'View', $this->textdomain ), 'edit' => __( 'Edit', $this->textdomain ) );
+		$format = array( 'flat' => __( 'Flat', $this->textdomain ), 'list' => __( 'List', $this->textdomain ) );
+		$order = array( 'ASC' => __( 'Ascending', $this->textdomain ), 'DESC' => __( 'Descending', $this->textdomain ), 'RAND' => __( 'Random', $this->textdomain ) );
+		$orderby = array( 'count' => __( 'Count', $this->textdomain ), 'name' => __( 'Name', $this->textdomain ) );
+		$unit = array( 'pt' => 'pt', 'px' => 'px', 'em' => 'em', '%' => '%' );
+
+		?>
+
+		<div class="hybrid-widget-controls columns-3">
 		<p>
 			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', $this->textdomain ); ?></label>
-			<input type="text" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $instance['title']; ?>" style="width:100%;" />
+			<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo $instance['title']; ?>" />
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'taxonomy' ); ?>"><?php _e( 'Taxonomy:', $this->textdomain ); ?> <code>taxonomy</code></label> 
-			<select id="<?php echo $this->get_field_id( 'taxonomy' ); ?>" name="<?php echo $this->get_field_name( 'taxonomy' ); ?>" class="widefat" style="width:100%;">
-			<?php global $wp_taxonomies; ?>
-			<?php if ( is_array( $wp_taxonomies ) ) : ?>
-				<?php foreach( $wp_taxonomies as $tax ) : ?>
-					<option <?php if ( $tax->name == $instance['taxonomy'] ) echo 'selected="selected"'; ?>><?php echo $tax->name; ?></option>
-				<?php endforeach; ?>
-			<?php endif; ?>
+			<label for="<?php echo $this->get_field_id( 'taxonomy' ); ?>"><code>taxonomy</code></label> 
+			<select class="widefat" id="<?php echo $this->get_field_id( 'taxonomy' ); ?>" name="<?php echo $this->get_field_name( 'taxonomy' ); ?>">
+				<?php foreach ( $taxonomies as $taxonomy ) { ?>
+					<option value="<?php echo $taxonomy->name; ?>" <?php selected( $instance['taxonomy'], $taxonomy->name ); ?>><?php echo $taxonomy->singular_label; ?></option>
+				<?php } ?>
 			</select>
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'link' ); ?>"><?php _e( 'Link:', $this->textdomain ); ?> <code>link</code></label> 
-			<select id="<?php echo $this->get_field_id( 'link' ); ?>" name="<?php echo $this->get_field_name( 'link' ); ?>" class="widefat" style="width:100%;">
-				<option <?php if ( 'view' == $instance['link'] ) echo 'selected="selected"'; ?>>view</option>
-				<option <?php if ( 'edit' == $instance['link'] ) echo 'selected="selected"'; ?>>edit</option>
+			<label for="<?php echo $this->get_field_id( 'link' ); ?>"><code>link</code></label> 
+			<select class="widefat" id="<?php echo $this->get_field_id( 'link' ); ?>" name="<?php echo $this->get_field_name( 'link' ); ?>">
+				<?php foreach ( $link as $option_value => $option_label ) { ?>
+					<option value="<?php echo $option_value; ?>" <?php selected( $instance['link'], $option_value ); ?>><?php echo $option_label; ?></option>
+				<?php } ?>
 			</select>
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'format' ); ?>"><?php _e( 'Format:', $this->textdomain ); ?> <code>format</code></label> 
-			<select id="<?php echo $this->get_field_id( 'format' ); ?>" name="<?php echo $this->get_field_name( 'format' ); ?>" class="widefat" style="width:100%;">
-				<option <?php if ( 'flat' == $instance['format'] ) echo 'selected="selected"'; ?>>flat</option>
-				<option <?php if ( 'list' == $instance['format'] ) echo 'selected="selected"'; ?>>list</option>
+			<label for="<?php echo $this->get_field_id( 'format' ); ?>"><code>format</code></label> 
+			<select class="widefat" id="<?php echo $this->get_field_id( 'format' ); ?>" name="<?php echo $this->get_field_name( 'format' ); ?>">
+				<?php foreach ( $format as $option_value => $option_label ) { ?>
+					<option value="<?php echo $option_value; ?>" <?php selected( $instance['format'], $option_value ); ?>><?php echo $option_label; ?></option>
+				<?php } ?>
 			</select>
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'order' ); ?>"><?php _e( 'Order:', $this->textdomain ); ?> <code>order</code></label> 
-			<select id="<?php echo $this->get_field_id( 'order' ); ?>" name="<?php echo $this->get_field_name( 'order' ); ?>" class="widefat" style="width:100%;">
-				<option <?php if ( 'ASC' == $instance['order'] ) echo 'selected="selected"'; ?>>ASC</option>
-				<option <?php if ( 'DESC' == $instance['order'] ) echo 'selected="selected"'; ?>>DESC</option>
-				<option <?php if ( 'RAND' == $instance['order'] ) echo 'selected="selected"'; ?>>RAND</option>
+			<label for="<?php echo $this->get_field_id( 'order' ); ?>"><code>order</code></label> 
+			<select class="widefat" id="<?php echo $this->get_field_id( 'order' ); ?>" name="<?php echo $this->get_field_name( 'order' ); ?>">
+				<?php foreach ( $order as $option_value => $option_label ) { ?>
+					<option value="<?php echo $option_value; ?>" <?php selected( $instance['order'], $option_value ); ?>><?php echo $option_label; ?></option>
+				<?php } ?>
 			</select>
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'orderby' ); ?>"><?php _e( 'Order By:', $this->textdomain ); ?> <code>orderby</code></label> 
-			<select id="<?php echo $this->get_field_id( 'orderby' ); ?>" name="<?php echo $this->get_field_name( 'orderby' ); ?>" class="widefat" style="width:100%;">
-				<option <?php if ( 'name' == $instance['orderby'] ) echo 'selected="selected"'; ?>>name</option>
-				<option <?php if ( 'count' == $instance['orderby'] ) echo 'selected="selected"'; ?>>count</option>
+			<label for="<?php echo $this->get_field_id( 'orderby' ); ?>"><code>orderby</code></label> 
+			<select class="widefat" id="<?php echo $this->get_field_id( 'orderby' ); ?>" name="<?php echo $this->get_field_name( 'orderby' ); ?>">
+				<?php foreach ( $orderby as $option_value => $option_label ) { ?>
+					<option value="<?php echo $option_value; ?>" <?php selected( $instance['orderby'], $option_value ); ?>><?php echo $option_label; ?></option>
+				<?php } ?>
 			</select>
 		</p>
 		</div>
 
-		<div style="float:left;width:31%;margin-left:3.5%;">
+		<div class="hybrid-widget-controls columns-3">
 		<p>
-			<label for="<?php echo $this->get_field_id( 'number' ); ?>"><?php _e( 'Number:', $this->textdomain ); ?> <code>number</code></label>
-			<input type="text" id="<?php echo $this->get_field_id( 'number' ); ?>" name="<?php echo $this->get_field_name( 'number' ); ?>" value="<?php echo $instance['number']; ?>" style="width:100%;" />
+			<label for="<?php echo $this->get_field_id( 'number' ); ?>"><code>number</code></label>
+			<input type="text" class="smallfat code" id="<?php echo $this->get_field_id( 'number' ); ?>" name="<?php echo $this->get_field_name( 'number' ); ?>" type="text" value="<?php echo $instance['number']; ?>" />
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'largest' ); ?>"><?php _e( 'Largest:', $this->textdomain ); ?> <code>largest</code></label>
-			<input type="text" id="<?php echo $this->get_field_id( 'largest' ); ?>" name="<?php echo $this->get_field_name( 'largest' ); ?>" value="<?php echo $instance['largest']; ?>" style="width:100%;" />
+			<label for="<?php echo $this->get_field_id( 'largest' ); ?>"><code>largest</code></label>
+			<input type="text" class="smallfat code" id="<?php echo $this->get_field_id( 'largest' ); ?>" name="<?php echo $this->get_field_name( 'largest' ); ?>" type="text" value="<?php echo $instance['largest']; ?>" />
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'smallest' ); ?>"><?php _e( 'Smallest:', $this->textdomain ); ?> <code>smallest</code></label>
-			<input type="text" id="<?php echo $this->get_field_id( 'smallest' ); ?>" name="<?php echo $this->get_field_name( 'smallest' ); ?>" value="<?php echo $instance['smallest']; ?>" style="width:100%;" />
+			<label for="<?php echo $this->get_field_id( 'smallest' ); ?>"><code>smallest</code></label>
+			<input type="text" class="smallfat code" id="<?php echo $this->get_field_id( 'smallest' ); ?>" name="<?php echo $this->get_field_name( 'smallest' ); ?>" type="text" value="<?php echo $instance['smallest']; ?>" />
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'unit' ); ?>"><?php _e( 'Unit:', $this->textdomain ); ?> <code>unit</code></label> 
-			<select id="<?php echo $this->get_field_id( 'unit' ); ?>" name="<?php echo $this->get_field_name( 'unit' ); ?>" class="widefat" style="width:100%;">
-				<option <?php if ( 'pt' == $instance['unit'] ) echo 'selected="selected"'; ?>>pt</option>
-				<option <?php if ( 'px' == $instance['unit'] ) echo 'selected="selected"'; ?>>px</option>
-				<option <?php if ( 'em' == $instance['unit'] ) echo 'selected="selected"'; ?>>em</option>
-				<option <?php if ( '%' == $instance['unit'] ) echo 'selected="selected"'; ?>>%</option>
+			<label for="<?php echo $this->get_field_id( 'unit' ); ?>"><code>unit</code></label> 
+			<select class="smallfat" id="<?php echo $this->get_field_id( 'unit' ); ?>" name="<?php echo $this->get_field_name( 'unit' ); ?>">
+				<?php foreach ( $unit as $option_value => $option_label ) { ?>
+					<option value="<?php echo $option_value; ?>" <?php selected( $instance['unit'], $option_value ); ?>><?php echo $option_label; ?></option>
+				<?php } ?>
 			</select>
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'exclude' ); ?>"><?php _e( 'Exclude:', $this->textdomain ); ?> <code>exclude</code></label>
-			<input type="text" id="<?php echo $this->get_field_id( 'exclude' ); ?>" name="<?php echo $this->get_field_name( 'exclude' ); ?>" value="<?php echo $instance['exclude']; ?>" style="width:100%;" />
+			<label for="<?php echo $this->get_field_id( 'include' ); ?>"><code>include</code></label> 
+			<select class="widefat" id="<?php echo $this->get_field_id( 'include' ); ?>" name="<?php echo $this->get_field_name( 'include' ); ?>[]" size="4" multiple="multiple">
+				<?php foreach ( $terms as $term ) { ?>
+					<option value="<?php echo $term->term_id; ?>" <?php echo ( in_array( $term->term_id, (array) $instance['include'] ) ? 'selected="selected"' : '' ); ?>><?php echo $term->name; ?></option>
+				<?php } ?>
+			</select>
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'include' ); ?>"><?php _e( 'Include:', $this->textdomain ); ?> <code>include</code></label>
-			<input type="text" id="<?php echo $this->get_field_id( 'include' ); ?>" name="<?php echo $this->get_field_name( 'include' ); ?>" value="<?php echo $instance['include']; ?>" style="width:100%;" />
+			<label for="<?php echo $this->get_field_id( 'exclude' ); ?>"><code>exclude</code></label> 
+			<select class="widefat" id="<?php echo $this->get_field_id( 'exclude' ); ?>" name="<?php echo $this->get_field_name( 'exclude' ); ?>[]" size="4" multiple="multiple">
+				<?php foreach ( $terms as $term ) { ?>
+					<option value="<?php echo $term->term_id; ?>" <?php echo ( in_array( $term->term_id, (array) $instance['exclude'] ) ? 'selected="selected"' : '' ); ?>><?php echo $term->name; ?></option>
+				<?php } ?>
+			</select>
 		</p>
 		</div>
 
-		<div style="float:right;width:31%;margin-left:3.5%;">
+		<div class="hybrid-widget-controls columns-3 column-last">
 		<p>
-			<label for="<?php echo $this->get_field_id( 'separator' ); ?>"><?php _e( 'Separator:', $this->textdomain ); ?> <code>separator</code></label>
-			<input type="text" id="<?php echo $this->get_field_id( 'separator' ); ?>" name="<?php echo $this->get_field_name( 'separator' ); ?>" value="<?php echo $instance['separator']; ?>" style="width:100%;" />
+			<label for="<?php echo $this->get_field_id( 'separator' ); ?>"><code>separator</code></label>
+			<input type="text" class="smallfat code" id="<?php echo $this->get_field_id( 'separator' ); ?>" name="<?php echo $this->get_field_name( 'separator' ); ?>" type="text" value="<?php echo $instance['separator']; ?>" />
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'search' ); ?>"><?php _e( 'Search:', $this->textdomain ); ?> <code>search</code></label>
-			<input id="<?php echo $this->get_field_id( 'search' ); ?>" name="<?php echo $this->get_field_name( 'search' ); ?>" type="text" value="<?php echo $instance['search']; ?>" style="width:100%;" />
+			<label for="<?php echo $this->get_field_id( 'child_of' ); ?>"><code>child_of</code></label>
+			<input type="text" class="smallfat code" id="<?php echo $this->get_field_id( 'child_of' ); ?>" name="<?php echo $this->get_field_name( 'child_of' ); ?>" type="text" value="<?php echo $instance['child_of']; ?>" />
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'name__like' ); ?>"><?php _e( 'Name Like:', $this->textdomain ); ?> <code>name__like</code></label>
-			<input id="<?php echo $this->get_field_id( 'name__like' ); ?>" name="<?php echo $this->get_field_name( 'name__like' ); ?>" type="text" value="<?php echo $instance['name__like']; ?>" style="width:100%;" />
+			<label for="<?php echo $this->get_field_id( 'parent' ); ?>"><code>parent</code></label>
+			<input type="text" class="smallfat code" id="<?php echo $this->get_field_id( 'parent' ); ?>" name="<?php echo $this->get_field_name( 'parent' ); ?>" type="text" value="<?php echo $instance['parent']; ?>" />
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'child_of' ); ?>"><?php _e( 'Child Of:', $this->textdomain ); ?> <code>child_of</code></label>
-			<input id="<?php echo $this->get_field_id( 'child_of' ); ?>" name="<?php echo $this->get_field_name( 'child_of' ); ?>" type="text" value="<?php echo $instance['child_of']; ?>" style="width:100%;" />
+			<label for="<?php echo $this->get_field_id( 'search' ); ?>"><code>search</code></label>
+			<input type="text" class="widefat code" id="<?php echo $this->get_field_id( 'search' ); ?>" name="<?php echo $this->get_field_name( 'search' ); ?>" type="text" value="<?php echo $instance['search']; ?>" />
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'parent' ); ?>"><?php _e( 'Parent:', $this->textdomain ); ?> <code>parent</code></label>
-			<input id="<?php echo $this->get_field_id( 'parent' ); ?>" name="<?php echo $this->get_field_name( 'parent' ); ?>" type="text" value="<?php echo $instance['parent']; ?>" style="width:100%;" />
+			<label for="<?php echo $this->get_field_id( 'name__like' ); ?>"><code>name__like</code></label>
+			<input type="text" class="widefat code" id="<?php echo $this->get_field_id( 'name__like' ); ?>" name="<?php echo $this->get_field_name( 'name__like' ); ?>" type="text" value="<?php echo $instance['name__like']; ?>" />
 		</p>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'pad_counts' ); ?>">

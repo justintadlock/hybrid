@@ -28,7 +28,7 @@ class Hybrid_Widget_Search extends WP_Widget {
 		$this->textdomain = hybrid_get_textdomain();
 
 		$widget_ops = array( 'classname' => 'search', 'description' => __( 'An advanced widget that gives you total control over the output of your search form.', $this->textdomain ) );
-		$control_ops = array( 'width' => 700, 'height' => 350, 'id_base' => "{$this->prefix}-search" );
+		$control_ops = array( 'width' => 525, 'height' => 350, 'id_base' => "{$this->prefix}-search" );
 		$this->WP_Widget( "{$this->prefix}-search", __( 'Search', $this->textdomain ), $widget_ops, $control_ops );
 	}
 
@@ -39,16 +39,13 @@ class Hybrid_Widget_Search extends WP_Widget {
 	function widget( $args, $instance ) {
 		extract( $args );
 
-		$title = apply_filters( 'widget_title', $instance['title'] );
-		$search_label = $instance['search_label'];
-		$search_text = $instance['search_text'];
-		$search_submit = $instance['search_submit'];
 		$theme_search = isset( $instance['theme_search'] ) ? $instance['theme_search'] : false;
 
 		echo $before_widget;
 
-		if ( $title )
-			echo $before_title . $title . $after_title;
+		/* If there is a title given, add it along with the $before_title and $after_title variables. */
+		if ( $instance['title'] )
+			echo $before_title . apply_filters( 'widget_title',  $instance['title'], $instance, $this->id_base ) . $after_title;
 
 		if ( $theme_search )
 			get_search_form();
@@ -56,23 +53,20 @@ class Hybrid_Widget_Search extends WP_Widget {
 		else {
 			global $search_form_num;
 
-			if ( !$search_form_num )
-				$search_num = false;
-			else
-				$search_num = '-' . $search_form_num;
+			$search_num = ( ( $search_form_num ) ? "-{$search_form_num}" : '' );
+			$search_text = ( ( is_search() ) ? esc_attr( get_search_query() ) : esc_attr( $instance['search_text'] ) );
 
-			if ( is_search() )
-				$search_text = esc_attr( get_search_query() );
+			$search = '<form method="get" class="search-form" id="search-form' . $search_num . '" action="' . home_url() . '/"><div>';
 
-			$search = '<form method="get" class="search-form" id="search-form' . $search_num . '" action="' . home_url() . '/">';
-			$search .= '<div>';
-			if ( $search_label )
+			if ( $instance['search_label'] )
 				$search .= '<label for="search-text' . $search_num . '">' . $search_label . '</label>';
-			$search .= '<input class="search-text" type="text" name="s" id="search-text' . $search_num . '" value="' . $search_text . '" onfocus="if(this.value==this.defaultValue)this.value=\'\';" onblur="if(this.value==\'\')this.value=this.defaultValue;" />';
-			if ( $search_submit )
-				$search .= '<input class="search-submit button" name="submit" type="submit" id="search-submit' . $search_num . '" value="' . $search_submit . '" />';
-			$search .= '</div>';
-			$search .= '</form><!-- .search-form -->';
+
+			$search .= '<input class="search-text" type="text" name="s" id="search-text' . $search_num . '" value="' . esc_attr( $search_text ) . '" onfocus="if(this.value==this.defaultValue)this.value=\'\';" onblur="if(this.value==\'\')this.value=this.defaultValue;" />';
+
+			if ( $instance['search_submit'] )
+				$search .= '<input class="search-submit button" name="submit" type="submit" id="search-submit' . $search_num . '" value="' . esc_attr( $instance['search_submit'] ) . '" />';
+
+			$search .= '</div></form><!-- .search-form -->';
 
 			echo $search;
 
@@ -107,25 +101,25 @@ class Hybrid_Widget_Search extends WP_Widget {
 		$defaults = array( 'title' => __( 'Search', $this->textdomain ), 'theme_search' => false );
 		$instance = wp_parse_args( (array) $instance, $defaults ); ?>
 
-		<div style="float:left;width:48%;">
+		<div class="hybrid-widget-controls columns-2">
 		<p>
 			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', $this->textdomain ); ?></label>
-			<input type="text" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $instance['title']; ?>" style="width:100%;" />
+			<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $instance['title']; ?>" />
 		</p>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'search_label' ); ?>"><?php _e( 'Search Label:', $this->textdomain ); ?></label>
-			<input type="text" id="<?php echo $this->get_field_id( 'search_label' ); ?>" name="<?php echo $this->get_field_name( 'search_label' ); ?>" value="<?php echo $instance['search_label']; ?>" style="width:100%;" />
+			<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'search_label' ); ?>" name="<?php echo $this->get_field_name( 'search_label' ); ?>" value="<?php echo $instance['search_label']; ?>" />
 		</p>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'search_text' ); ?>"><?php _e( 'Search Text:', $this->textdomain ); ?></label>
-			<input type="text" id="<?php echo $this->get_field_id( 'search_text' ); ?>" name="<?php echo $this->get_field_name( 'search_text' ); ?>" value="<?php echo $instance['search_text']; ?>" style="width:100%;" />
+			<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'search_text' ); ?>" name="<?php echo $this->get_field_name( 'search_text' ); ?>" value="<?php echo $instance['search_text']; ?>" />
 		</p>
 		</div>
 
-		<div style="float:right;width:48%;">
+		<div class="hybrid-widget-controls columns-2 column-last">
 		<p>
 			<label for="<?php echo $this->get_field_id( 'search_submit' ); ?>"><?php _e( 'Search Submit:', $this->textdomain ); ?></label>
-			<input type="text" id="<?php echo $this->get_field_id( 'search_submit' ); ?>" name="<?php echo $this->get_field_name( 'search_submit' ); ?>" value="<?php echo $instance['search_submit']; ?>" style="width:100%;" />
+			<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'search_submit' ); ?>" name="<?php echo $this->get_field_name( 'search_submit' ); ?>" value="<?php echo $instance['search_submit']; ?>" />
 		</p>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'theme_search' ); ?>">

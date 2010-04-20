@@ -39,74 +39,42 @@ class Hybrid_Widget_Bookmarks extends WP_Widget {
 	function widget( $args, $instance ) {
 		extract( $args );
 
-		$title_li = apply_filters( 'widget_title', $instance['title_li'] );
-		$category = $instance['category'];
-		$category_name = $instance['category_name'];
-		$category_order = $instance['category_order'];
-		$category_orderby = $instance['category_orderby'];
-		$exclude_category = $instance['exclude_category'];
-		$limit = (int)$instance['limit'];
-		$include = $instance['include'];
-		$exclude = $instance['exclude'];
-		$orderby = $instance['orderby'];
-		$order = $instance['order'];
-		$between = $instance['between'];
-		$class = $instance['class'];
-		$link_before = $instance['link_before'];
-		$link_after = $instance['link_after'];
-		$search = $instance['search'];
+		$args = array();
 
-		$categorize = isset( $instance['categorize'] ) ? $instance['categorize'] : false;
-		$show_description = isset( $instance['show_description'] ) ? $instance['show_description'] : false;
-		$hide_invisible = isset( $instance['hide_invisible'] ) ? $instance['hide_invisible'] : false;
-		$show_rating = isset( $instance['show_rating'] ) ? $instance['show_rating'] : false;
-		$show_updated = isset( $instance['show_updated'] ) ? $instance['show_updated'] : false;
-		$show_images = isset( $instance['show_images'] ) ? $instance['show_images'] : false;
-		$show_name = isset( $instance['show_name'] ) ? $instance['show_name'] : false;
-		$show_private = isset( $instance['show_private'] ) ? $instance['show_private'] : false;
+		$args['title_li'] = apply_filters( 'widget_title',  $instance['title_li'], $instance, $this->id_base );
+		$args['category'] = ( is_array( $instance['category'] ) ? join( ', ', $instance['category'] ) : $instance['category'] );
+		$args['exclude_category'] = ( is_array( $instance['exclude_category'] ) ? join( ', ', $instance['exclude_category'] ) : $instance['exclude_category'] );
+		$args['category_order'] = $instance['category_order'];
+		$args['category_orderby'] = $instance['category_orderby'];
+		$args['include'] = ( is_array( $instance['include'] ) ? join( ', ', $instance['include'] ) : $instance['include'] );
+		$args['exclude'] = ( is_array( $instance['exclude'] ) ? join( ', ', $instance['exclude'] ) : $instance['exclude'] );
+		$args['order'] = $instance['order'];
+		$args['orderby'] = $instance['orderby'];
+		$args['limit'] = ( ( $instance['limit'] ) ? intval( $instance['largest'] ) : -1 );
+		$args['between'] = $instance['between'];
+		$args['link_before'] = $instance['link_before'];
+		$args['link_after'] = $instance['link_after'];
+		$args['search'] = $instance['search'];
+		$args['categorize'] = isset( $instance['categorize'] ) ? $instance['categorize'] : false;
+		$args['show_description'] = isset( $instance['show_description'] ) ? $instance['show_description'] : false;
+		$args['hide_invisible'] = isset( $instance['hide_invisible'] ) ? $instance['hide_invisible'] : false;
+		$args['show_rating'] = isset( $instance['show_rating'] ) ? $instance['show_rating'] : false;
+		$args['show_updated'] = isset( $instance['show_updated'] ) ? $instance['show_updated'] : false;
+		$args['show_images'] = isset( $instance['show_images'] ) ? $instance['show_images'] : false;
+		$args['show_name'] = isset( $instance['show_name'] ) ? $instance['show_name'] : false;
+		$args['show_private'] = isset( $instance['show_private'] ) ? $instance['show_private'] : false;
 
-		if ( $categorize )
+		if ( $args['categorize'] )
 			$before_widget = preg_replace( '/id="[^"]*"/','id="%id"', $before_widget );
-		if ( $class )
-			$before_widget = str_replace( 'class="', 'class="' . $class . ' ', $before_widget );
+		if ( $instance['class'] )
+			$before_widget = str_replace( 'class="', 'class="' . esc_attr( $instance['class'] ) . ' ', $before_widget );
 
-		if ( !$limit )
-			$limit = -1;
-
-		if ( $category_name )
-			$category = intval( $category_name );
-
-		$args = array(
-			'orderby' => $orderby,
-			'order' => $order,
-			'limit' => $limit,
-			'include' => $include,
-			'exclude' => $exclude,
-			'hide_invisible' => $hide_invisible,
-			'show_rating' => $show_rating,
-			'show_updated' => $show_updated,
-			'show_description' => $show_description,
-			'show_images' => $show_images,
-			'show_name' => $show_name,
-			'between' => ' ' . $between,
-			'categorize' => $categorize,
-			'category' => $category,
-			'exclude_category' => $exclude_category,
-			'show_private' => $show_private,
-			'category_orderby' => $category_orderby,
-			'category_order' => $category_order,
-			'title_li' => $title_li,
-			'title_before' => $before_title,
-			'title_after' => $after_title,
-			'category_before' => $before_widget,
-			'category_after' => $after_widget,
-			'link_before' => $link_before,
-			'link_after' => $link_after,
-			'class' => $class,
-			'category_name' => false,	// Uses category instead
-			'search' => $search,
-			'echo' => 0,
-		);
+		$args['title_before'] = $before_title;
+		$args['title_after'] = $after_title;
+		$args['category_before'] = $before_widget;
+		$args['category_after'] = $after_widget;
+		$args['category_name'] = false;
+		$args['echo'] = false;
 
 		echo str_replace( array( "\r", "\n", "\t" ), '', wp_list_bookmarks( $args ) );
 	}
@@ -117,15 +85,14 @@ class Hybrid_Widget_Bookmarks extends WP_Widget {
 	 */
 	function update( $new_instance, $old_instance ) {
 		$instance = $old_instance;
+
+		/* Set the instance to the new instance. */
+		$instance = $new_instance;
+
 		$instance['title_li'] = strip_tags( $new_instance['title_li'] );
-		$instance['category'] = strip_tags( $new_instance['category'] );
-		$instance['exclude_category'] = strip_tags( $new_instance['exclude_category'] );
 		$instance['limit'] = strip_tags( $new_instance['limit'] );
 		$instance['class'] = strip_tags( $new_instance['class'] );
-		$instance['include'] = strip_tags( $new_instance['include'] );
-		$instance['exclude'] = strip_tags( $new_instance['exclude'] );
 		$instance['search'] = strip_tags( $new_instance['search'] );
-		$instance['category_name'] = $new_instance['category_name'];
 		$instance['category_order'] = $new_instance['category_order'];
 		$instance['category_orderby'] = $new_instance['category_orderby'];
 		$instance['orderby'] = $new_instance['orderby'];
@@ -153,113 +120,132 @@ class Hybrid_Widget_Bookmarks extends WP_Widget {
 	function form( $instance ) {
 
 		//Defaults
-		$defaults = array( 'title_li' => __( 'Bookmarks', $this->textdomain ), 'categorize' => true, 'hide_invisible' => true, 'show_description' => false, 'show_image' => false, 'show_rating' => false, 'show_updated' => false, 'show_private' => false, 'show_name' => false, 'class' => 'linkcat', 'link_before' => '<span>', 'link_after' => '</span>' );
+		$defaults = array(
+			'title_li' => __( 'Bookmarks', $this->textdomain ),
+			'categorize' => true,
+			'hide_invisible' => true,
+			'show_description' => false,
+			'show_image' => false,
+			'show_rating' => false,
+			'show_updated' => false,
+			'show_private' => false,
+			'show_name' => false,
+			'class' => 'linkcat',
+			'link_before' => '<span>',
+			'link_after' => '</span>'
+		);
 		$instance = wp_parse_args( (array) $instance, $defaults );
-		$link_cats = get_categories( array( 'type' => 'link' ) );
-		$link_cats[] = false; ?>
 
-		<div style="float:left;width:31%;">
+		$terms = get_categories( array( 'type' => 'link' ) );
+		$bookmarks = get_bookmarks( array( 'hide_invisible' => false ) );
+		$category_order = array( 'ASC' => __( 'Ascending', $this->textdomain ), 'DESC' => __( 'Descending', $this->textdomain ) );
+		$category_orderby = array( 'count' => __( 'Count', $this->textdomain ), 'ID' => __( 'ID', $this->textdomain ), 'name' => __( 'Name', $this->textdomain ), 'slug' => __( 'Slug', $this->textdomain ) );
+		$order = array( 'ASC' => __( 'Ascending', $this->textdomain ), 'DESC' => __( 'Descending', $this->textdomain ) );
+		$orderby = array( 'id' => __( 'ID', $this->textdomain ), 'description' => __( 'Description',  $this->textdomain ), 'length' => __( 'Length',  $this->textdomain ), 'name' => __( 'Name',  $this->textdomain ), 'notes' => __( 'Notes',  $this->textdomain ), 'owner' => __( 'Owner',  $this->textdomain ), 'rand' => __( 'Random',  $this->textdomain ), 'rating' => __( 'Rating',  $this->textdomain ), 'rel' => __( 'Rel',  $this->textdomain ), 'rss' => __( 'RSS',  $this->textdomain ), 'target' => __( 'Target',  $this->textdomain ), 'updated' => __( 'Updated',  $this->textdomain ), 'url' => __( 'URL',  $this->textdomain ) );
+
+		?>
+
+		<div class="hybrid-widget-controls columns-3">
 		<p>
-			<label for="<?php echo $this->get_field_id( 'title_li' ); ?>"><?php _e( 'Title:', $this->textdomain ); ?> <code>title_li</code></label>
-			<input type="text" id="<?php echo $this->get_field_id( 'title_li' ); ?>" name="<?php echo $this->get_field_name( 'title_li' ); ?>" value="<?php echo $instance['title_li']; ?>" style="width:100%;" />
+			<label for="<?php echo $this->get_field_id( 'title_li' ); ?>"><?php _e( 'Title:', $this->textdomain ); ?></label>
+			<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'title_li' ); ?>" name="<?php echo $this->get_field_name( 'title_li' ); ?>" value="<?php echo $instance['title_li']; ?>" />
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'category' ); ?>"><?php _e( 'Categories:', $this->textdomain ); ?> <code>category</code></label>
-			<input type="text" id="<?php echo $this->get_field_id( 'category' ); ?>" name="<?php echo $this->get_field_name( 'category' ); ?>" value="<?php echo $instance['category']; ?>" style="width:100%;" />
-		</p>
-		<p>
-			<label for="<?php echo $this->get_field_id( 'exclude_category' ); ?>"><?php _e( 'Exclude categories:', $this->textdomain ); ?> <code>category</code></label>
-			<input type="text" id="<?php echo $this->get_field_id( 'exclude_category' ); ?>" name="<?php echo $this->get_field_name( 'exclude_category' ); ?>" value="<?php echo $instance['exclude_category']; ?>" style="width:100%;" />
-		</p>
-		<p>
-			<label for="<?php echo $this->get_field_id( 'category_name' ); ?>"><?php _e( 'Category:',$this->textdomain ); ?> <code>category_name</code>	</label>
-			<select id="<?php echo $this->get_field_id( 'category_name' ); ?>" name="<?php echo $this->get_field_name( 'category_name' ); ?>" class="widefat" style="width:100%;">
-			<?php foreach ( $link_cats as $cat ) { ?>
-				<option <?php if ( $cat->term_id == $instance['category_name'] ) echo ' selected="selected"'; ?> value="<?php echo $cat->term_id; ?>"><?php echo $cat->name; ?></option>
-			<?php } ?>
+			<label for="<?php echo $this->get_field_id( 'category_order' ); ?>"><code>category_order</code></label> 
+			<select class="widefat" id="<?php echo $this->get_field_id( 'category_order' ); ?>" name="<?php echo $this->get_field_name( 'category_order' ); ?>">
+				<?php foreach ( $category_order as $option_value => $option_label ) { ?>
+					<option value="<?php echo $option_value; ?>" <?php selected( $instance['category_order'], $option_value ); ?>><?php echo $option_label; ?></option>
+				<?php } ?>
 			</select>
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'category_order' ); ?>"><?php _e( 'Category Order:',$this->textdomain ); ?> <code>category_order</code></label> 
-			<select id="<?php echo $this->get_field_id( 'category_order' ); ?>" name="<?php echo $this->get_field_name( 'category_order' ); ?>" class="widefat" style="width:100%;">
-				<option <?php if ( 'ASC' == $instance['category_order'] ) echo 'selected="selected"'; ?>>ASC</option>
-				<option <?php if ( 'DESC' == $instance['category_order'] ) echo 'selected="selected"'; ?>>DESC</option>
+			<label for="<?php echo $this->get_field_id( 'category_orderby' ); ?>"><code>category_orderby</code></label> 
+			<select class="widefat" id="<?php echo $this->get_field_id( 'category_orderby' ); ?>" name="<?php echo $this->get_field_name( 'category_orderby' ); ?>">
+				<?php foreach ( $category_orderby as $option_value => $option_label ) { ?>
+					<option value="<?php echo $option_value; ?>" <?php selected( $instance['category_orderby'], $option_value ); ?>><?php echo $option_label; ?></option>
+				<?php } ?>
 			</select>
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'category_orderby' ); ?>"><?php _e( 'Category Orderby:',$this->textdomain ); ?> <code>category_orderby</code></label> 
-			<select id="<?php echo $this->get_field_id( 'category_orderby' ); ?>" name="<?php echo $this->get_field_name( 'category_orderby' ); ?>" class="widefat" style="width:100%;">
-				<option <?php if ( 'name' == $instance['category_orderby'] ) echo 'selected="selected"'; ?>>name</option>
-				<option <?php if ( 'id' == $instance['category_orderby'] ) echo 'selected="selected"'; ?>>id</option>
-				<option <?php if ( 'slug' == $instance['category_orderby'] ) echo 'selected="selected"'; ?>>slug</option>
-				<option <?php if ( 'count' == $instance['category_orderby'] ) echo 'selected="selected"'; ?>>count</option>
+			<label for="<?php echo $this->get_field_id( 'category' ); ?>"><code>category</code></label> 
+			<select class="widefat" id="<?php echo $this->get_field_id( 'category' ); ?>" name="<?php echo $this->get_field_name( 'category' ); ?>[]" size="4" multiple="multiple">
+				<?php foreach ( $terms as $term ) { ?>
+					<option value="<?php echo $term->term_id; ?>" <?php echo ( in_array( $term->term_id, (array) $instance['category'] ) ? 'selected="selected"' : '' ); ?>><?php echo $term->name; ?></option>
+				<?php } ?>
 			</select>
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'class' ); ?>"><?php _e( 'Class:', $this->textdomain ); ?> <code>class</code></label>
-			<input type="text" id="<?php echo $this->get_field_id( 'class' ); ?>" name="<?php echo $this->get_field_name( 'class' ); ?>" value="<?php echo $instance['class']; ?>" style="width:100%;" />
+			<label for="<?php echo $this->get_field_id( 'exclude_category' ); ?>"><code>exclude_category</code></label> 
+			<select class="widefat" id="<?php echo $this->get_field_id( 'exclude_category' ); ?>" name="<?php echo $this->get_field_name( 'exclude_category' ); ?>[]" size="4" multiple="multiple">
+				<?php foreach ( $terms as $term ) { ?>
+					<option value="<?php echo $term->term_id; ?>" <?php echo ( in_array( $term->term_id, (array) $instance['exclude_category'] ) ? 'selected="selected"' : '' ); ?>><?php echo $term->name; ?></option>
+				<?php } ?>
+			</select>
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id( 'class' ); ?>"><code>class</code></label>
+			<input type="text" class="smallfat code" id="<?php echo $this->get_field_id( 'class' ); ?>" name="<?php echo $this->get_field_name( 'class' ); ?>" value="<?php echo $instance['class']; ?>" />
 		</p>
 
 		</div>
 
-		<div style="float:left;width:31%;margin-left:3.5%;">
+		<div class="hybrid-widget-controls columns-3">
 
 		<p>
-			<label for="<?php echo $this->get_field_id( 'limit' ); ?>"><?php _e( 'Limit:', $this->textdomain ); ?> <code>limit</code></label>
-			<input type="text" id="<?php echo $this->get_field_id( 'limit' ); ?>" name="<?php echo $this->get_field_name( 'limit' ); ?>" value="<?php echo $instance['limit']; ?>" style="width:100%;" />
+			<label for="<?php echo $this->get_field_id( 'limit' ); ?>"><code>limit</code></label>
+			<input type="text" class="smallfat code" id="<?php echo $this->get_field_id( 'limit' ); ?>" name="<?php echo $this->get_field_name( 'limit' ); ?>" value="<?php echo $instance['limit']; ?>" />
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'include' ); ?>"><?php _e( 'Include Bookmarks:', $this->textdomain ); ?> <code>include</code></label>
-			<input type="text" id="<?php echo $this->get_field_id( 'include' ); ?>" name="<?php echo $this->get_field_name( 'include' ); ?>" value="<?php echo $instance['include']; ?>" style="width:100%;" />
-		</p>
-		<p>
-			<label for="<?php echo $this->get_field_id( 'exclude' ); ?>"><?php _e( 'Exclude Bookmarks:', $this->textdomain ); ?> <code>exclude</code></label>
-			<input type="text" id="<?php echo $this->get_field_id( 'exclude' ); ?>" name="<?php echo $this->get_field_name( 'exclude' ); ?>" value="<?php echo $instance['exclude']; ?>" style="width:100%;" />
-		</p>
-		<p>
-			<label for="<?php echo $this->get_field_id( 'order' ); ?>"><?php _e( 'Bookmarks Order:',$this->textdomain ); ?> <code>order</code></label> 
-			<select id="<?php echo $this->get_field_id( 'order' ); ?>" name="<?php echo $this->get_field_name( 'order' ); ?>" class="widefat" style="width:100%;">
-				<option <?php if ( 'ASC' == $instance['order'] ) echo 'selected="selected"'; ?>>ASC</option>
-				<option <?php if ( 'DESC' == $instance['order'] ) echo 'selected="selected"'; ?>>DESC</option>
+			<label for="<?php echo $this->get_field_id( 'order' ); ?>"><code>order</code></label> 
+			<select class="widefat" id="<?php echo $this->get_field_id( 'order' ); ?>" name="<?php echo $this->get_field_name( 'order' ); ?>">
+				<?php foreach ( $order as $option_value => $option_label ) { ?>
+					<option value="<?php echo $option_value; ?>" <?php selected( $instance['order'], $option_value ); ?>><?php echo $option_label; ?></option>
+				<?php } ?>
 			</select>
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'orderby' ); ?>"><?php _e( 'Bookmarks Orderby:',$this->textdomain ); ?> <code>orderby</code></label> 
-			<select id="<?php echo $this->get_field_id( 'orderby' ); ?>" name="<?php echo $this->get_field_name( 'orderby' ); ?>" class="widefat" style="width:100%;">
-				<option <?php if ( 'name' == $instance['orderby'] ) echo 'selected="selected"'; ?>>name</option>
-				<option <?php if ( 'id' == $instance['orderby'] ) echo 'selected="selected"'; ?>>id</option>
-				<option <?php if ( 'url' == $instance['orderby'] ) echo 'selected="selected"'; ?>>url</option>
-				<option <?php if ( 'target' == $instance['orderby'] ) echo 'selected="selected"'; ?>>target</option>
-				<option <?php if ( 'description' == $instance['orderby'] ) echo 'selected="selected"'; ?>>description</option>
-				<option <?php if ( 'owner' == $instance['orderby'] ) echo 'selected="selected"'; ?>>owner</option>
-				<option <?php if ( 'rating' == $instance['orderby'] ) echo 'selected="selected"'; ?>>rating</option>
-				<option <?php if ( 'updated' == $instance['orderby'] ) echo 'selected="selected"'; ?>>updated</option>
-				<option <?php if ( 'rel' == $instance['orderby'] ) echo 'selected="selected"'; ?>>rel</option>
-				<option <?php if ( 'notes' == $instance['orderby'] ) echo 'selected="selected"'; ?>>notes</option>
-				<option <?php if ( 'rss' == $instance['orderby'] ) echo 'selected="selected"'; ?>>rss</option>
-				<option <?php if ( 'length' == $instance['orderby'] ) echo 'selected="selected"'; ?>>length</option>
-				<option <?php if ( 'rand' == $instance['orderby'] ) echo 'selected="selected"'; ?>>rand</option>
+			<label for="<?php echo $this->get_field_id( 'orderby' ); ?>"><code>orderby</code></label> 
+			<select class="widefat" id="<?php echo $this->get_field_id( 'orderby' ); ?>" name="<?php echo $this->get_field_name( 'orderby' ); ?>">
+				<?php foreach ( $orderby as $option_value => $option_label ) { ?>
+					<option value="<?php echo $option_value; ?>" <?php selected( $instance['orderby'], $option_value ); ?>><?php echo $option_label; ?></option>
+				<?php } ?>
 			</select>
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'between' ); ?>"><?php _e( 'Between:', $this->textdomain ); ?> <code>between</code></label>
-			<input type="text" id="<?php echo $this->get_field_id( 'between' ); ?>" name="<?php echo $this->get_field_name( 'between' ); ?>" value="<?php echo $instance['between']; ?>" style="width:100%;" />
+			<label for="<?php echo $this->get_field_id( 'include' ); ?>"><code>include</code></label> 
+			<select class="widefat" id="<?php echo $this->get_field_id( 'include' ); ?>" name="<?php echo $this->get_field_name( 'include' ); ?>[]" size="4" multiple="multiple">
+				<?php foreach ( $bookmarks as $bookmark ) { ?>
+					<option value="<?php echo $bookmark->link_id; ?>" <?php echo ( in_array( $bookmark->link_id, (array) $instance['include'] ) ? 'selected="selected"' : '' ); ?>><?php echo $bookmark->link_name; ?></option>
+				<?php } ?>
+			</select>
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'search' ); ?>"><?php _e( 'Search:', $this->textdomain ); ?> <code>search</code></label>
-			<input type="text" id="<?php echo $this->get_field_id( 'search' ); ?>" name="<?php echo $this->get_field_name( 'search' ); ?>" value="<?php echo $instance['search']; ?>" style="width:100%;" />
+			<label for="<?php echo $this->get_field_id( 'exclude' ); ?>"><code>exclude</code></label> 
+			<select class="widefat" id="<?php echo $this->get_field_id( 'exclude' ); ?>" name="<?php echo $this->get_field_name( 'exclude' ); ?>[]" size="4" multiple="multiple">
+				<?php foreach ( $bookmarks as $bookmark ) { ?>
+					<option value="<?php echo $bookmark->link_id; ?>" <?php echo ( in_array( $bookmark->link_id, (array) $instance['exclude'] ) ? 'selected="selected"' : '' ); ?>><?php echo $bookmark->link_name; ?></option>
+				<?php } ?>
+			</select>
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id( 'search' ); ?>"><code>search</code></label>
+			<input type="text" class="widefat code" id="<?php echo $this->get_field_id( 'search' ); ?>" name="<?php echo $this->get_field_name( 'search' ); ?>" value="<?php echo $instance['search']; ?>" />
 		</p>
 
 		</div>
 
-		<div style="float:right;width:31%;margin-left:3.5%;">
+		<div class="hybrid-widget-controls columns-3 column-last">
 		<p>
-			<label for="<?php echo $this->get_field_id( 'link_before' ); ?>"><?php _e( 'Before Link:', $this->textdomain ); ?> <code>link_before</code></label>
-			<input type="text" id="<?php echo $this->get_field_id( 'link_before' ); ?>" name="<?php echo $this->get_field_name( 'link_before' ); ?>" value="<?php echo $instance['link_before']; ?>" style="width:100%;" />
+			<label for="<?php echo $this->get_field_id( 'between' ); ?>"><code>between</code></label>
+			<input type="text" class="smallfat code" id="<?php echo $this->get_field_id( 'between' ); ?>" name="<?php echo $this->get_field_name( 'between' ); ?>" value="<?php echo $instance['between']; ?>" />
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'link_after' ); ?>"><?php _e( 'After Link:', $this->textdomain ); ?> <code>link_after</code></label>
-			<input type="text" id="<?php echo $this->get_field_id( 'link_after' ); ?>" name="<?php echo $this->get_field_name( 'link_after' ); ?>" value="<?php echo $instance['link_after']; ?>" style="width:100%;" />
+			<label for="<?php echo $this->get_field_id( 'link_before' ); ?>"><code>link_before</code></label>
+			<input type="text" class="smallfat code" id="<?php echo $this->get_field_id( 'link_before' ); ?>" name="<?php echo $this->get_field_name( 'link_before' ); ?>" value="<?php echo $instance['link_before']; ?>" />
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id( 'link_after' ); ?>"><code>link_after</code></label>
+			<input type="text" class="smallfat code" id="<?php echo $this->get_field_id( 'link_after' ); ?>" name="<?php echo $this->get_field_name( 'link_after' ); ?>" value="<?php echo $instance['link_after']; ?>" />
 		</p>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'categorize' ); ?>">

@@ -39,14 +39,14 @@ class Hybrid_Widget_Categories extends WP_Widget {
 	function widget( $args, $instance ) {
 		extract( $args );
 
-		$title = apply_filters( 'widget_title', $instance['title'] );
-
 		$args = array();
 
 		$args['taxonomy'] = $instance['taxonomy'];
 		$args['style'] = $instance['style'];
 		$args['orderby'] = $instance['orderby'];
 		$args['order'] = $instance['order'];
+		$args['include'] = ( is_array( $instance['include'] ) ? join( ', ', $instance['include'] ) : $instance['include'] );
+		$args['exclude'] = ( is_array( $instance['exclude'] ) ? join( ', ', $instance['exclude'] ) : $instance['exclude'] );
 		$args['exclude_tree'] = $instance['exclude_tree'];
 		$args['depth'] = intval( $instance['depth'] );
 		$args['number'] = intval( $instance['number'] );
@@ -56,8 +56,6 @@ class Hybrid_Widget_Categories extends WP_Widget {
 		$args['feed_type'] = $instance['feed_type'];
 		$args['feed_image'] = esc_url( $instance['feed_image'] );
 		$args['search'] = $instance['search'];
-		$args['include'] = ( $instance['include'] ? join( ', ', (array) $instance['include'] ) : '' );
-		$args['include'] = ( $instance['exclude'] ? join( ', ', (array) $instance['exclude'] ) : '' );
 		$args['hierarchical'] = isset( $instance['hierarchical'] ) ? $instance['hierarchical'] : false;
 		$args['use_desc_for_title'] = isset( $instance['use_desc_for_title'] ) ? $instance['use_desc_for_title'] : false;
 		$args['show_last_update'] = isset( $instance['show_last_update'] ) ? $instance['show_last_updated'] : false;
@@ -88,9 +86,17 @@ class Hybrid_Widget_Categories extends WP_Widget {
 	function update( $new_instance, $old_instance ) {
 		$instance = $old_instance;
 
+		/* Set the instance to the new instance. */
 		$instance = $new_instance;
 
+		/* If new taxonomy is chosen, reset includes and excludes. */
+		if ( $instance['taxonomy'] !== $old_instance['taxonomy'] ) {
+			$instance['include'] = array();
+			$instance['exclude'] = array();
+		}
+
 		$instance['title'] = strip_tags( $new_instance['title'] );
+		$instance['taxonomy'] = $new_instance['taxonomy'];
 		$instance['exclude_tree'] = strip_tags( $new_instance['exclude_tree'] );
 		$instance['depth'] = strip_tags( $new_instance['depth'] );
 		$instance['number'] = strip_tags( $new_instance['number'] );
@@ -189,17 +195,17 @@ class Hybrid_Widget_Categories extends WP_Widget {
 		<div class="hybrid-widget-controls columns-3">
 		<p>
 			<label for="<?php echo $this->get_field_id( 'include' ); ?>"><code>include</code></label> 
-			<select class="widefat" id="<?php echo $this->get_field_id( 'include' ); ?>" name="<?php echo $this->get_field_name( 'include' ); ?>" size="4" multiple="multiple">
+			<select class="widefat" id="<?php echo $this->get_field_id( 'include' ); ?>" name="<?php echo $this->get_field_name( 'include' ); ?>[]" size="4" multiple="multiple">
 				<?php foreach ( $terms as $term ) { ?>
-					<option value="<?php echo $term->term_id; ?>" <?php echo ( in_array( $term->id, (array) $instance['include'] ) ? 'selected="selected"' : '' ); ?>><?php echo $term->name; ?></option>
+					<option value="<?php echo $term->term_id; ?>" <?php echo ( in_array( $term->term_id, (array) $instance['include'] ) ? 'selected="selected"' : '' ); ?>><?php echo $term->name; ?></option>
 				<?php } ?>
 			</select>
 		</p>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'exclude' ); ?>"><code>exclude</code></label> 
-			<select class="widefat" id="<?php echo $this->get_field_id( 'exclude' ); ?>" name="<?php echo $this->get_field_name( 'exclude' ); ?>" size="4" multiple="multiple">
+			<select class="widefat" id="<?php echo $this->get_field_id( 'exclude' ); ?>" name="<?php echo $this->get_field_name( 'exclude' ); ?>[]" size="4" multiple="multiple">
 				<?php foreach ( $terms as $term ) { ?>
-					<option value="<?php echo $term->term_id; ?>" <?php echo ( in_array( $term->id, (array) $instance['exclude'] ) ? 'selected="selected"' : '' ); ?>><?php echo $term->name; ?></option>
+					<option value="<?php echo $term->term_id; ?>" <?php echo ( in_array( $term->term_id, (array) $instance['exclude'] ) ? 'selected="selected"' : '' ); ?>><?php echo $term->name; ?></option>
 				<?php } ?>
 			</select>
 		</p>

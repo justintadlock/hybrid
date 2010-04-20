@@ -28,7 +28,7 @@ class Hybrid_Widget_Archives extends WP_Widget {
 		$this->textdomain = hybrid_get_textdomain();
 
 		$widget_ops = array( 'classname' => 'archives', 'description' => __( 'An advanced widget that gives you total control over the output of your archives.', $this->textdomain ) );
-		$control_ops = array( 'width' => 700, 'height' => 350, 'id_base' => "{$this->prefix}-archives" );
+		$control_ops = array( 'width' => 525, 'height' => 350, 'id_base' => "{$this->prefix}-archives" );
 		$this->WP_Widget( "{$this->prefix}-archives", __( 'Archives', $this->textdomain ), $widget_ops, $control_ops );
 	}
 
@@ -117,46 +117,48 @@ class Hybrid_Widget_Archives extends WP_Widget {
 			'before' => '',
 			'after' => ''
 		);
-		$instance = wp_parse_args( (array) $instance, $defaults ); ?>
+		$instance = wp_parse_args( (array) $instance, $defaults );
 
-		<div style="float:left;width:48%;">
+		$type = array( 'alpha' => __( 'Alphabetical', $this->textdomain ), 'daily' => __( 'Daily', $this->textdomain ), 'monthly' => __( 'Monthly', $this->textdomain ),'postbypost' => __( 'Post By Post', $this->textdomain ), 'weekly' => __( 'Weekly', $this->textdomain ), 'yearly' => __( 'Yearly', $this->textdomain ) );
+		$format = array( 'custom' => __( 'Custom', $this->textdomain ), 'html' => __( 'HTML', $this->textdomain ), 'option' => __( 'Option', $this->textdomain ) );
+
+		?>
+
+		<div class="hybrid-widget-controls columns-2">
 		<p>
 			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', $this->textdomain ); ?></label>
-			<input type="text" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $instance['title']; ?>" style="width:100%;" />
+			<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $instance['title']; ?>" />
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'limit' ); ?>"><?php _e( 'Limit:', $this->textdomain ); ?> <code>limit</code></label>
-			<input type="text" id="<?php echo $this->get_field_id( 'limit' ); ?>" name="<?php echo $this->get_field_name( 'limit' ); ?>" value="<?php echo $instance['limit']; ?>" style="width:100%;" />
+			<label for="<?php echo $this->get_field_id( 'limit' ); ?>"><code>limit</code></label>
+			<input type="text" class="smallfat code" id="<?php echo $this->get_field_id( 'limit' ); ?>" name="<?php echo $this->get_field_name( 'limit' ); ?>" value="<?php echo $instance['limit']; ?>" />
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'type' ); ?>"><?php _e( 'Type:',$this->textdomain ); ?> <code>type</code></label> 
-			<select id="<?php echo $this->get_field_id( 'type' ); ?>" name="<?php echo $this->get_field_name( 'type' ); ?>" class="widefat" style="width:100%;">
-				<option <?php if ( 'yearly' == $instance['type'] ) echo 'selected="selected"'; ?>>yearly</option>
-				<option <?php if ( 'monthly' == $instance['type'] ) echo 'selected="selected"'; ?>>monthly</option>
-				<option <?php if ( 'weekly' == $instance['type'] ) echo 'selected="selected"'; ?>>weekly</option>
-				<option <?php if ( 'daily' == $instance['type'] ) echo 'selected="selected"'; ?>>daily</option>
-				<option <?php if ( 'postbypost' == $instance['type'] ) echo 'selected="selected"'; ?>>postbypost</option>
-				<option <?php if ( 'alpha' == $instance['type'] ) echo 'selected="selected"'; ?>>alpha</option>
+			<label for="<?php echo $this->get_field_id( 'type' ); ?>"><code>type</code></label> 
+			<select class="widefat" id="<?php echo $this->get_field_id( 'type' ); ?>" name="<?php echo $this->get_field_name( 'type' ); ?>">
+				<?php foreach ( $type as $option_value => $option_label ) { ?>
+					<option value="<?php echo $option_value; ?>" <?php selected( $instance['type'], $option_value ); ?>><?php echo $option_label; ?></option>
+				<?php } ?>
 			</select>
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'format' ); ?>"><?php _e( 'Format:',$this->textdomain ); ?> <code>format</code></label> 
-			<select id="<?php echo $this->get_field_id( 'format' ); ?>" name="<?php echo $this->get_field_name( 'format' ); ?>" class="widefat" style="width:100%;">
-				<option <?php if ( 'html' == $instance['format'] ) echo 'selected="selected"'; ?>>html</option>
-				<option <?php if ( 'option' == $instance['format'] ) echo 'selected="selected"'; ?>>option</option>
-				<option <?php if ( 'custom' == $instance['format'] ) echo 'selected="selected"'; ?>>custom</option>
+			<label for="<?php echo $this->get_field_id( 'format' ); ?>"><code>format</code></label> 
+			<select class="widefat" id="<?php echo $this->get_field_id( 'format' ); ?>" name="<?php echo $this->get_field_name( 'format' ); ?>">
+				<?php foreach ( $format as $option_value => $option_label ) { ?>
+					<option value="<?php echo $option_value; ?>" <?php selected( $instance['format'], $option_value ); ?>><?php echo $option_label; ?></option>
+				<?php } ?>
 			</select>
 		</p>
 		</div>
 
-		<div style="float:right;width:48%;">
+		<div class="hybrid-widget-controls columns-2 column-last">
 		<p>
-			<label for="<?php echo $this->get_field_id( 'before' ); ?>"><?php _e( 'Before:', $this->textdomain ); ?> <code>before</code></label>
-			<input type="text" id="<?php echo $this->get_field_id( 'before' ); ?>" name="<?php echo $this->get_field_name( 'before' ); ?>" value="<?php echo $instance['before']; ?>" style="width:100%;" />
+			<label for="<?php echo $this->get_field_id( 'before' ); ?>"><code>before</code></label>
+			<input type="text" class="widefat code" id="<?php echo $this->get_field_id( 'before' ); ?>" name="<?php echo $this->get_field_name( 'before' ); ?>" value="<?php echo $instance['before']; ?>" />
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'after' ); ?>"><?php _e( 'After:', $this->textdomain ); ?> <code>after</code></label>
-			<input type="text" id="<?php echo $this->get_field_id( 'after' ); ?>" name="<?php echo $this->get_field_name( 'after' ); ?>" value="<?php echo $instance['after']; ?>" style="width:100%;" />
+			<label for="<?php echo $this->get_field_id( 'after' ); ?>"><code>after</code></label>
+			<input type="text" class="widefat code" id="<?php echo $this->get_field_id( 'after' ); ?>" name="<?php echo $this->get_field_name( 'after' ); ?>" value="<?php echo $instance['after']; ?>" />
 		</p>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'show_post_count' ); ?>">
