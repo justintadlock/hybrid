@@ -17,7 +17,7 @@
 			<?php previous_post_link( '%link', '<span class="previous">' . __( '&laquo; Return to entry', 'hybrid' ) . '</span>' ); ?>
 		</div>
 
-	<?php elseif ( is_singular() && 'post' == get_post_type() ) : ?>
+	<?php elseif ( is_singular() && is_post_type( 'post' ) ) : ?>
 
 		<div class="navigation-links">
 			<?php previous_post_link( '%link', '<span class="previous">' . __( '&laquo; Previous', 'hybrid' ) . '</span>' ); ?>
