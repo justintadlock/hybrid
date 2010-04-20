@@ -32,7 +32,7 @@ function hybrid_settings_page_init() {
 	$domain = hybrid_get_textdomain();
 
 	/* Create the theme settings page. */
-	$hybrid->settings_page = add_theme_page( sprintf( __( '%1$s Theme Settings', $domain ), $theme_data['Name'] ), sprintf( __( '%1$s Settings', $domain ), $theme_data['Name'] ), apply_filters( "{$prefix}_settings_capability", 'edit_themes' ), 'theme-settings', 'hybrid_settings_page' );
+	$hybrid->settings_page = add_theme_page( sprintf( __( '%1$s Theme Settings', $domain ), $theme_data['Name'] ), sprintf( __( '%1$s Settings', $domain ), $theme_data['Name'] ), apply_filters( "{$prefix}_settings_capability", 'edit_theme_options' ), 'theme-settings', 'hybrid_settings_page' );
 
 	/* Register the default theme settings meta boxes. */
 	add_action( "load-{$hybrid->settings_page}", 'hybrid_create_settings_meta_boxes' );
