@@ -8,35 +8,11 @@
  * @subpackage Functions
  */
 
+/**
+ * Filter the comment form defaults.
+ * @since 0.8
+ */
 add_filter( 'comment_form_defaults', 'hybrid_comment_form_args' );
-
-function hybrid_comment_form_args( $args ) {
-	global $user_identity;
-
-	$commenter = wp_get_current_commenter();
-
-	$req = get_option( 'require_name_email' );
-	$req = ( ( $req ) ? ' <span class="required">' . __( '*', 'hybrid' ) . '</span> ' : '' );
-
-	$args = array(
-		'fields' => apply_filters( 'comment_form_default_fields', array(
-			'author' => '<p class="form-author"><label for="author">' . __( 'Name', 'hybrid' ) . $req . '</label> <input type="text" class="text-input" name="author" id="author" value="' . esc_attr( $commenter['comment_author'] ) . '" size="40" tabindex="1" /></p>',
-			'email' => '<p class="form-email"><label for="email">' . __( 'Email', 'hybrid' ) . $req . '</label> <input type="text" class="text-input" name="email" id="email" value="' . esc_attr( $commenter['comment_author_email'] ) . '" size="40" tabindex="2" /></p>',
-			'url' => '<p class="form-url"><label for="url">' . __( 'Website', 'hybrid' ) . '</label><input type="text" class="text-input" name="url" id="url" value="' . esc_attr( $commenter['comment_author_url'] ) . '" size="40" tabindex="3" /></p>'
-		) ),
-		'comment_field' => '<p class="form-textarea"><label for="comment">' . __( 'Comment', 'hybrid' ) . '</label><textarea name="comment" id="comment" cols="60" rows="10" tabindex="4"></textarea></p>',
-		'must_log_in' => '<p class="alert">' . sprintf( __( 'You must be <a href="%1$s" title="Log in">logged in</a> to post a comment.', 'hybrid' ), wp_login_url( get_permalink() ) ) . '</p><!-- .alert -->',
-		'logged_in_as' => '<p class="log-in-out">' . sprintf( __( 'Logged in as <a href="%1$s" title="%2$s">%2$s</a>.', 'hybrid' ), admin_url( 'profile.php' ), $user_identity ) . ' <a href="' . wp_logout_url( get_permalink() ) . '" title="' . __( 'Log out of this account', 'hybrid' ) . '">' . __( 'Log out &raquo;', 'hybrid' ) . '</a></p><!-- .log-in-out -->',
-		'id_form' => 'commentform',
-		'id_submit' => 'submit',
-		'title_reply' => __( 'Leave a Reply', 'hybrid' ),
-		'title_reply_to' => __( 'Leave a Reply to %s', 'hybrid' ),
-		'cancel_reply_link' => __( 'Click here to cancel reply.', 'hybrid' ),
-		'label_submit' => __( 'Submit', 'hybrid' ),
-	);
-
-	return $args;
-}
 
 /**
  * Arguments for the wp_list_comments_function() used in comments.php. Users can set up a 
@@ -152,6 +128,46 @@ function hybrid_comment_meta( $metadata = '' ) {
 	$metadata = '<div class="comment-meta comment-meta-data">' . $metadata . '</div>';
 
 	echo do_shortcode( apply_filters( hybrid_get_prefix() . '_comment_meta', $metadata ) );
+}
+
+/**
+ * Filters the WordPress comment_form() function that was added in WordPress 3.0.  This allows
+ * the theme to preserve some backwards compatibility with its old comment form.  It also allows 
+ * users to build custom comment forms by filtering 'comment_form_defaults' in their child theme.
+ *
+ * @since 0.8
+ * @param array $args The default comment form arguments.
+ * @return array $args The filtered comment form arguments.
+ */
+function hybrid_comment_form_args( $args ) {
+	global $user_identity;
+
+	$domain = hybrid_get_textdomain();
+	$commenter = wp_get_current_commenter();
+	$req = ( ( get_option( 'require_name_email' ) ) ? ' <span class="required">' . __( '*', 'hybrid' ) . '</span> ' : '' );
+
+	$fields = array(
+		'author' => '<p class="form-author"><label for="author">' . __( 'Name', $domain ) . $req . '</label> <input type="text" class="text-input" name="author" id="author" value="' . esc_attr( $commenter['comment_author'] ) . '" size="40" tabindex="1" /></p>',
+		'email' => '<p class="form-email"><label for="email">' . __( 'Email', $domain ) . $req . '</label> <input type="text" class="text-input" name="email" id="email" value="' . esc_attr( $commenter['comment_author_email'] ) . '" size="40" tabindex="2" /></p>',
+		'url' => '<p class="form-url"><label for="url">' . __( 'Website', $domain ) . '</label><input type="text" class="text-input" name="url" id="url" value="' . esc_attr( $commenter['comment_author_url'] ) . '" size="40" tabindex="3" /></p>'
+	);
+
+	$args = array(
+		'fields' => apply_filters( 'comment_form_default_fields', $fields ),
+		'comment_field' => '<p class="form-textarea"><label for="comment">' . __( 'Comment', $domain ) . '</label><textarea name="comment" id="comment" cols="60" rows="10" tabindex="4"></textarea></p>',
+		'must_log_in' => '<p class="alert">' . sprintf( __( 'You must be <a href="%1$s" title="Log in">logged in</a> to post a comment.', $domain ), wp_login_url( get_permalink() ) ) . '</p><!-- .alert -->',
+		'logged_in_as' => '<p class="log-in-out">' . sprintf( __( 'Logged in as <a href="%1$s" title="%2$s">%2$s</a>.', $domain ), admin_url( 'profile.php' ), $user_identity ) . ' <a href="' . wp_logout_url( get_permalink() ) . '" title="' . __( 'Log out of this account', $domain ) . '">' . __( 'Log out &raquo;', $domain ) . '</a></p><!-- .log-in-out -->',
+		'comment_notes_before' => '',
+		'comment_notes_after' => '',
+		'id_form' => 'commentform',
+		'id_submit' => 'submit',
+		'title_reply' => __( 'Leave a Reply', $domain ),
+		'title_reply_to' => __( 'Leave a Reply to %s', $domain ),
+		'cancel_reply_link' => __( 'Click here to cancel reply.', $domain ),
+		'label_submit' => __( 'Submit', $domain ),
+	);
+
+	return $args;
 }
 
 ?>
