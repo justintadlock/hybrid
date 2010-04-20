@@ -82,7 +82,7 @@ function is_nav_menu_active( $menu ) {
 
 	$menu_object = wp_get_nav_menu_object( $menu );
 
-	if ( !empty( $menu ) )
+	if ( !empty( $menu_object ) )
 		$menu_items = get_objects_in_term( $menu_object->term_id, 'nav_menu' );
 
 	if ( !empty( $menu_items ) ) {
