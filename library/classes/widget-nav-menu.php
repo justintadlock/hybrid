@@ -43,6 +43,7 @@ class Hybrid_Widget_Nav_Menu extends WP_Widget {
 		$args['menu'] = $instance['menu'];
 		$args['container'] = $instance['container'];
 		$args['menu_class'] = $instance['menu_class'];
+		$args['container_id'] = $instance['container_id'];
 		$args['container_class'] = $instance['container_class'];
 		$args['link_before'] = $instance['link_before'];
 		$args['link_after'] = $instance['link_after'];
@@ -73,6 +74,7 @@ class Hybrid_Widget_Nav_Menu extends WP_Widget {
 
 		$instance['title'] = strip_tags( $new_instance['title'] );
 		$instance['depth'] = strip_tags( $new_instance['depth'] );
+		$instance['container_id'] = strip_tags( $new_instance['container_id'] );
 		$instance['container_class'] = strip_tags( $new_instance['container_class'] );
 		$instance['menu_class'] = strip_tags( $new_instance['menu_class'] );
 		$instance['ul_class'] = strip_tags( $new_instance['ul_class'] );
@@ -107,7 +109,7 @@ class Hybrid_Widget_Nav_Menu extends WP_Widget {
 		</p>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'menu' ); ?>"><code>menu</code></label> 
-			<select class="smallfat" id="<?php echo $this->get_field_id( 'menu' ); ?>" name="<?php echo $this->get_field_name( 'menu' ); ?>">
+			<select class="widefat" id="<?php echo $this->get_field_id( 'menu' ); ?>" name="<?php echo $this->get_field_name( 'menu' ); ?>">
 				<?php foreach ( wp_get_nav_menus() as $menu ) { ?>
 					<option value="<?php echo $menu->term_id; ?>" <?php selected( $instance['menu'], $menu->term_id ); ?>><?php echo $menu->name; ?></option>
 				<?php } ?>
@@ -122,6 +124,10 @@ class Hybrid_Widget_Nav_Menu extends WP_Widget {
 			</select>
 		</p>
 		<p>
+			<label for="<?php echo $this->get_field_id( 'container_id' ); ?>"><code>container_id</code></label>
+			<input type="text" class="smallfat code" id="<?php echo $this->get_field_id( 'container_id' ); ?>" name="<?php echo $this->get_field_name( 'container_id' ); ?>" value="<?php echo $instance['container_id']; ?>" />
+		</p>
+		<p>
 			<label for="<?php echo $this->get_field_id( 'container_class' ); ?>"><code>container_class</code></label>
 			<input type="text" class="smallfat code" id="<?php echo $this->get_field_id( 'container_class' ); ?>" name="<?php echo $this->get_field_name( 'container_class' ); ?>" value="<?php echo $instance['container_class']; ?>" />
 		</p>
@@ -129,13 +135,13 @@ class Hybrid_Widget_Nav_Menu extends WP_Widget {
 			<label for="<?php echo $this->get_field_id( 'menu_class' ); ?>"><code>menu_class</code></label>
 			<input type="text" class="smallfat code" id="<?php echo $this->get_field_id( 'menu_class' ); ?>" name="<?php echo $this->get_field_name( 'menu_class' ); ?>" value="<?php echo $instance['menu_class']; ?>" />
 		</p>
+		</div>
+
+		<div class="hybrid-widget-controls columns-2 column-last">
 		<p>
 			<label for="<?php echo $this->get_field_id( 'depth' ); ?>"><code>depth</code></label>
 			<input type="text" class="smallfat code" id="<?php echo $this->get_field_id( 'depth' ); ?>" name="<?php echo $this->get_field_name( 'depth' ); ?>" value="<?php echo $instance['depth']; ?>" />
 		</p>
-		</div>
-
-		<div class="hybrid-widget-controls columns-2 column-last">
 		<p>
 			<label for="<?php echo $this->get_field_id( 'before' ); ?>"><code>before</code></label>
 			<input type="text" class="smallfat code" id="<?php echo $this->get_field_id( 'before' ); ?>" name="<?php echo $this->get_field_name( 'before' ); ?>" value="<?php echo $instance['before']; ?>" />

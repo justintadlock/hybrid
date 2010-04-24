@@ -200,6 +200,22 @@ class Hybrid_Widget_Tags extends WP_Widget {
 
 		<div class="hybrid-widget-controls columns-3">
 		<p>
+			<label for="<?php echo $this->get_field_id( 'include' ); ?>"><code>include</code></label> 
+			<select class="widefat" id="<?php echo $this->get_field_id( 'include' ); ?>" name="<?php echo $this->get_field_name( 'include' ); ?>[]" size="4" multiple="multiple">
+				<?php foreach ( $terms as $term ) { ?>
+					<option value="<?php echo $term->term_id; ?>" <?php echo ( in_array( $term->term_id, (array) $instance['include'] ) ? 'selected="selected"' : '' ); ?>><?php echo $term->name; ?></option>
+				<?php } ?>
+			</select>
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id( 'exclude' ); ?>"><code>exclude</code></label> 
+			<select class="widefat" id="<?php echo $this->get_field_id( 'exclude' ); ?>" name="<?php echo $this->get_field_name( 'exclude' ); ?>[]" size="4" multiple="multiple">
+				<?php foreach ( $terms as $term ) { ?>
+					<option value="<?php echo $term->term_id; ?>" <?php echo ( in_array( $term->term_id, (array) $instance['exclude'] ) ? 'selected="selected"' : '' ); ?>><?php echo $term->name; ?></option>
+				<?php } ?>
+			</select>
+		</p>
+		<p>
 			<label for="<?php echo $this->get_field_id( 'number' ); ?>"><code>number</code></label>
 			<input type="text" class="smallfat code" id="<?php echo $this->get_field_id( 'number' ); ?>" name="<?php echo $this->get_field_name( 'number' ); ?>" type="text" value="<?php echo $instance['number']; ?>" />
 		</p>
@@ -216,22 +232,6 @@ class Hybrid_Widget_Tags extends WP_Widget {
 			<select class="smallfat" id="<?php echo $this->get_field_id( 'unit' ); ?>" name="<?php echo $this->get_field_name( 'unit' ); ?>">
 				<?php foreach ( $unit as $option_value => $option_label ) { ?>
 					<option value="<?php echo $option_value; ?>" <?php selected( $instance['unit'], $option_value ); ?>><?php echo $option_label; ?></option>
-				<?php } ?>
-			</select>
-		</p>
-		<p>
-			<label for="<?php echo $this->get_field_id( 'include' ); ?>"><code>include</code></label> 
-			<select class="widefat" id="<?php echo $this->get_field_id( 'include' ); ?>" name="<?php echo $this->get_field_name( 'include' ); ?>[]" size="4" multiple="multiple">
-				<?php foreach ( $terms as $term ) { ?>
-					<option value="<?php echo $term->term_id; ?>" <?php echo ( in_array( $term->term_id, (array) $instance['include'] ) ? 'selected="selected"' : '' ); ?>><?php echo $term->name; ?></option>
-				<?php } ?>
-			</select>
-		</p>
-		<p>
-			<label for="<?php echo $this->get_field_id( 'exclude' ); ?>"><code>exclude</code></label> 
-			<select class="widefat" id="<?php echo $this->get_field_id( 'exclude' ); ?>" name="<?php echo $this->get_field_name( 'exclude' ); ?>[]" size="4" multiple="multiple">
-				<?php foreach ( $terms as $term ) { ?>
-					<option value="<?php echo $term->term_id; ?>" <?php echo ( in_array( $term->term_id, (array) $instance['exclude'] ) ? 'selected="selected"' : '' ); ?>><?php echo $term->name; ?></option>
 				<?php } ?>
 			</select>
 		</p>

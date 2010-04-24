@@ -43,7 +43,7 @@ class Hybrid_Widget_Pages extends WP_Widget {
 		$args['child_of'] = intval( $instance['child_of'] );
 		$args['meta_key'] = $instance['meta_key'];
 		$args['meta_value'] = $instance['meta_value'];
-		$args['authors'] = $instance['authors'];
+		$args['authors'] = ( is_array( $instance['authors'] ) ? join( ', ', $instance['authors'] ) : $instance['authors'] );
 		$args['include'] = ( is_array( $instance['include'] ) ? join( ', ', $instance['include'] ) : $instance['include'] );
 		$args['exclude'] = ( is_array( $instance['exclude'] ) ? join( ', ', $instance['exclude'] ) : $instance['exclude'] );
 		$args['exclude_tree'] = $instance['exclude_tree'];
@@ -82,7 +82,6 @@ class Hybrid_Widget_Pages extends WP_Widget {
 		$instance['child_of'] = strip_tags( $new_instance['child_of'] );
 		$instance['meta_key'] = strip_tags( $new_instance['meta_key'] );
 		$instance['meta_value'] = strip_tags( $new_instance['meta_value'] );
-		$instance['authors'] = strip_tags( $new_instance['authors'] );
 		$instance['exclude_tree'] = strip_tags( $new_instance['exclude_tree'] );
 		$instance['date_format'] = strip_tags( $new_instance['date_format'] );
 		$instance['number'] = strip_tags( $new_instance['number'] );
@@ -111,6 +110,10 @@ class Hybrid_Widget_Pages extends WP_Widget {
 		$instance = wp_parse_args( (array) $instance, $defaults );
 
 		$posts = get_posts( array( 'post_type' => 'page', 'post_status' => 'any', 'post_mime_type' => '', 'orderby' => 'title', 'order' => 'ASC', 'numberposts' => -1 ) );
+		$authors = array();
+		foreach ( $posts as $post )
+			$authors[$post->post_author] = get_the_author_meta( 'display_name', $post->post_author );
+
 		$sort_order = array( 'ASC' => __( 'Ascending', $this->textdomain ), 'DESC' => __( 'Descending', $this->textdomain ) );
 		$sort_column = array( 'post_author' => __( 'Author', $this->textdomain ), 'post_date' => __( 'Date', $this->textdomain ), 'ID' => __( 'ID', $this->textdomain ), 'menu_order' => __( 'Menu Order', $this->textdomain ), 'post_modified' => __( 'Modified', $this->textdomain ), 'post_name' => __( 'Slug', $this->textdomain ), 'post_title' => __( 'Title', $this->textdomain ) );
 		$show_date = array( '' => '', 'created' => __( 'Created', $this->textdomain ), 'modified' => __( 'Modified', $this->textdomain ) );
@@ -193,9 +196,14 @@ class Hybrid_Widget_Pages extends WP_Widget {
 		</div>
 
 		<div class="hybrid-widget-controls columns-3 column-last">
+
 		<p>
-			<label for="<?php echo $this->get_field_id( 'authors' ); ?>"><code>authors</code></label>
-			<input type="text" class="widefat code" id="<?php echo $this->get_field_id( 'authors' ); ?>" name="<?php echo $this->get_field_name( 'authors' ); ?>" value="<?php echo $instance['authors']; ?>" />
+			<label for="<?php echo $this->get_field_id( 'authors' ); ?>"><code>authors</code></label> 
+			<select class="widefat" id="<?php echo $this->get_field_id( 'authors' ); ?>" name="<?php echo $this->get_field_name( 'authors' ); ?>[]" size="4" multiple="multiple">
+				<?php foreach ( $authors as $option_value => $option_label ) { ?>
+					<option value="<?php echo $option_value; ?>" <?php echo ( in_array( $option_value, (array) $instance['authors'] ) ? 'selected="selected"' : '' ); ?>><?php echo $option_label; ?></option>
+				<?php } ?>
+			</select>
 		</p>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'link_before' ); ?>"><code>link_before</code></label>
