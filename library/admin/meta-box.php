@@ -68,11 +68,12 @@ function hybrid_post_meta_box_args( $type = '' ) {
 	if ( 'page' != $type && 'attachment' != $type ) {
 		$post_type_object = get_post_type_object( $type );
 
-		if ( $post_type_object->label || $post_type_object->name )
-			$templates = hybrid_get_post_templates( array( 'label' => array( "{$post_type_object->name} Template", "{$post_type_object->singular_label} Template" ) ) );
+		if ( $post_type_object->singular_label || $post_type_object->name ) {
+			$templates = hybrid_get_post_templates( array( 'label' => array( "{$post_type_object->singular_label} Template", "{$post_type_object->name} Template" ) ) );
 
-		if ( 0 != count( $templates ) )
-			$meta['template'] = array( 'name' => "_wp_{$type}_template", 'title' => __( 'Template:', $domain ), 'type' => 'select', 'options' => $templates );
+			if ( 0 != count( $templates ) )
+				$meta['template'] = array( 'name' => "_wp_{$type}_template", 'title' => __( 'Template:', $domain ), 'type' => 'select', 'options' => $templates );
+		}
 	}
 
 	/* Add post layouts option if current theme supports them. */
