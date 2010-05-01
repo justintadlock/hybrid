@@ -24,9 +24,10 @@
  * @return string
  */
 function get_the_object( $args = array() ) {
+	global $post;
 
 	$defaults = array(
-		// 'post_id' => false, // Build functionality in later
+		 'post_id' => $post->ID,
 		'custom_key' => array( 'Object', 'Video' ),
 		'attachment' => true,
 		'default_object' => false,
@@ -45,13 +46,6 @@ function get_the_object( $args = array() ) {
 	$args = wp_parse_args( $args, $defaults );
 	extract( $args );
 
-	if ( !is_array( $custom_key ) ) :
-		$custom_key = str_replace( ' ', '', $custom_key );
-		$custom_key = str_replace( array( '+' ), ',', $custom_key );
-		$custom_key = explode( ',', $custom_key );
-		$args['custom_key'] = $custom_key;
-	endif;
-
 	if ( $src )
 		$object = object_by_file( $args );
 
@@ -67,15 +61,15 @@ function get_the_object( $args = array() ) {
 	if ( !$object && $default_object )
 		$object = object_by_default( $args );
 
-	if ( !$object )
-		return apply_filters( 'get_the_object', $object );
+	if ( $object )
+		$object = display_the_object( $args, $object );
 
-	$object = display_the_object( $args, $object );
+	$object = apply_filters( 'get_the_object', $object );
 
 	if ( $echo )
-		echo apply_filters( 'get_the_object', $object );
+		echo $object;
 	else
-		return apply_filters( 'get_the_object', $object );
+		return $object;
 }
 
 /**
@@ -87,19 +81,21 @@ function get_the_object( $args = array() ) {
  * @return string
  */
 function object_by_custom_field( $args = array() ) {
-	global $post;
 
-	extract( $args );
+	/* If $custom_key is a string, we want to split it by spaces into an array. */
+	if ( !is_array( $args['custom_key'] ) )
+		$args['custom_key'] = preg_split( '#\s+#', $args['custom_key'] );
 
-	if ( isset( $custom_key) ) :
-		foreach ( $custom_key as $custom ) :
-			$url = get_post_meta( $post->ID, $custom, true );
-			if ( $url ) :
+	/* If $custom_key is set, loop through each custom field key, searching for values. */
+	if ( isset( $args['custom_key'] ) ) {
+		foreach ( $args['custom_key'] as $custom ) {
+			$image = get_metadata( 'post', $args['post_id'], $custom, true );
+			if ( $image )
 				break;
-			endif;
-		endforeach;
-	endif;
+		}
+	}
 
+	/* If a custom key value has been given for one of the keys, return the URL. */
 	if ( $url )
 		return array( 'url' => $url );
 
@@ -132,22 +128,20 @@ function object_by_file( $args = array() ) {
  * @return array|bool
  */
 function object_by_attachment( $args = array() ) {
-	global $post;
-
 	extract( $args );
 
 	/* Get attachments. */
-	$attachments = get_children( array( 'post_parent' => $post->ID, 'post_status' => 'inherit', 'post_type' => 'attachment', 'order' => 'ASC', 'orderby' => 'menu_order ID' ) );
+	$attachments = get_children( array( 'post_parent' => $post_id, 'post_status' => 'inherit', 'post_type' => 'attachment', 'order' => 'ASC', 'orderby' => 'menu_order ID' ) );
 
 	if ( empty( $attachments ) )
 		return false;
 
-	foreach ( $attachments as $id => $attachment ) :
-		if ( !wp_attachment_is_image( $id ) ) :
+	foreach ( $attachments as $id => $attachment ) {
+		if ( !wp_attachment_is_image( $id ) ) {
 			$url = wp_get_attachment_url( $id );
 			break;
-		endif;
-	endforeach;
+		}
+	}
 
 	if ( $url )
 		return array( 'url' => $url, 'mime_type' => $type );
@@ -165,20 +159,21 @@ function object_by_attachment( $args = array() ) {
  * @return array|bool
  */
 function object_by_scan( $args = array() ) {
-	global $post;
 
-	preg_match_all( '|<object.*?data=[\'"](.*?)[\'"].*?>|i', $post->post_content, $url );
+	$content =  get_post_field( 'post_content', $args['post_id'] );
 
-	if ( isset( $url ) )
-		$url = $url[1][0];
+	preg_match_all( '|<object.*?data=[\'"](.*?)[\'"].*?>|i', $content, $url );
 
-	preg_match_all( '|<object.*?type=[\'"](.*?)[\'"].*?>|i', $post->post_content, $type );
+	if ( isset( $url ) ) {
+		$out = array( 'url' => $url[1][0] );
 
-	if ( isset( $type ) )
-		$type = $type[1][0];
+		preg_match_all( '|<object.*?type=[\'"](.*?)[\'"].*?>|i', $content, $type );
 
-	if ( $url )
-		return array( 'url' => $url, 'mime_type' => $type );
+		if ( isset( $type ) )
+			$out['mime_type'] = $type[1][0];
+
+		return $out;
+	}
 
 	return false;
 }
@@ -218,14 +213,14 @@ function display_the_object( $args, $object ) {
 	if ( !$mime_type )
 		$mime_type = 'application/x-shockwave-flash';
 
-	if ( $object['url'] ) :
+	if ( $object['url'] ) {
 		$player = '<object type="' . $mime_type . '" data="' . $object['url'] . '" class="' . $class . '" width="' . $width . '" height="' . $height . '">';
 		$player .= '<param name="movie" value="' . $object['url'] . '" />';
 		$player .= '<param name="allowfullscreen" value="true" />';
 		$player .= '<param name="wmode" value="transparent" />';
 		$player .= '<param name="autoplay" value="false" />';
 		$player .= '</object>';
-	endif;
+	}
 
 	return $player;
 }
