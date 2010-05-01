@@ -10,6 +10,12 @@
  * @subpackage Functions
  */
 
+/**
+ * Add theme support for feed links.
+ * @since 0.8
+ */
+add_theme_support( 'automatic-feed-links' );
+
 add_action( 'init', 'hybrid_add_post_type_support' );
 
 function hybrid_add_post_type_support() {
