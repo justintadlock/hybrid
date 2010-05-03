@@ -74,7 +74,6 @@ class Hybrid_Widget_Nav_Menu extends WP_Widget {
 
 		$instance['title'] = strip_tags( $new_instance['title'] );
 		$instance['depth'] = strip_tags( $new_instance['depth'] );
-		$instance['container_id'] = strip_tags( $new_instance['container_id'] );
 		$instance['container_class'] = strip_tags( $new_instance['container_class'] );
 		$instance['menu_class'] = strip_tags( $new_instance['menu_class'] );
 		$instance['ul_class'] = strip_tags( $new_instance['ul_class'] );
@@ -94,12 +93,16 @@ class Hybrid_Widget_Nav_Menu extends WP_Widget {
 			'title' => __( 'Navigation', $this->textdomain ),
 			'format' => 'div',
 			'menu_class' => 'nav-menu',
+			'depth' => 0,
+			'before' => '',
+			'after' => '',
+			'link_before' => '',
+			'link_after' => '',
 			'fallback_cb' => 'wp_page_menu'
 		);
 		$instance = wp_parse_args( (array) $instance, $defaults );
 
-		$container = array( '' => '', 'div' => 'div', 'nav' => 'nav', 'p' => 'p' );
-
+		$container = apply_filters( 'wp_nav_menu_container_allowedtags', array( 'div', 'p', 'nav' ) );
 		?>
 
 		<div class="hybrid-widget-controls columns-2">
@@ -118,14 +121,10 @@ class Hybrid_Widget_Nav_Menu extends WP_Widget {
 		<p>
 			<label for="<?php echo $this->get_field_id( 'container' ); ?>"><code>container</code></label> 
 			<select class="smallfat" id="<?php echo $this->get_field_id( 'container' ); ?>" name="<?php echo $this->get_field_name( 'container' ); ?>">
-				<?php foreach ( $container as $option_value => $option_label ) { ?>
-					<option value="<?php echo $option_value; ?>" <?php selected( $instance['container'], $option_value ); ?>><?php echo $option_label; ?></option>
+				<?php foreach ( $container as $option ) { ?>
+					<option value="<?php echo $option; ?>" <?php selected( $instance['container'], $option ); ?>><?php echo $option; ?></option>
 				<?php } ?>
 			</select>
-		</p>
-		<p>
-			<label for="<?php echo $this->get_field_id( 'container_id' ); ?>"><code>container_id</code></label>
-			<input type="text" class="smallfat code" id="<?php echo $this->get_field_id( 'container_id' ); ?>" name="<?php echo $this->get_field_name( 'container_id' ); ?>" value="<?php echo $instance['container_id']; ?>" />
 		</p>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'container_class' ); ?>"><code>container_class</code></label>
