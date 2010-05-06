@@ -21,24 +21,6 @@ add_theme_support( 'nav-menus' );
 add_action( 'init', 'hybrid_register_menus' );
 
 /**
- * Add post types to menus.
- * @since 0.8
- */
-//add_filter( 'post_types_allowed_in_menus', 'hybrid_post_types_allowed_in_menus' );
-
-/**
- * Add taxonomies to menus.
- * @since 0.8
- */
-//add_filter( 'taxonomies_allowed_in_menus', 'hybrid_taxonomies_allowed_in_menus' );
-
-/**
- * Validate menus.
- * @since 0.8
- */
-add_filter( 'wp_nav_menu', 'hybrid_validate_nav_menus' );
-
-/**
  * Registers the theme's menus.
  *
  * @since 0.8
@@ -96,33 +78,6 @@ function is_nav_menu_active( $menu ) {
 	}
 
 	return false;
-}
-
-/**
- * Allow all public post types in menus.
- *
- * @since 0.8
- */
-function hybrid_post_types_allowed_in_menus( $post_types ) {
-	return get_post_types( array( 'public' => true ), 'names' );
-}
-
-/**
- * Allow all public taxonomies in menus.
- *
- * @since 0.8
- */
-function hybrid_taxonomies_allowed_in_menus( $taxonomies ) {
-	return get_taxonomies( array( 'public' => true ), 'names' );
-}
-
-/**
- * Removes the 'target' attribute from menu items so that site's have valid HTML.
- *
- * @since 0.8
- */
-function hybrid_validate_nav_menus( $menu ) {
-	return preg_replace( "/target=\".*?\"/", '', $menu );
 }
 
 ?>
