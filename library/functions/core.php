@@ -6,29 +6,7 @@
  *
  * @package Hybrid
  * @subpackage Functions
- */	
-
-function get_atomic_template( $template ) {
-
-	$templates = array();
-
-	$theme_dir = THEME_DIR . '/' . $template;
-	$child_dir = CHILD_THEME_DIR . '/' . $template;
-
-	if ( is_dir( $child_dir ) || is_dir( $theme_dir ) ) {
-		$dir = true;
-		$templates[] = "{$template}/index.php";
-	}
-	else {
-		$dir = false;
-		$templates[] = "{$template}.php";
-	}
-
-	foreach ( hybrid_get_context() as $context )
-		$templates[] = ( ( $dir ) ? "{$template}/{$context}.php" : "{$template}-{$context}.php" );
-
-	locate_template( array_reverse( $templates ), true );
-}
+ */
 
 /**
  * Defines the theme prefix. This allows developers to infinitely change the theme. In theory,
