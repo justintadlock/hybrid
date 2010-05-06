@@ -16,11 +16,55 @@
  */
 add_theme_support( 'automatic-feed-links' );
 
+/**
+ * Add extra support for post types.
+ * @since 0.8
+ */
 add_action( 'init', 'hybrid_add_post_type_support' );
 
+/**
+ * This function is for adding extra support for features not default to the core post types.
+ * Excerpts are added the the 'page' post type.  Comments and trackbacks are added for the
+ * 'attachment' post type.  Technically, these are already used for attachments in core, but 
+ * they're not registered.
+ *
+ * @since 0.8
+ */
 function hybrid_add_post_type_support() {
 	add_post_type_support( 'page', array( 'excerpts' ) );
 	add_post_type_support( 'attachment', array( 'comments', 'trackbacks' ) );
+}
+
+/**
+ * Looks for a template based on the hybrid_get_context() function.  If the $template parameter
+ * is a directory, it will look for files within that directory.  Otherwise, $template becomes the 
+ * template name prefix.  The function looks for templates based on the context of the current page
+ * being viewed by the user.
+ *
+ * @since 0.8
+ * @param string $template The slug of the template whose context we're searching for.
+ * @return string $template The full path of the located template.
+ */
+function get_atomic_template( $template ) {
+
+	$templates = array();
+
+	$theme_dir = THEME_DIR . '/' . $template;
+	$child_dir = CHILD_THEME_DIR . '/' . $template;
+
+	if ( is_dir( $child_dir ) || is_dir( $theme_dir ) ) {
+		$dir = true;
+		$templates[] = "{$template}/index.php";
+	}
+	else {
+		$dir = false;
+		$templates[] = "{$template}.php";
+	}
+
+	foreach ( hybrid_get_context() as $context )
+		$templates[] = ( ( $dir ) ? "{$template}/{$context}.php" : "{$template}-{$context}.php" );
+
+	return locate_template( array_reverse( $templates ), true );
 }
 
 /**
