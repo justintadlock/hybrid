@@ -1,9 +1,8 @@
 <?php
 /**
- * A script for showing a breadcrumb menu within template files.
- * Use the template tag breadcrumb_trail() to get it to display.
- * Two filter hooks are available for developers to change the
- * output: breadcrumb_trail_args and breadcrumb_trail.
+ * A script for showing a breadcrumb trail for any type of page.  It tries to anticipate any
+ * type of structure and display the best possible trail that matches your site's permalinks.
+ * While not perfect, it attempts to fill in the gaps left by many other breadcrumb scripts.
  *
  * @copyright 2008 - 2010
  * @version 0.3
@@ -15,24 +14,19 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * Localized to match the Hybrid theme
- * _e( 'Text', $textdomain )
- * __( 'Text', $textdomain )
- *
  * @package BreadcrumbTrail
  */
 
 /**
- * Shows a breadcrumb for all types of pages.  Themes and 
- * plugins can filter $args or input directly.  Allow filtering of 
- * only the $args using get_the_breadcrumb_args.
+ * Shows a breadcrumb for all types of pages.  Themes and plugins can filter $args or 
+ * input directly.  Allow filtering of only the $args using get_the_breadcrumb_args.
  *
  * @since 0.1
  * @param array $args Mixed arguments for the menu.
  * @return string Output of the breadcrumb menu.
  */
 function breadcrumb_trail( $args = array() ) {
-	global $wp_query;
+	global $wp_query, $wp_rewrite;
 
 	/* Get the textdomain. */
 	$textdomain = hybrid_get_textdomain();
@@ -47,8 +41,7 @@ function breadcrumb_trail( $args = array() ) {
 		'after' => false,
 		'front_page' => true,
 		'show_home' => __( 'Home', $textdomain ),
-		'single_tax' => false,
-		'format' => 'flat', // Implement later
+		'single_tax' => false, // @deprecated 0.3 Use singular_{$post_type}_taxonomy.
 		'echo' => true
 	);
 
@@ -97,22 +90,31 @@ function breadcrumb_trail( $args = array() ) {
 		$post_type = $wp_query->post->post_type;
 		$parent = $wp_query->post->post_parent;
 
-		/* Display terms for specific post type taxonomy if requested. */
-		if ( $args["singular_{$post_type}_taxonomy"] && $terms = get_the_term_list( $post_id, $args["singular_{$post_type}_taxonomy"], '', ', ', '' ) )
-			$trail[] = $terms;
+		/* If a custom post type, check if there are any pages in its hierarchy based on the slug. */
+		if ( !is_post_type( array( 'page' ), $post_id ) ) {
+
+			$post_type_object = get_post_type_object( $post_type );
+
+			/* If $front has been set, add it to the $path. */
+			if ( 'post' == $post_type || 'attachment' == $post_type || ( $post_type_object->rewrite['with_front'] && $wp_rewrite->front ) )
+				$path = trailingslashit( $wp_rewrite->front );
+
+			/* If there's a slug, add it to the $path. */
+			if ( !empty( $post_type_object->rewrite['slug'] ) )
+				$path .= $post_type_object->rewrite['slug'];
+
+			/* If there's a path, check for parents. */
+			if ( !empty( $path ) )
+				$trail = array_merge( $trail, breadcrumb_trail_get_parents( '', $path ) );
+		}
 
 		/* If the post type is hierarchical or is an attachment, get its parents. */
 		if ( is_post_type_hierarchical( $post_type ) || is_attachment() )
 			$trail = array_merge( $trail, breadcrumb_trail_get_parents( $parent, '' ) );
 
-		/* If a custom post type, check if there are any pages in its hierarchy based on the slug. */
-		if ( !is_post_type( array( 'post', 'page', 'attachment' ), $post_id ) ) {
-
-			$post_type_object = get_post_type_object( $post_type );
-
-			if ( !empty( $post_type_object->rewrite['slug'] ) )
-				$trail = array_merge( $trail, breadcrumb_trail_get_parents( '', $post_type_object->rewrite['slug'] ) );
-		}
+		/* Display terms for specific post type taxonomy if requested. */
+		if ( $args["singular_{$post_type}_taxonomy"] && $terms = get_the_term_list( $post_id, $args["singular_{$post_type}_taxonomy"], '', ', ', '' ) )
+			$trail[] = $terms;
 
 		/* End with the post title. */
 		$trail['trail_end'] = get_the_title();
@@ -133,8 +135,11 @@ function breadcrumb_trail( $args = array() ) {
 				$path = get_option( 'category_base' );
 			elseif ( is_tag() )
 				$path = get_option( 'tag_base' );
-			else
-				$path = $taxonomy->rewrite['slug'];
+			else {
+				if ( $taxonomy->rewrite['with_front'] && $wp_rewrite->front )
+					$path = trailingslashit( $wp_rewrite->front );
+				$path .= $taxonomy->rewrite['slug'];
+			}
 
 			/* Get parent pages by path if they exist. */
 			if ( $path )
@@ -148,16 +153,26 @@ function breadcrumb_trail( $args = array() ) {
 			$trail['trail_end'] = $term->name;
 		}
 
+		/* If viewing an author archive. */
 		elseif ( is_author() ) {
-			global $wp_rewrite;
 
-			/* Get parent pages by path if they exist. */
-			if ( $wp_rewrite->author_base )
-				$trail = array_merge( $trail, breadcrumb_trail_get_parents( '', $wp_rewrite->author_base ) );
+			/* If $front has been set, add it to $path. */
+			if ( !empty( $wp_rewrite->front ) )
+				$path .= trailingslashit( $wp_rewrite->front );
 
+			/* If an $author_base exists, add it to $path. */
+			if ( !empty( $wp_rewrite->author_base ) )
+				$path .= $wp_rewrite->author_base;
+
+			/* If $path exists, check for parent pages. */
+			if ( !empty( $path ) )
+				$trail = array_merge( $trail, breadcrumb_trail_get_parents( '', $path ) );
+
+			/* Add the author's display name to the trail end. */
 			$trail['trail_end'] = get_the_author_meta( 'display_name', get_query_var( 'author' ) );
 		}
 
+		/* If viewing a time-based archive. */
 		elseif ( is_time() ) {
 
 			if ( get_query_var( 'minute' ) && get_query_var( 'hour' ) )
@@ -170,7 +185,12 @@ function breadcrumb_trail( $args = array() ) {
 				$trail['trail_end'] = get_the_time( __( 'g a', $textdomain ) );
 		}
 
+		/* If viewing a date-based archive. */
 		elseif ( is_date() ) {
+
+			/* If $front has been set, check for parent pages. */
+			if ( $wp_rewrite->front )
+				$trail = array_merge( $trail, breadcrumb_trail_get_parents( '', $wp_rewrite->front ) );
 
 			if ( is_day() ) {
 				$trail[] = '<a href="' . get_year_link( get_the_time( __( 'Y', $textdomain ) ) ) . '" title="' . get_the_time( __( 'Y', $textdomain ) ) . '">' . get_the_time( __( 'Y', $textdomain ) ) . '</a>';
@@ -194,17 +214,20 @@ function breadcrumb_trail( $args = array() ) {
 		}
 	}
 
+	/* If viewing search results. */
 	elseif ( is_search() )
 		$trail['trail_end'] = sprintf( __( 'Search results for &quot;%1$s&quot;', $textdomain ), esc_attr( get_search_query() ) );
 
+	/* If viewing a 404 error page. */
 	elseif ( is_404() )
 		$trail['trail_end'] = __( '404 Not Found', $textdomain );
 
-	/* Connect the breadcrumb trail. */
+	/* Connect the breadcrumb trail if there are items in the trail. */
 	if ( is_array( $trail ) ) {
 		$breadcrumb = '<div class="breadcrumb breadcrumbs"><div class="breadcrumb-trail">';
 		$breadcrumb .= " {$before} ";
 		$breadcrumb .= join( " {$separator} ", $trail );
+		$breadcrumb .= " {$after} ";
 		$breadcrumb .= '</div></div>';
 	}
 
@@ -241,6 +264,7 @@ function breadcrumb_trail_get_parents( $post_id = '', $path = '' ) {
 	}
 
 	if ( $post_id == 0 ) {
+		$path = trim( $path, '/' );
 		preg_match_all( "/\/.*?\z/", $path, $matches );
 
 		if ( isset( $matches ) ) {
@@ -249,7 +273,7 @@ function breadcrumb_trail_get_parents( $post_id = '', $path = '' ) {
 			foreach ( $matches as $match ) {
 
 				$path = str_replace( $match[0], '', $path );
-				$parent_page = get_page_by_path( $path );
+				$parent_page = get_page_by_path( trim( $path, '/' ) );
 
 				if ( $parent_page->ID > 0 ) {
 					$post_id = $parent_page->ID;
