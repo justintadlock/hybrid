@@ -30,7 +30,9 @@ get_header(); ?>
 
 					<?php the_content(); ?>
 
-					<?php if ( function_exists( 'smartArchives' ) ) : smartArchives( 'both', '' ); ?>
+					<?php if ( function_exists( 'clean_my_archives' ) ) : echo clean_my_archives(); ?>
+
+					<?php elseif ( function_exists( 'smartArchives' ) ) : smartArchives( 'both', '' ); ?>
 
 					<?php elseif ( function_exists( 'wp_smart_archives' ) ) : wp_smart_archives(); ?>
 
