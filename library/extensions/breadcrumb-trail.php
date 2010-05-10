@@ -91,7 +91,7 @@ function breadcrumb_trail( $args = array() ) {
 		$parent = $wp_query->post->post_parent;
 
 		/* If a custom post type, check if there are any pages in its hierarchy based on the slug. */
-		if ( !is_post_type( array( 'page' ), $post_id ) ) {
+		if ( 'page' !== $post_type ) {
 
 			$post_type_object = get_post_type_object( $post_type );
 
