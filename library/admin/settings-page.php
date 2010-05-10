@@ -241,7 +241,7 @@ function hybrid_general_settings_meta_box() {
 			<th><label for="use_menus"><?php _e( 'Menus:', $domain ); ?></label></th>
 			<td>
 				<input id="use_menus" name="use_menus" type="checkbox" <?php if ( hybrid_get_setting( 'use_menus' ) ) echo 'checked="checked"'; ?> value="true" /> 
-				<label for="use_menus"><?php _e( 'Use the WordPress 3.0+ menu system?', $domain ); ?></label>
+				<label for="use_menus"><?php _e( 'Use the WordPress 3.0+ menu system? Child themes built prior to <em>Hybrid</em> 0.8 may need to be updated to use this.', $domain ); ?></label>
 			</td>
 		</tr>
 		<tr>
