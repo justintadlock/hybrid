@@ -231,19 +231,19 @@ th {
 	}
 
 /* Navigation */
-#navigation {
+#primary-menu, #navigation {
 	overflow: visible;
 	height: 34px;
 	margin: 0 0 60px 0;
 	z-index: 100;
 	}
-#page-nav li {
+#primary-menu li, #page-nav li {
 	margin-right: 15px;
 	}
-#page-nav li li {
+#primary-menu li li, #page-nav li li {
 	margin-right: 0;
 	}
-#page-nav li a {
+#primary-menu li a, #page-nav li a {
 	padding: 8px 15px 8px 15px;
 	color: #111;
 	background: #fff;
@@ -251,21 +251,22 @@ th {
 	}
 
 /* Drop-downs style */
-#page-nav li:hover ul, li.sfHover ul {
+#primary-menu li:hover ul, #primary-menu li.sfHover ul, #page-nav li:hover ul, #page-nav li.sfHover ul {
 	top: 32px;
 	}
-#page-nav li li a {
+#primary-menu li li a, #page-nav li li a {
 	border-top: none;
 	margin-right: 0;
 	}
-#page-nav li ul {
+#primary-menu li ul, #page-nav li ul {
 	background: #fff;
 	border-top: 1px solid #ccc;
 	}
-#page-nav li li:hover ul, li li.sfHover ul , #page-nav li li li:hover ul, li li li.sfHover ul  {
+#primary-menu li li:hover ul, #primary-menu li li.sfHover ul, #primary-menu li li li:hover ul, #primary-menu li li li.sfHover ul, 
+#page-nav li li:hover ul, #page-nav li li.sfHover ul , #page-nav li li li:hover ul, #page-nav li li li.sfHover ul  {
 	top: -1px;
 	}
-#page-nav li li li {
+#primary-menu li li li, #page-nav li li li {
 	margin-left: -1px;
 	}
 
