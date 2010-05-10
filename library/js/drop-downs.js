@@ -41,7 +41,7 @@ $j(document).ready(
 		$j('.menu ul:first-child').supersubs( {
 			minWidth: 12,
 			maxWidth: 27,
-			extraWidth: 1,
+			extraWidth: 1
 			}
 		).superfish( {
 			delay: 100,
