@@ -140,14 +140,15 @@ function hybrid_nav_menu_shortcode( $attr ) {
 	$attr = shortcode_atts(
 		array(
 			'menu' => '',
-			'format' => 'div',
+			'container' => 'div',
 			'container_class' => 'nav-menu',
 			'menu_class' => '',
 			'link_before' => '',
 			'link_after' => '',
-			'before_link' => '',
-			'after_link' => '',
+			'before' => '',
+			'after' => '',
 			'fallback_cb' => 'wp_page_menu',
+			'walker' => ''
 		),
 		$attr
 	);
