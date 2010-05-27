@@ -208,7 +208,7 @@ function hybrid_save_post_meta_box( $post_id ) {
 	$post_type = get_post_type_object( $_POST['post_type'] );
 
 	/* Check if the current user has permission to edit the post. */
-	if ( !current_user_can( $post_type->edit_cap, $post_id ) )
+	if ( !current_user_can( $post_type->cap->edit_post, $post_id ) )
 		return $post_id;
 
 	/* Get the post meta box arguments. */
