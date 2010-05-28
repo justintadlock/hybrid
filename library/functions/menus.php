@@ -28,10 +28,7 @@ add_action( 'init', 'hybrid_register_menus' );
  * @uses locate_template() Checks for template in child and parent theme.
  */
 function hybrid_register_menus() {
-
-	/* Check if Primary menu exists before creating it. */
-	if ( is_admin() && !is_nav_menu( 'primary-menu' ) && locate_template( array( 'menu-primary.php' ), false ) )
-		wp_create_nav_menu( __( 'Primary Menu', hybrid_get_textdomain() ), array( 'slug' => 'primary-menu' ) );
+	register_nav_menu( 'primary-menu', __( 'Primary Menu', hybrid_get_textdomain() ) );
 }
 
 /**
@@ -55,27 +52,10 @@ function hybrid_get_primary_menu() {
  */
 function is_nav_menu_active( $menu ) {
 
-	$cache = wp_cache_get( 'active', 'nav_menus' );
-	if ( !is_array( $cache ) )
-		$cache = array();
+	$locations = get_nav_menu_locations();
 
-	if ( isset( $cache[$menu] ) )
-		return $cache[$menu];
-
-	$menu_object = wp_get_nav_menu_object( $menu );
-
-	if ( !empty( $menu_object ) )
-		$menu_items = get_objects_in_term( $menu_object->term_id, 'nav_menu' );
-
-	if ( !empty( $menu_items ) ) {
-		$cache[$menu] = true;
-		wp_cache_set( 'active', $cache, 'nav_menus' );
+	if ( !empty( $locations[ $menu ] ) )
 		return true;
-	}
-	else {
-		$cache[$menu] = false;
-		wp_cache_set( 'active', $cache, 'nav_menus' );
-	}
 
 	return false;
 }
