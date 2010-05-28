@@ -248,9 +248,11 @@ function hybrid_body_class( $class = '' ) {
 	if ( is_singular() ) {
 
 		/* Checks for custom template. */
-		$template = str_replace( '.php', '', get_post_meta( $wp_query->post->ID, "_wp_{$wp_query->post->post_type}_template", true ) );
-		if ( $template )
+		$template = str_replace( array ( "{$wp_query->post->post_type}-", "{$wp_query->post->post_type}-template-", '.php' ), '', get_post_meta( $wp_query->post->ID, "_wp_{$wp_query->post->post_type}_template", true ) );
+		if ( $template ) {
+			//$template = str_replace(  ), '', $template );
 			$classes[] = "{$wp_query->post->post_type}-template-{$template}";
+		}
 
 		/* Attachment mime types. */
 		if ( is_attachment() ) {
