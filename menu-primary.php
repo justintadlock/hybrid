@@ -15,7 +15,7 @@ if ( is_nav_menu_active( 'primary-menu' ) ) : ?>
 
 		<?php hybrid_before_primary_menu(); // Before primary menu hook ?>
 
-		<?php wp_nav_menu( array( 'menu' => 'primary-menu', 'container_class' => 'menu', 'menu_class' => '', 'fallback_cb' => '' ) ); ?>
+		<?php wp_nav_menu( array( 'theme_location' => 'primary-menu', 'container_class' => 'menu', 'menu_class' => '', 'fallback_cb' => '' ) ); ?>
 
 		<?php hybrid_after_primary_menu(); // After primary menu hook ?>
 
