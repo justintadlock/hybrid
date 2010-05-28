@@ -30,7 +30,7 @@ function hybrid_create_post_meta_box() {
 
 	/* For each available post type, create a meta box on its edit page. */
 	foreach ( $post_types as $type )
-		add_meta_box( "{$prefix}-{$type->name}-meta-box", sprintf( __( '%1$s %2$s settings', $domain ), $theme_data['Name'], $type->name ), 'hybrid_post_meta_box', $type->name, 'normal', 'high' );
+		add_meta_box( "{$prefix}-{$type->name}-meta-box", sprintf( __( '%1$s Settings', $domain ), $type->labels->singular_name ), 'hybrid_post_meta_box', $type->name, 'normal', 'high' );
 }
 
 /**
