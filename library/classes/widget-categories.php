@@ -90,7 +90,7 @@ class Hybrid_Widget_Categories extends WP_Widget {
 		$instance = $new_instance;
 
 		/* If new taxonomy is chosen, reset includes and excludes. */
-		if ( $instance['taxonomy'] !== $old_instance['taxonomy'] ) {
+		if ( $instance['taxonomy'] !== $old_instance['taxonomy'] && '' !== $old_instance['taxonomy'] ) {
 			$instance['include'] = array();
 			$instance['exclude'] = array();
 		}
