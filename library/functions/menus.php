@@ -42,22 +42,4 @@ function hybrid_get_primary_menu() {
 	locate_template( array( 'menu-primary.php', 'menu.php' ), true );
 }
 
-/**
- * Checks if a nav menu has menu items.
- *
- * @since 0.8
- * @uses wp_get_nav_menu_object() Gets the nav menu object.
- * @uses get_objects_in_term() Checks to see if there are any associated menu items.
- * @return bool Whether the menu has menu items.
- */
-function is_nav_menu_active( $menu ) {
-
-	$locations = get_nav_menu_locations();
-
-	if ( !empty( $locations[ $menu ] ) )
-		return true;
-
-	return false;
-}
-
 ?>

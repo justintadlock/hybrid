@@ -9,7 +9,7 @@
  * @subpackage Template
  */
 
-if ( is_nav_menu_active( 'primary-menu' ) ) : ?>
+if ( has_nav_menu( 'primary-menu' ) ) : ?>
 
 	<div id="primary-menu" class="menu-container">
 
