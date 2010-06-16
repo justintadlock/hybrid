@@ -50,7 +50,7 @@ class Hybrid_Widget_Bookmarks extends WP_Widget {
 		$args['exclude'] = ( is_array( $instance['exclude'] ) ? join( ', ', $instance['exclude'] ) : $instance['exclude'] );
 		$args['order'] = $instance['order'];
 		$args['orderby'] = $instance['orderby'];
-		$args['limit'] = ( ( $instance['limit'] ) ? intval( $instance['largest'] ) : -1 );
+		$args['limit'] = ( ( $instance['limit'] ) ? intval( $instance['limit'] ) : -1 );
 		$args['between'] = $instance['between'];
 		$args['link_before'] = $instance['link_before'];
 		$args['link_after'] = $instance['link_after'];
