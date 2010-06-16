@@ -141,7 +141,9 @@ function hybrid_nav_menu_shortcode( $attr ) {
 		array(
 			'menu' => '',
 			'container' => 'div',
+			'container_id' => '',
 			'container_class' => 'nav-menu',
+			'menu_id' => '',
 			'menu_class' => '',
 			'link_before' => '',
 			'link_after' => '',
