@@ -46,14 +46,14 @@ class Hybrid_Widget_Tags extends WP_Widget {
 		$args['smallest'] = ( ( $instance['smallest'] ) ? absint( $instance['smallest'] ) : 8 );
 		$args['number'] = intval( $instance['number'] );
 		$args['child_of'] = intval( $instance['child_of'] );
-		$args['parent'] = intval( $instance['parent'] );
+		$args['parent'] = ( $instance['parent'] ) ? intval( $instance['parent'] ) : '';
 		$args['separator'] = ( $instance['separator'] ) ? $instance['separator'] : "\n";
 		$args['pad_counts'] = isset( $instance['pad_counts'] ) ? $instance['pad_counts'] : false;
 		$args['hide_empty'] = isset( $instance['hide_empty'] ) ? $instance['hide_empty'] : false;
 		$args['unit'] = $instance['unit'];
 		$args['format'] = $instance['format'];
-		$args['include'] = ( is_array( $instance['include'] ) ? join( ', ', $instance['include'] ) : $instance['include'] );
-		$args['exclude'] = ( is_array( $instance['exclude'] ) ? join( ', ', $instance['exclude'] ) : $instance['exclude'] );
+		$args['include'] = $instance['include'];
+		$args['exclude'] = $instance['exclude'];
 		$args['order'] = $instance['order'];
 		$args['orderby'] = $instance['orderby'];
 		$args['link'] = $instance['link'];
