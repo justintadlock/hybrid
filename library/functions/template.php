@@ -87,6 +87,7 @@ function get_atomic_template( $template ) {
  * @return string $template Full path to file.
  */
 function hybrid_date_template( $template ) {
+	$templates = array();
 
 	if ( is_time() ) {
 		if ( get_query_var( 'minute' ) )
@@ -169,6 +170,8 @@ function hybrid_taxonomy_template( $template ) {
  */
 function hybrid_singular_template( $template ) {
 	global $wp_query;
+
+	$templates = array();
 
 	/* Check for a custom post template by custom field key '_wp_post_template'. */
 	$custom = get_post_meta( $wp_query->post->ID, "_wp_{$wp_query->post->post_type}_template", true );
