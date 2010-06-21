@@ -148,7 +148,7 @@ class Hybrid_Widget_Categories extends WP_Widget {
 		<div class="hybrid-widget-controls columns-3">
 		<p>
 			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', $this->textdomain ); ?></label>
-			<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo $instance['title']; ?>" />
+			<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $instance['title']; ?>" />
 		</p>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'taxonomy' ); ?>"><code>taxonomy</code></label> 
@@ -184,11 +184,11 @@ class Hybrid_Widget_Categories extends WP_Widget {
 		</p>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'depth' ); ?>"><code>depth</code></label>
-			<input type="text" class="smallfat code" id="<?php echo $this->get_field_id( 'depth' ); ?>" name="<?php echo $this->get_field_name( 'depth' ); ?>" type="text" value="<?php echo $instance['depth']; ?>" />
+			<input type="text" class="smallfat code" id="<?php echo $this->get_field_id( 'depth' ); ?>" name="<?php echo $this->get_field_name( 'depth' ); ?>" value="<?php echo $instance['depth']; ?>" />
 		</p>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'number' ); ?>"><code>number</code></label>
-			<input type="text" class="smallfat code" id="<?php echo $this->get_field_id( 'number' ); ?>" name="<?php echo $this->get_field_name( 'number' ); ?>" type="text" value="<?php echo $instance['number']; ?>" />
+			<input type="text" class="smallfat code" id="<?php echo $this->get_field_id( 'number' ); ?>" name="<?php echo $this->get_field_name( 'number' ); ?>" value="<?php echo $instance['number']; ?>" />
 		</p>
 		</div>
 
@@ -211,26 +211,26 @@ class Hybrid_Widget_Categories extends WP_Widget {
 		</p>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'exclude_tree' ); ?>"><code>exclude_tree</code></label>
-			<input type="text" class="smallfat code" id="<?php echo $this->get_field_id( 'exclude_tree' ); ?>" name="<?php echo $this->get_field_name( 'exclude_tree' ); ?>" type="text" value="<?php echo $instance['exclude_tree']; ?>" />
+			<input type="text" class="smallfat code" id="<?php echo $this->get_field_id( 'exclude_tree' ); ?>" name="<?php echo $this->get_field_name( 'exclude_tree' ); ?>" value="<?php echo $instance['exclude_tree']; ?>" />
 		</p>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'child_of' ); ?>"><code>child_of</code></label>
-			<input type="text" class="smallfat code" id="<?php echo $this->get_field_id( 'child_of' ); ?>" name="<?php echo $this->get_field_name( 'child_of' ); ?>" type="text" value="<?php echo $instance['child_of']; ?>" />
+			<input type="text" class="smallfat code" id="<?php echo $this->get_field_id( 'child_of' ); ?>" name="<?php echo $this->get_field_name( 'child_of' ); ?>" value="<?php echo $instance['child_of']; ?>" />
 		</p>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'current_category' ); ?>"><code>current_category</code></label>
-			<input type="text" class="smallfat code" id="<?php echo $this->get_field_id( 'current_category' ); ?>" name="<?php echo $this->get_field_name( 'current_category' ); ?>" type="text" value="<?php echo $instance['current_category']; ?>" />
+			<input type="text" class="smallfat code" id="<?php echo $this->get_field_id( 'current_category' ); ?>" name="<?php echo $this->get_field_name( 'current_category' ); ?>" value="<?php echo $instance['current_category']; ?>" />
 		</p>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'search' ); ?>"><code>search</code></label>
-			<input type="text" class="widefat code" id="<?php echo $this->get_field_id( 'search' ); ?>" name="<?php echo $this->get_field_name( 'search' ); ?>" type="text" value="<?php echo $instance['search']; ?>" />
+			<input type="text" class="widefat code" id="<?php echo $this->get_field_id( 'search' ); ?>" name="<?php echo $this->get_field_name( 'search' ); ?>" value="<?php echo $instance['search']; ?>" />
 		</p>
 		</div>
 
 		<div class="hybrid-widget-controls columns-3 column-last">
 		<p>
 			<label for="<?php echo $this->get_field_id( 'feed' ); ?>"><code>feed</code></label>
-			<input type="text" class="widefat code" id="<?php echo $this->get_field_id( 'feed' ); ?>" name="<?php echo $this->get_field_name( 'feed' ); ?>" type="text" value="<?php echo $instance['feed']; ?>" />
+			<input type="text" class="widefat code" id="<?php echo $this->get_field_id( 'feed' ); ?>" name="<?php echo $this->get_field_name( 'feed' ); ?>" value="<?php echo $instance['feed']; ?>" />
 		</p>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'feed_type' ); ?>"><code>feed_type</code></label> 
@@ -242,7 +242,7 @@ class Hybrid_Widget_Categories extends WP_Widget {
 		</p>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'feed_image' ); ?>"><code>feed_image</code></label>
-			<input type="text" class="widefat code" id="<?php echo $this->get_field_id( 'feed_image' ); ?>" name="<?php echo $this->get_field_name( 'feed_image' ); ?>" type="text" value="<?php echo $instance['feed_image']; ?>" />
+			<input type="text" class="widefat code" id="<?php echo $this->get_field_id( 'feed_image' ); ?>" name="<?php echo $this->get_field_name( 'feed_image' ); ?>" value="<?php echo $instance['feed_image']; ?>" />
 		</p>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'hierarchical' ); ?>">
