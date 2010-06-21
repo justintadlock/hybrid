@@ -245,7 +245,10 @@ function hybrid_entry_terms_shortcode( $attr ) {
 
 	$attr = shortcode_atts( array( 'id' => $post->ID, 'taxonomy' => 'post_tag', 'separator' => ', ', 'before' => '', 'after' => '' ), $attr );
 
-	return '<span class="' . $attr['taxonomy'] . '">' . get_the_term_list( $attr['id'], $attr['taxonomy'], $attr['before'], $attr['separator'], $attr['after'] ) . '</span>';
+	$attr['before'] = '<span class="' . $attr['taxonomy'] . '">' . $attr['before'];
+	$attr['after'] .= '</span>';
+
+	return get_the_term_list( $attr['id'], $attr['taxonomy'], $attr['before'], $attr['separator'], $attr['after'] );
 }
 
 /**
