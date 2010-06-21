@@ -11,20 +11,20 @@
  */
 
 /**
- * Add theme support for feed links.
- * @since 0.8
- */
-add_theme_support( 'automatic-feed-links' );
-
-/**
  * Add extra support for post types.
  * @since 0.8
  */
 add_action( 'init', 'hybrid_add_post_type_support' );
 
 /**
+ * Add theme support for feed links.
+ * @since 0.8
+ */
+add_action( 'init', 'hybrid_add_theme_support' );
+
+/**
  * This function is for adding extra support for features not default to the core post types.
- * Excerpts are added the the 'page' post type.  Comments and trackbacks are added for the
+ * Excerpts are added to the 'page' post type.  Comments and trackbacks are added for the
  * 'attachment' post type.  Technically, these are already used for attachments in core, but 
  * they're not registered.
  *
@@ -33,6 +33,15 @@ add_action( 'init', 'hybrid_add_post_type_support' );
 function hybrid_add_post_type_support() {
 	add_post_type_support( 'page', array( 'excerpts' ) );
 	add_post_type_support( 'attachment', array( 'comments', 'trackbacks' ) );
+}
+
+/**
+ * This function is for adding extra support for theme features to the theme.
+ *
+ * @since 0.8
+ */
+function hybrid_add_theme_support() {
+	add_theme_support( 'automatic-feed-links' );
 }
 
 /**
