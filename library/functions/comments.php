@@ -144,7 +144,7 @@ function hybrid_comment_form_args( $args ) {
 
 	$domain = hybrid_get_textdomain();
 	$commenter = wp_get_current_commenter();
-	$req = ( ( get_option( 'require_name_email' ) ) ? ' <span class="required">' . __( '*', 'hybrid' ) . '</span> ' : '' );
+	$req = ( ( get_option( 'require_name_email' ) ) ? ' <span class="required">' . __( '*', $domain ) . '</span> ' : '' );
 
 	$fields = array(
 		'author' => '<p class="form-author"><label for="author">' . __( 'Name', $domain ) . $req . '</label> <input type="text" class="text-input" name="author" id="author" value="' . esc_attr( $commenter['comment_author'] ) . '" size="40" tabindex="1" /></p>',
