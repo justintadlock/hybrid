@@ -46,7 +46,7 @@ get_header(); ?>
 		<?php else: ?>
 
 			<p class="no-data">
-				<?php _e( 'Sorry, no posts matched your criteria.', 'hybrid' ); ?> <?php _e( 'Maybe you\'d like to try inputting different search terms.', 'hybrid' ); ?>
+				<?php _e( 'Apologies, but no results were found.', 'hybrid' ); ?>
 			</p><!-- .no-data -->
 
 			<?php get_search_form(); ?>

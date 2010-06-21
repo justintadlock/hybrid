@@ -47,7 +47,7 @@ get_header(); ?>
 		<?php else: ?>
 
 			<p class="no-data">
-				<?php printf( __( 'Sorry, there are no posts for week %1$s of %2$s.', 'hybrid' ), get_the_time( __( 'W', 'hybrid' ) ), get_the_time( __( 'Y', 'hybrid' ) ) ); ?>
+				<?php _e( 'Apologies, but no results were found.', 'hybrid' ); ?>
 			</p><!-- .no-data -->
 
 		<?php endif; ?>

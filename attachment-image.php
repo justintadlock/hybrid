@@ -54,7 +54,7 @@ get_header(); ?>
 		<?php else: ?>
 
 			<p class="no-data">
-				<?php _e( 'Sorry, no images matched your criteria.', 'hybrid' ); ?>
+				<?php _e( 'Apologies, but no results were found.', 'hybrid' ); ?>
 			</p><!-- .no-data -->
 
 		<?php endif; ?>

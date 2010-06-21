@@ -47,7 +47,7 @@ get_header(); ?>
 		<?php else: ?>
 
 			<p class="no-data">
-				<?php printf( __( 'Sorry, there are no posts in the %1$s category.', 'hybrid' ), single_cat_title( false, false ) ); ?>
+				<?php _e( 'Apologies, but no results were found.', 'hybrid' ); ?>
 			</p><!-- .no-data -->
 
 		<?php endif; ?>
