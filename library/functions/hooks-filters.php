@@ -252,7 +252,7 @@ function hybrid_site_description() {
  */
 function hybrid_entry_title( $title = '' ) {
 	if ( !$title )
-		$title = '[entry-title]';
+		$title =  hybrid_entry_title_shortcode();
 
 	echo apply_atomic_shortcode( 'entry_title', $title );
 }
