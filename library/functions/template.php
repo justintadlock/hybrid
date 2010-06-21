@@ -42,6 +42,9 @@ function hybrid_add_post_type_support() {
  */
 function hybrid_add_theme_support() {
 	add_theme_support( 'automatic-feed-links' );
+
+	if ( 'hybrid' == get_stylesheet() )
+		add_theme_support( 'post-layouts' );
 }
 
 /**

@@ -77,7 +77,7 @@ function hybrid_post_meta_box_args( $type = '' ) {
 	}
 
 	/* Add post layouts option if current theme supports them. */
-	if ( current_theme_supports( 'post-layouts' ) || 'hybrid' == get_stylesheet() )
+	if ( current_theme_supports( 'post-layouts' ) )
 		$meta['post_layout'] = array( 'name' => 'Layout', 'title' => __( 'Layout:', $domain ), 'type' => 'select', 'options' => array( '1c', '2c-l', '2c-r', '3c-l', '3c-r', '3c-c' ) );
 
 	/* $prefix_$type_meta_boxes filter is deprecated. Use $prefix_$type_meta_box_args instead. */
