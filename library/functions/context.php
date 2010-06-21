@@ -263,7 +263,7 @@ function hybrid_body_class( $class = '' ) {
 		/* Deprecated classes. */
 		elseif ( is_page() )
 			$classes[] = "page-{$wp_query->post->ID}"; // Use singular-page-ID
-		elseif ( is_single() )
+		elseif ( is_singular( 'post' ) )
 			$classes[] = "single-{$wp_query->post->ID}"; // Use singular-post-ID
 	}
 

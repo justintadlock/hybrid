@@ -125,7 +125,7 @@ function hybrid_after_entry() {
  * @since 0.7
  */
 function hybrid_after_singular() {
-	if ( is_single() && !is_attachment() )
+	if ( is_singular( 'post' ) && !is_attachment() )
 		do_action( 'hybrid_after_single' ); // Deprecated
 	elseif ( is_page() )
 		do_action( 'hybrid_after_page' ); // Deprecated
