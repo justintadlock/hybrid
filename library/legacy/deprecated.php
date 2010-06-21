@@ -22,7 +22,7 @@ function hybrid_post_class( $deprecated = '' ) {
 }
 
 /**
- * Displays the category navigation menu and wraps it in a <div> eement.
+ * Displays the category navigation menu and wraps it in a <div> element.
  *
  * @deprecated 0.6 Child themes should manually add a category menu using wp_list_categories().
  * @internal This function needs to stay for the long haul (post-1.0).
@@ -57,7 +57,7 @@ function hybrid_cat_nav() {
 function hybrid_category_menu( $args = array() ) {
 	_deprecated_function( __FUNCTION__, '0.6', 'wp_nav_menu()' );
 
-	$defaults = array( 'show_home' => false, 'menu_class' => 'cat-nav', 'style' => 'list', 'hide_empty' => 1, 'use_desc_for_title' => 0, 'depth' => 4, 'hierarchical' => true, 'echo' => 1 );
+	$defaults = array( 'menu_class' => 'cat-nav', 'style' => 'list', 'hide_empty' => 1, 'use_desc_for_title' => 0, 'depth' => 4, 'hierarchical' => true, 'echo' => 1 );
 	$args = apply_filters( 'hybrid_category_menu_args', $args );
 	$args = wp_parse_args( $args, $defaults );
 	extract( $args );
@@ -66,9 +66,6 @@ function hybrid_category_menu( $args = array() ) {
 	$args['echo'] = false;
 
 	$menu = '<div id="' . $menu_class . '" class="' . $menu_class . '"><ul class="menu sf-menu">';
-
-	if ( $show_home )
-		$menu .= '<li><a href="' . site_url() . '" title="' . $show_home . '" rel="home">' . $show_home . '</a></li>';
 
 	$menu .= str_replace( array( "\t", "\n", "\r" ), '', wp_list_categories( $args ) );
 
@@ -552,7 +549,7 @@ function hybrid_pings_end_callback() {
  * @since 0.5
  */
 function hybrid_function_removed( $func = '' ) {
-	die( '<code>' . $func . '</code> &mdash; ' . __('This function has been removed or replaced by another function.','hybrid') );
+	die( sprintf( __( '<code>%1$s</code> &mdash; This function has been removed or replaced by another function.', hybrid_get_textdomain() ), $func ) );
 }
 
 ?>
