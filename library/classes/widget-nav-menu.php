@@ -52,6 +52,7 @@ class Hybrid_Widget_Nav_Menu extends WP_Widget {
 		$args['after'] = $instance['after'];
 		$args['depth'] = intval( $instance['depth'] );
 		$args['fallback_cb'] = $instance['fallback_cb'];
+		$args['walker'] = $instance['walker'];
 		$args['echo'] = false;
 
 		echo $before_widget;
@@ -79,8 +80,8 @@ class Hybrid_Widget_Nav_Menu extends WP_Widget {
 		$instance['container_class'] = strip_tags( $new_instance['container_class'] );
 		$instance['menu_id'] = strip_tags( $new_instance['menu_id'] );
 		$instance['menu_class'] = strip_tags( $new_instance['menu_class'] );
-		$instance['ul_class'] = strip_tags( $new_instance['ul_class'] );
 		$instance['fallback_cb'] = strip_tags( $new_instance['fallback_cb'] );
+		$instance['walker'] = strip_tags( $new_instance['walker'] );
 
 		return $instance;
 	}
@@ -171,6 +172,10 @@ class Hybrid_Widget_Nav_Menu extends WP_Widget {
 		<p>
 			<label for="<?php echo $this->get_field_id( 'fallback_cb' ); ?>"><code>fallback_cb</code></label>
 			<input type="text" class="widefat code" id="<?php echo $this->get_field_id( 'fallback_cb' ); ?>" name="<?php echo $this->get_field_name( 'fallback_cb' ); ?>" value="<?php echo $instance['fallback_cb']; ?>" />
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id( 'walker' ); ?>"><code>walker</code></label>
+			<input type="text" class="widefat code" id="<?php echo $this->get_field_id( 'walker' ); ?>" name="<?php echo $this->get_field_name( 'walker' ); ?>" value="<?php echo $instance['walker']; ?>" />
 		</p>
 		</div>
 		<div style="clear:both;">&nbsp;</div>
