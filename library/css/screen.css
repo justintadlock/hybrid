@@ -343,7 +343,7 @@ th {
 	}
 
 /* Page links (multiple-paged posts) */
-p.pages a {
+p.page-links a {
 	margin: 0 3px;
 	padding: 3px 9px 3px 9px;
 	border: 1px solid #ccc;
