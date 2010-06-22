@@ -4,7 +4,7 @@
  * by a custom field called 'Series'.  Each post is listed that
  * belong to the same series of posts.
  *
- * @copyright 2007 - 2009
+ * @copyright 2007 - 2010
  * @version 0.2.1
  * @author Justin Tadlock
  * @link http://justintadlock.com/archives/2007/11/01/wordpress-custom-fields-listing-a-series-of-posts

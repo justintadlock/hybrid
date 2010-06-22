@@ -3,7 +3,7 @@
  * Set of functions to gather objects by custom field.
  * Output in XHTML-compliant <object> element.
  *
- * @copyright 2008 - 2009
+ * @copyright 2008 - 2010
  * @version 0.1
  * @author Justin Tadlock
  * @link http://justintadlock.com

@@ -5,7 +5,7 @@
  * related to specific posts in some way.  It creates an image-based representation of a WordPress 
  * post (or any post type).
  *
- * @copyright 2008 - 2009
+ * @copyright 2008 - 2010
  * @version 0.5
  * @author Justin Tadlock
  * @link http://justintadlock.com/archives/2008/05/27/get-the-image-wordpress-plugin
