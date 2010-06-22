@@ -72,7 +72,7 @@ function hybrid_post_meta_box_args( $type = '' ) {
 			$templates = hybrid_get_post_templates( array( 'label' => array( "{$post_type_object->labels->singular_name} Template", "{$post_type_object->name} Template" ) ) );
 
 			if ( 0 != count( $templates ) )
-				$meta['template'] = array( 'name' => "_wp_{$type}_template", 'title' => __( 'Template:', $domain ), 'type' => 'select', 'options' => $templates );
+				$meta['template'] = array( 'name' => "_wp_{$type}_template", 'title' => __( 'Template:', $domain ), 'type' => 'select', 'options' => $templates, 'use_key_and_value' => true );
 		}
 	}
 
@@ -144,7 +144,7 @@ function hybrid_post_meta_box_select( $args = array(), $value = false ) {
 			<select name="<?php echo $name; ?>" id="<?php echo $name; ?>">
 				<option value=""></option>
 				<?php foreach ( $args['options'] as $option => $val ) : ?>
-					<option <?php if ( htmlentities( $value, ENT_QUOTES ) == $val ) echo ' selected="selected"'; ?> value="<?php echo $val; ?>"><?php if ( __( 'Template:', 'hybrid') == $args['title'] ) echo $option; else echo $val; ?></option>
+					<option <?php if ( htmlentities( $value, ENT_QUOTES ) == $val ) echo ' selected="selected"'; ?> value="<?php echo $val; ?>"><?php if ( $args['use_key_and_value'] ) echo $option; else echo $val; ?></option>
 				<?php endforeach; ?>
 			</select>
 		</td>
