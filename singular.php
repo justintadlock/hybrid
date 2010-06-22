@@ -2,11 +2,10 @@
 /**
  * Singular Template
  *
- * WordPress currently supports custom post types at the database level, but it's still lacking
- * some major functionality in other places.  This template is in preparation for the future, at which
- * time I hope that full support of custom post types is a part of the platform.  Until then, this should
- * serve as a placeholder.  Ideally, each post type (on a singular view) would be represented by a
- * template hierarchy like so: $post_type-$template.php, $post_type-$slug.php, $post_type-$id.php, 
+ * WordPress currently supports custom post types displayed on the singular post level. This template
+ * is a catchall template for the singular views of these posts. It should only be used as a backup or if
+ * your custom post type doesn't require a custom structure. The template hierarchy for singular views
+ * of post types is like so: $post_type-$template.php, $post_type-$slug.php, $post_type-$id.php,
  * $post_type.php, and singular.php.
  *
  * @package Hybrid
