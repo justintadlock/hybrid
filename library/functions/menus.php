@@ -12,7 +12,7 @@
  * Add theme support for menus.
  * @since 0.8
  */
-add_theme_support( 'nav-menus' );
+add_theme_support( 'menus' );
 
 /**
  * Register menus.
