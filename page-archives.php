@@ -54,7 +54,7 @@ get_header(); ?>
 
 					<?php endif; ?>
 
-					<?php wp_link_pages( array( 'before' => '<p class="pages">' . __( 'Pages:', 'hybrid' ), 'after' => '</p>' ) ); ?>
+					<?php wp_link_pages( array( 'before' => '<p class="page-links pages">' . __( 'Pages:', 'hybrid' ), 'after' => '</p>' ) ); ?>
 
 				</div><!-- .entry-content -->
 

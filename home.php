@@ -22,7 +22,7 @@ get_header(); ?>
 
 				<div class="entry-content">
 					<?php the_content( sprintf( __( 'Continue reading %1$s', 'hybrid' ), the_title( ' "', '"', false ) ) ); ?>
-					<?php wp_link_pages( array( 'before' => '<p class="pages">' . __( 'Pages:', 'hybrid' ), 'after' => '</p>' ) ); ?>
+					<?php wp_link_pages( array( 'before' => '<p class="page-links pages">' . __( 'Pages:', 'hybrid' ), 'after' => '</p>' ) ); ?>
 				</div><!-- .entry-content -->
 
 				<?php hybrid_after_entry(); // After entry hook ?>

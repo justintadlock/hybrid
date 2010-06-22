@@ -30,7 +30,7 @@ get_header(); ?>
 						<?php wp_tag_cloud( array( 'number' => 0 ) ); ?>
 					</p><!-- .post_tag-cloud .tag-cloud -->
 
-					<?php wp_link_pages( array( 'before' => '<p class="pages">' . __( 'Pages:', 'hybrid' ), 'after' => '</p>' ) ); ?>
+					<?php wp_link_pages( array( 'before' => '<p class="page-links pages">' . __( 'Pages:', 'hybrid' ), 'after' => '</p>' ) ); ?>
 
 				</div><!-- .entry-content -->
 
