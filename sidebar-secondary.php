@@ -1,9 +1,9 @@
 <?php
 /**
- * Secondary Aside Template
+ * Secondary Sidebar Template
  *
- * The Secondary Aside template houses the HTML used for the 'Secondary' widget area.
- * It will first check if the widget area is active before displaying anything.
+ * The Secondary sidebar template houses the HTML used for the 'Secondary' sidebar.
+ * It will first check if the sidebar is active before displaying anything.
  * @link http://themehybrid.com/themes/hybrid/widget-areas
  *
  * @package Hybrid

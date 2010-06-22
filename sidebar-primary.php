@@ -1,9 +1,9 @@
 <?php
 /**
- * Primary Aside Template
+ * Primary Sidebar Template
  *
- * The Primary Aside template houses the HTML used for the 'Primary' widget area.
- * It will first check if the widget area is active before displaying anything.
+ * The Primary sidebar template houses the HTML used for the 'Primary' sidebar.
+ * It will first check if the sidebar is active before displaying anything.
  * @link http://themehybrid.com/themes/hybrid/widget-areas
  *
  * @package Hybrid

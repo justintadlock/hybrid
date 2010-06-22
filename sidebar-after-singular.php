@@ -1,9 +1,9 @@
 <?php
 /**
- * After Singular Utility
+ * After Singular Sidebar Template
  *
- * The After Singular Utility template houses the HTML used for the 'Utility: After Singular' 
- * widget area. It will first check if the widget area is active before displaying anything.
+ * The After Singular sidebar template houses the HTML used for the 'Utility: After Singular' 
+ * sidebar. It will first check if the sidebar is active before displaying anything.
  * @link http://themehybrid.com/themes/hybrid/widget-areas
  *
  * @package Hybrid

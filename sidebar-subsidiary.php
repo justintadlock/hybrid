@@ -1,9 +1,9 @@
 <?php
 /**
- * Subsidiary Aside Template
+ * Subsidiary Sidebar Template
  *
- * The Subsidiary Aside template houses the HTML used for the 'Subsidiary' widget area.
- * It will first check if the widget area is active before displaying anything.
+ * The Subsidiary sidebar template houses the HTML used for the 'Subsidiary' sidebar.
+ * It will first check if the sidebar is active before displaying anything.
  * @link http://themehybrid.com/themes/hybrid/widget-areas
  *
  * @package Hybrid

@@ -1,9 +1,9 @@
 <?php
 /**
- * Before Content Utility
+ * Before Content Sidebar Template
  *
- * The Before Content Utility template houses the HTML used for the 'Utility: Before Content' 
- * widget area. It will first check if the widget area is active before displaying anything.
+ * The Before Content sidebar template houses the HTML used for the 'Utility: Before Content' 
+ * sidebar. It will first check if the sidebar is active before displaying anything.
  * @link http://themehybrid.com/themes/hybrid/widget-areas
  *
  * @package Hybrid

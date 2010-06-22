@@ -1,9 +1,9 @@
 <?php
 /**
- * After Content Utility
+ * After Content Sidebar Template
  *
- * The After Content Utility template houses the HTML used for the 'Utility: After Content' 
- * widget area. It will first check if the widget area is active before displaying anything.
+ * The After Content sidebar template houses the HTML used for the 'Utility: After Content' 
+ * sidebar. It will first check if the sidebar is active before displaying anything.
  * @link http://themehybrid.com/themes/hybrid/widget-areas
  *
  * @package Hybrid
