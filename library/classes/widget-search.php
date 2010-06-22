@@ -59,7 +59,7 @@ class Hybrid_Widget_Search extends WP_Widget {
 			$search = '<form method="get" class="search-form" id="search-form' . $search_num . '" action="' . home_url() . '/"><div>';
 
 			if ( $instance['search_label'] )
-				$search .= '<label for="search-text' . $search_num . '">' . $search_label . '</label>';
+				$search .= '<label for="search-text' . $search_num . '">' . $instance['search_label'] . '</label>';
 
 			$search .= '<input class="search-text" type="text" name="s" id="search-text' . $search_num . '" value="' . esc_attr( $search_text ) . '" onfocus="if(this.value==this.defaultValue)this.value=\'\';" onblur="if(this.value==\'\')this.value=this.defaultValue;" />';
 
