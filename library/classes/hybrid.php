@@ -48,6 +48,11 @@ class Hybrid {
 		$locale = get_locale();
 		load_textdomain( $domain, locate_template( array( "languages/{$domain}-{$locale}.mo", "{$domain}-{$locale}.mo" ) ) );
 
+		/* Load locale-specific functions file. */
+		$locale_functions = locate_template( array( "languages/{$locale}.php", "{$locale}.php" ) );
+		if ( !empty( $locale_functions ) && is_readable( $locale_functions ) )
+			require_once( $locale_functions );
+
 		/* Initialize the theme's default actions. */
 		$this->actions();
 
