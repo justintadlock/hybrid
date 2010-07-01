@@ -20,7 +20,7 @@
  */
 function hybrid_doctype() {
 	if ( !preg_match( "/MSIE 6.0/", esc_attr( $_SERVER['HTTP_USER_AGENT'] ) ) )
-		$doctype = '<?xml version="1.0" encoding="' . get_bloginfo( 'charset' ) . '"?>' . "\n";
+		$doctype = '<' . '?xml version="1.0" encoding="' . get_bloginfo( 'charset' ) . '"?>' . "\n";
 
 	$doctype .= '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">' . "\n";
 	echo apply_atomic( 'doctype', $doctype );
