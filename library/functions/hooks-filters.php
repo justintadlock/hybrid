@@ -111,8 +111,11 @@ function hybrid_meta_copyright() {
  * @since 0.4
  */
 function hybrid_meta_revised() {
+	$revised = '';
+
 	if ( is_singular() )
 		$revised = '<meta name="revised" content="' . get_the_modified_time( esc_attr__( 'l, F jS, Y, g:i a', hybrid_get_textdomain() ) ) . '" />' . "\n";
+
 	echo apply_atomic( 'meta_revised', $revised );
 }
 
