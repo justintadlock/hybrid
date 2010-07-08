@@ -31,6 +31,9 @@ function breadcrumb_trail( $args = array() ) {
 	/* Get the textdomain. */
 	$textdomain = hybrid_get_textdomain();
 
+	/* Create an empty variable for the breadcrumb. */
+	$breadcrumb = '';
+
 	/* Create an empty array for the trail. */
 	$trail = array();
 
