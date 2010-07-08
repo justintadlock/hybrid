@@ -30,7 +30,7 @@ function hybrid_get_context() {
 	global $wp_query, $hybrid;
 
 	/* If $hybrid->context has been set, don't run through the conditionals again. Just return the variable. */
-	if ( is_array( $hybrid->context ) )
+	if ( isset( $hybrid->context ) )
 		return $hybrid->context;
 
 	$hybrid->context = array();
