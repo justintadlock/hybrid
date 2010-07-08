@@ -32,6 +32,8 @@ function custom_field_series( $args = array() ) {
 
 	$textdomain = hybrid_get_textdomain();
 
+	$series = '';
+
 	$series_meta = get_metadata( 'post', $post->ID, 'Series', true );
 
 	if ( $series_meta ) {
@@ -79,7 +81,7 @@ function custom_field_series( $args = array() ) {
 
 	$series = apply_filters( 'custom_field_series', $series );
 
-	if ( $args['echo'] && $series )
+	if ( !empty( $args['echo'] ) && $series )
 		echo $series;
 
 	elseif ( $series )
