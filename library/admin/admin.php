@@ -27,10 +27,7 @@ function hybrid_admin_init() {
 	add_action( "{$prefix}_update_settings_page", 'hybrid_save_theme_settings' );
 
 	/* Add a new meta box to the post editor. */
-	add_action( 'admin_menu', 'hybrid_create_post_meta_box' );
-
-	/* Saves the post meta box data. */
-	add_action( 'save_post', 'hybrid_save_post_meta_box' );
+	add_action( 'load-post.php', 'hybrid_create_post_meta_box' );
 
 	/* Load the admin stylesheet for the widgets screen. */
 	add_action( 'load-widgets.php', 'hybrid_settings_page_enqueue_style' );

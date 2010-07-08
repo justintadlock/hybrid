@@ -31,6 +31,9 @@ function hybrid_create_post_meta_box() {
 	/* For each available post type, create a meta box on its edit page. */
 	foreach ( $post_types as $type )
 		add_meta_box( "{$prefix}-{$type->name}-meta-box", sprintf( __( '%1$s Settings', $domain ), $type->labels->singular_name ), 'hybrid_post_meta_box', $type->name, 'normal', 'high' );
+
+	/* Saves the post meta box data. */
+	add_action( 'save_post', 'hybrid_save_post_meta_box' );
 }
 
 /**
@@ -68,7 +71,7 @@ function hybrid_post_meta_box_args( $type = '' ) {
 	if ( 'page' != $type && 'attachment' != $type ) {
 		$post_type_object = get_post_type_object( $type );
 
-		if ( $post_type_object->singular_label || $post_type_object->name ) {
+		if ( $post_type_object->labels->singular_name || $post_type_object->name ) {
 			$templates = hybrid_get_post_templates( array( 'label' => array( "{$post_type_object->labels->singular_name} Template", "{$post_type_object->name} Template" ) ) );
 
 			if ( 0 != count( $templates ) )
@@ -124,7 +127,7 @@ function hybrid_post_meta_box_text( $args = array(), $value = false ) {
 	$name = preg_replace( "/[^A-Za-z_-]/", '-', $args['name'] ); ?>
 	<tr>
 		<th style="width:10%;"><label for="<?php echo $name; ?>"><?php echo $args['title']; ?></label></th>
-		<td><input type="text" name="<?php echo $name; ?>" id="<?php echo $name; ?>" value="<?php echo wp_specialchars( $value, 1 ); ?>" size="30" tabindex="30" style="width: 97%;" /></td>
+		<td><input type="text" name="<?php echo $name; ?>" id="<?php echo $name; ?>" value="<?php echo esc_html( $value ); ?>" size="30" tabindex="30" style="width: 97%;" /></td>
 	</tr>
 	<?php
 }
@@ -144,7 +147,7 @@ function hybrid_post_meta_box_select( $args = array(), $value = false ) {
 			<select name="<?php echo $name; ?>" id="<?php echo $name; ?>">
 				<option value=""></option>
 				<?php foreach ( $args['options'] as $option => $val ) : ?>
-					<option <?php if ( htmlentities( $value, ENT_QUOTES ) == $val ) echo ' selected="selected"'; ?> value="<?php echo $val; ?>"><?php if ( $args['use_key_and_value'] ) echo $option; else echo $val; ?></option>
+					<option <?php if ( htmlentities( $value, ENT_QUOTES ) == $val ) echo ' selected="selected"'; ?> value="<?php echo $val; ?>"><?php if ( !empty( $args['use_key_and_value'] ) ) echo $option; else echo $val; ?></option>
 				<?php endforeach; ?>
 			</select>
 		</td>
@@ -163,7 +166,7 @@ function hybrid_post_meta_box_textarea( $args = array(), $value = false ) {
 	$name = preg_replace( "/[^A-Za-z_-]/", '-', $args['name'] ); ?>
 	<tr>
 		<th style="width:10%;"><label for="<?php echo $name; ?>"><?php echo $args['title']; ?></label></th>
-		<td><textarea name="<?php echo $name; ?>" id="<?php echo $name; ?>" cols="60" rows="4" tabindex="30" style="width: 97%;"><?php echo wp_specialchars( $value, 1 ); ?></textarea></td>
+		<td><textarea name="<?php echo $name; ?>" id="<?php echo $name; ?>" cols="60" rows="4" tabindex="30" style="width: 97%;"><?php echo esc_html( $value ); ?></textarea></td>
 	</tr>
 	<?php
 }
