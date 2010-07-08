@@ -73,10 +73,12 @@ function hybrid_meta_robots() {
 function hybrid_meta_author() {
 	global $wp_query;
 
+	$author = '';
+
 	if ( is_singular() )
 		$author = get_the_author_meta( 'display_name', $wp_query->post->post_author );
 
-	if ( $author )
+	if ( !empty( $author ) )
 		$author = '<meta name="author" content="' . esc_attr( $author ) . '" />' . "\n";
 
 	echo apply_atomic( 'meta_author', $author );
