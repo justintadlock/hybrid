@@ -167,6 +167,8 @@ function hybrid_meta_description() {
 function hybrid_meta_keywords() {
 	global $wp_query;
 
+	$keywords = '';
+
 	/* If on a single post, check for custom field key Keywords and taxonomies. */
 	if ( is_singular() && !is_preview() ) {
 		$keywords = get_post_meta( $wp_query->post->ID, 'Keywords', true );
