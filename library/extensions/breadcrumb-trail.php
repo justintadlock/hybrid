@@ -116,7 +116,7 @@ function breadcrumb_trail( $args = array() ) {
 			$trail = array_merge( $trail, breadcrumb_trail_get_parents( $parent, '' ) );
 
 		/* Display terms for specific post type taxonomy if requested. */
-		if ( $args["singular_{$post_type}_taxonomy"] && $terms = get_the_term_list( $post_id, $args["singular_{$post_type}_taxonomy"], '', ', ', '' ) )
+		if ( isset( $args["singular_{$post_type}_taxonomy"] ) && $terms = get_the_term_list( $post_id, $args["singular_{$post_type}_taxonomy"], '', ', ', '' ) )
 			$trail[] = $terms;
 
 		/* End with the post title. */
@@ -263,7 +263,8 @@ function breadcrumb_trail_get_parents( $post_id = '', $path = '' ) {
 
 	if ( empty( $post_id ) ) {
 		$parent_page = get_page_by_path( $path );
-		$post_id = $parent_page->ID;
+		if ( !empty( $parent_page ) )
+			$post_id = $parent_page->ID;
 	}
 
 	if ( $post_id == 0 ) {
@@ -275,12 +276,14 @@ function breadcrumb_trail_get_parents( $post_id = '', $path = '' ) {
 
 			foreach ( $matches as $match ) {
 
-				$path = str_replace( $match[0], '', $path );
-				$parent_page = get_page_by_path( trim( $path, '/' ) );
+				if ( isset( $match[0] ) ) {
+					$path = str_replace( $match[0], '', $path );
+					$parent_page = get_page_by_path( trim( $path, '/' ) );
 
-				if ( $parent_page->ID > 0 ) {
-					$post_id = $parent_page->ID;
-					break;
+					if ( $parent_page->ID > 0 ) {
+						$post_id = $parent_page->ID;
+						break;
+					}
 				}
 			}
 		}
@@ -292,7 +295,7 @@ function breadcrumb_trail_get_parents( $post_id = '', $path = '' ) {
 		$post_id = $page->post_parent;
 	}
 
-	if ( $parents )
+	if ( isset( $parents ) )
 		$trail = array_reverse( $parents );
 
 	return $trail;
