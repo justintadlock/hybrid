@@ -99,7 +99,7 @@ function hybrid_load_settings_page() {
 	}
 
 	/* If the form has been submitted, check the referer and execute available actions. */
-	elseif ( 'Y' == $_POST["{$prefix}-settings-submit"] ) {
+	elseif ( isset( $_POST["{$prefix}-settings-submit"] ) && 'Y' == $_POST["{$prefix}-settings-submit"] ) {
 
 		/* Make sure the form is valid. */
 		check_admin_referer( "{$prefix}-settings-page" );
@@ -129,7 +129,7 @@ function hybrid_save_theme_settings() {
 
 	/* Loop through each of the default settings and match them with the posted settings. */
 	foreach ( hybrid_theme_settings() as $key => $value )
-		$settings[$key] = $_POST[$key];
+		$settings[$key] = ( isset( $_POST[$key] ) ? $_POST[$key] : '' );
 
 	/* Make sure users without the 'unfiltered_html' capability can't add HTML to the footer insert. */
 	if ( $settings['footer_insert'] && !current_user_can( 'unfiltered_html' ) )
@@ -278,7 +278,7 @@ function hybrid_footer_settings_meta_box() {
 			<th><label for="footer_insert"><?php _e( 'Footer Insert:', $domain ); ?></label></th>
 			<td>
 				<?php _e( 'You can add custom <acronym title="Hypertext Markup Language">HTML</acronym> and/or shortcodes, which will be automatically inserted into your theme.', $domain ); ?><br />
-				<textarea id="footer_insert" name="footer_insert" cols="60" rows="5" style="width: 98%;"><?php echo wp_specialchars( stripslashes( hybrid_get_setting( 'footer_insert' ) ), 1, 0, 1 ); ?></textarea><br />
+				<textarea id="footer_insert" name="footer_insert" cols="60" rows="5" style="width: 98%;"><?php echo wp_htmledit_pre( stripslashes( hybrid_get_setting( 'footer_insert' ) ) ); ?></textarea><br />
 				<?php _e( 'Shortcodes:', $domain ); ?> <code>[the-year]</code>, <code>[site-link]</code>, <code>[wp-link]</code>, <code>[theme-link]</code>, <code>[child-link]</code>, <code>[loginout-link]</code>, <code>[query-counter]</code>.
 			</td>
 		</tr>
@@ -304,7 +304,7 @@ function hybrid_settings_page() {
 
 		<h2><?php printf( __( '%1$s Theme Settings', $domain ), $theme_data['Name'] ); ?></h2>
 
-		<?php if ( 'true' == esc_attr( $_GET['updated'] ) ) echo '<p class="updated fade below-h2" style="padding: 5px 10px;"><strong>' . __( 'Settings saved.', $domain ) . '</strong></p>'; ?>
+		<?php if ( isset( $_GET['updated'] ) && 'true' == esc_attr( $_GET['updated'] ) ) echo '<p class="updated fade below-h2" style="padding: 5px 10px;"><strong>' . __( 'Settings saved.', $domain ) . '</strong></p>'; ?>
 
 		<div id="poststuff">
 
