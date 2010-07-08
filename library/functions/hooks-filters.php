@@ -202,6 +202,8 @@ function hybrid_meta_keywords() {
  * @since 0.4
  */
 function hybrid_favicon() {
+	$favicon = '';
+
 	if ( file_exists( CHILD_THEME_DIR . '/images/favicon.ico' ) )
 		$favicon =  '<link rel="shortcut icon" type="image/x-icon" href="' . CHILD_THEME_URI . '/images/favicon.ico" />' . "\n";
 	echo apply_atomic( 'favicon', $favicon );
