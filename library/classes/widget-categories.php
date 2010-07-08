@@ -58,7 +58,7 @@ class Hybrid_Widget_Categories extends WP_Widget {
 		$args['search'] = $instance['search'];
 		$args['hierarchical'] = isset( $instance['hierarchical'] ) ? $instance['hierarchical'] : false;
 		$args['use_desc_for_title'] = isset( $instance['use_desc_for_title'] ) ? $instance['use_desc_for_title'] : false;
-		$args['show_last_update'] = isset( $instance['show_last_update'] ) ? $instance['show_last_updated'] : false;
+		$args['show_last_update'] = isset( $instance['show_last_update'] ) ? $instance['show_last_update'] : false;
 		$args['show_count'] = isset( $instance['show_count'] ) ? $instance['show_count'] : false;
 		$args['hide_empty'] = isset( $instance['hide_empty'] ) ? $instance['hide_empty'] : false;
 		$args['title_li'] = false;
