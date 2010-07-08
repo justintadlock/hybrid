@@ -334,7 +334,7 @@ function hybrid_comment_author_shortcode( $attr ) {
 	$output = '<div class="comment-author vcard">' . $attr['before'] . apply_filters( 'get_comment_author_link', $output ) . $attr['after'] . '</div><!-- .comment-author .vcard -->';
 
 	/* @deprecated 0.8. Create a custom shortcode instead of filtering hybrid_comment_author. */
-	return apply_filters( "{$hybrid->prefix}_comment_author", $output );
+	return apply_filters( hybrid_get_prefix() . '_comment_author', $output );
 }
 
 /**
@@ -343,6 +343,8 @@ function hybrid_comment_author_shortcode( $attr ) {
  * @since 0.7
  */
 function hybrid_comment_permalink_shortcode( $attr ) {
+	global $comment;
+
 	$attr = shortcode_atts( array( 'before' => '', 'after' => '' ), $attr );
 	$domain = hybrid_get_textdomain();
 	$link = '<a class="permalink" href="' . get_comment_link( $comment->comment_ID ) . '" title="' . sprintf( __( 'Permalink to comment %1$s', $domain ), $comment->comment_ID ) . '">' . __( 'Permalink', $domain ) . '</a>';
