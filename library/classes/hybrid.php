@@ -116,6 +116,7 @@ class Hybrid {
 		require_once( THEME_EXTENSIONS . '/custom-field-series.php' );
 		require_once( THEME_EXTENSIONS . '/get-the-image.php' );
 		require_once( THEME_EXTENSIONS . '/get-the-object.php' );
+		require_once( THEME_EXTENSIONS . '/pagination.php' );
 	}
 
 	/**
