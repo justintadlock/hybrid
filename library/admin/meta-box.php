@@ -67,6 +67,10 @@ function hybrid_post_meta_box_args( $type = '' ) {
 	/* Input box for a custom thumbnail. */
 	$meta['thumbnail'] = array( 'name' => 'Thumbnail', 'title' => __( 'Thumbnail:', $domain ), 'type' => 'text' );
 
+	/* Input box for a custom stylesheet. */
+	if ( current_theme_supports( 'post-stylesheets' ) )
+		$meta['stylesheet'] = array( 'name' => 'Stylesheet', 'title' => __( 'Stylesheet:', $domain ), 'type' => 'text' );
+
 	/* If there are any custom post templates, allow the user to select one. */
 	if ( 'page' != $type && 'attachment' != $type ) {
 		$post_type_object = get_post_type_object( $type );

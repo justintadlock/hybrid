@@ -8,6 +8,21 @@
  * @subpackage Functions
  */
 
+add_filter( 'stylesheet_uri', 'hybrid_post_stylesheets', 10, 2 );
+
+function hybrid_post_stylesheets( $stylesheet_uri, $stylesheet_dir_uri ) {
+	global $wp_query;
+
+	if ( is_singular() && current_theme_supports( 'post-stylesheets' ) ) {
+		$stylesheet = get_post_meta( $wp_query->post->ID, 'Stylesheet', true );
+
+		if ( !empty( $stylesheet ) )
+			$stylesheet_uri = $stylesheet_dir_uri . "/css/{$stylesheet}";
+	}
+
+	return $stylesheet_uri;
+}
+
 /**
  * Function to load CSS at an appropriate time. Adds print.css if user chooses to use it. 
  * Users should load their own CSS using wp_enqueue_style() in their child theme's 
