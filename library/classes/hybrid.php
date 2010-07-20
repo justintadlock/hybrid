@@ -102,7 +102,7 @@ class Hybrid {
 		require_once( THEME_FUNCTIONS . '/widgets.php' );
 
 		/* Menus compatibility. */
-		if ( hybrid_get_setting( 'use_menus' ) )
+		if ( hybrid_get_setting( 'use_menus' ) || 'hybrid' !== get_template() )
 			require_once( THEME_FUNCTIONS . '/menus.php' );
 	}
 
@@ -179,7 +179,7 @@ class Hybrid {
 		add_action( "{$this->prefix}_header", 'hybrid_site_description' );
 
 		/* Load the correct menu. */
-		if ( hybrid_get_setting( 'use_menus' ) )
+		if ( hybrid_get_setting( 'use_menus' ) || 'hybrid' !== get_template() )
 			add_action( "{$this->prefix}_after_header", 'hybrid_get_primary_menu' );
 		else
 			add_action( "{$this->prefix}_after_header", 'hybrid_page_nav' );
