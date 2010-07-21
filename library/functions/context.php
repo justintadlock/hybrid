@@ -254,6 +254,9 @@ function hybrid_body_class( $class = '' ) {
 			$classes[] = "{$wp_query->post->post_type}-template-{$template}";
 		}
 
+		/* Comments class. */
+		$classes[] = ( ( comments_open() ) ? 'comments-open' : 'comments-closed' );
+
 		/* Attachment mime types. */
 		if ( is_attachment() ) {
 			foreach ( explode( '/', get_post_mime_type() ) as $type )
