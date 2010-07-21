@@ -60,7 +60,8 @@ function hybrid_comments_callback( $comment, $args, $depth ) {
 		wp_cache_set( 'comment_template', $cache );
 	}
 
-	require( $cache[$comment_type] );
+	if ( !empty( $cache[$comment_type] ) )
+		require( $cache[$comment_type] );
 }
 
 /**
