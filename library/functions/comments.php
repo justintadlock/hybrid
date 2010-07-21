@@ -145,16 +145,17 @@ function hybrid_comment_form_args( $args ) {
 	$domain = hybrid_get_textdomain();
 	$commenter = wp_get_current_commenter();
 	$req = ( ( get_option( 'require_name_email' ) ) ? ' <span class="required">' . __( '*', $domain ) . '</span> ' : '' );
+	$input_class = ( ( get_option( 'require_name_email' ) ) ? ' req' : '' );
 
 	$fields = array(
-		'author' => '<p class="form-author"><label for="author">' . __( 'Name', $domain ) . $req . '</label> <input type="text" class="text-input" name="author" id="author" value="' . esc_attr( $commenter['comment_author'] ) . '" size="40" /></p>',
-		'email' => '<p class="form-email"><label for="email">' . __( 'Email', $domain ) . $req . '</label> <input type="text" class="text-input" name="email" id="email" value="' . esc_attr( $commenter['comment_author_email'] ) . '" size="40" /></p>',
+		'author' => '<p class="form-author' . $input_class . '"><label for="author">' . __( 'Name', $domain ) . $req . '</label> <input type="text" class="text-input" name="author" id="author" value="' . esc_attr( $commenter['comment_author'] ) . '" size="40" /></p>',
+		'email' => '<p class="form-email' . $input_class . '"><label for="email">' . __( 'Email', $domain ) . $req . '</label> <input type="text" class="text-input" name="email" id="email" value="' . esc_attr( $commenter['comment_author_email'] ) . '" size="40" /></p>',
 		'url' => '<p class="form-url"><label for="url">' . __( 'Website', $domain ) . '</label><input type="text" class="text-input" name="url" id="url" value="' . esc_attr( $commenter['comment_author_url'] ) . '" size="40" /></p>'
 	);
 
 	$args = array(
 		'fields' => apply_filters( 'comment_form_default_fields', $fields ),
-		'comment_field' => '<p class="form-textarea"><label for="comment">' . __( 'Comment', $domain ) . '</label><textarea name="comment" id="comment" cols="60" rows="10"></textarea></p>',
+		'comment_field' => '<p class="form-textarea req"><label for="comment">' . __( 'Comment', $domain ) . '</label><textarea name="comment" id="comment" cols="60" rows="10"></textarea></p>',
 		'must_log_in' => '<p class="alert">' . sprintf( __( 'You must be <a href="%1$s" title="Log in">logged in</a> to post a comment.', $domain ), wp_login_url( get_permalink() ) ) . '</p><!-- .alert -->',
 		'logged_in_as' => '<p class="log-in-out">' . sprintf( __( 'Logged in as <a href="%1$s" title="%2$s">%2$s</a>.', $domain ), admin_url( 'profile.php' ), $user_identity ) . ' <a href="' . wp_logout_url( get_permalink() ) . '" title="' . __( 'Log out of this account', $domain ) . '">' . __( 'Log out &raquo;', $domain ) . '</a></p><!-- .log-in-out -->',
 		'comment_notes_before' => '',
