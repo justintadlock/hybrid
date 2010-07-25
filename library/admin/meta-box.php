@@ -28,9 +28,11 @@ function hybrid_create_post_meta_box() {
 	/* Gets available post types. */
 	$post_types = get_post_types( array( 'public' => true, 'exclude_from_search' => false ), 'objects' );
 
-	/* For each available post type, create a meta box on its edit page. */
-	foreach ( $post_types as $type )
-		add_meta_box( "{$prefix}-{$type->name}-meta-box", sprintf( __( '%1$s Settings', $domain ), $type->labels->singular_name ), 'hybrid_post_meta_box', $type->name, 'normal', 'high' );
+	/* For each available post type, create a meta box on its edit page if it supports '$prefix-post-settings'. */
+	foreach ( $post_types as $type ) {
+		if ( post_type_supports( $type->name, "{$prefix}-post-settings" ) )
+			add_meta_box( "{$prefix}-{$type->name}-meta-box", sprintf( __( '%1$s Settings', $domain ), $type->labels->singular_name ), 'hybrid_post_meta_box', $type->name, 'normal', 'high' );
+	}
 
 	/* Saves the post meta box data. */
 	add_action( 'save_post', 'hybrid_save_post_meta_box' );
