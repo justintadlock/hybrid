@@ -237,6 +237,7 @@ function hybrid_general_settings_meta_box() {
 				<label for="superfish_js"><?php _e( 'Include the drop-down menu JavaScript.', $domain ); ?></label>
 			</td>
 		</tr>
+		<?php if ( 'hybrid' == get_template() ) { // Only show if 'hybrid' is the template ?>
 		<tr>
 			<th><label for="use_menus"><?php _e( 'Menus:', $domain ); ?></label></th>
 			<td>
@@ -244,6 +245,7 @@ function hybrid_general_settings_meta_box() {
 				<label for="use_menus"><?php _e( 'Use the WordPress 3.0+ menu system? Child themes built prior to <em>Hybrid</em> 0.8 may need to be updated to use this.', $domain ); ?></label>
 			</td>
 		</tr>
+		<?php } ?>
 		<tr>
 			<th><label for="feed_url"><?php _e( 'Feeds:', $domain ); ?></label></th>
 			<td>
