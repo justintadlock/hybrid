@@ -222,11 +222,6 @@ class Hybrid {
 	 * @since 0.7
 	 */
 	function filters() {
-		/* Remove WP and plugin functions. */
-		remove_filter( 'pre_user_description', 'wp_filter_kses' );
-		remove_filter( 'pre_term_description', 'wp_filter_kses' );
-		remove_filter( 'term_description', 'wp_kses_data' );
-
 		/* Add same filters to user description as term descriptions. */
 		add_filter( 'get_the_author_description', 'wptexturize' );
 		add_filter( 'get_the_author_description', 'convert_chars' );
