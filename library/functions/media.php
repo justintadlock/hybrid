@@ -8,15 +8,20 @@
  * @subpackage Functions
  */
 
-add_filter( 'stylesheet_uri', 'hybrid_post_stylesheets', 10, 2 );
-
+/**
+ * Checks for a custom field called 'Stylesheet' for a CSS file name in the form of 'example.css'.
+ *  If the file exists in the child theme '/css' folder, replace the normal 'style.css' used with this 
+ * file for the singular view of the post.
+ *
+ * @since 0.9
+ */
 function hybrid_post_stylesheets( $stylesheet_uri, $stylesheet_dir_uri ) {
 	global $wp_query;
 
 	if ( is_singular() && current_theme_supports( 'post-stylesheets' ) ) {
 		$stylesheet = get_post_meta( $wp_query->post->ID, 'Stylesheet', true );
 
-		if ( !empty( $stylesheet ) )
+		if ( !empty( $stylesheet ) && file_exists( get_stylesheet_directory() . "/css/{$stylesheet}" ) )
 			$stylesheet_uri = $stylesheet_dir_uri . "/css/{$stylesheet}";
 	}
 

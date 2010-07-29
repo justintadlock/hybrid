@@ -233,6 +233,9 @@ class Hybrid {
 		add_filter( 'term_description', 'do_shortcode' );
 		add_filter( 'get_the_author_description', 'do_shortcode' );
 
+		/* Stylesheet filters. */
+		add_filter( 'stylesheet_uri', 'hybrid_post_stylesheets', 10, 2 );
+
 		/* Template filters. */
 		add_filter( 'date_template', 'hybrid_date_template' );
 		add_filter( 'author_template', 'hybrid_user_template' );
