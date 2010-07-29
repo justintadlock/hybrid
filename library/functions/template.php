@@ -31,7 +31,8 @@ add_action( 'init', 'hybrid_add_theme_support' );
  * @since 0.8
  */
 function hybrid_add_post_type_support() {
-	add_post_type_support( 'page', array( 'excerpts' ) );
+	add_post_type_support( 'post', array( hybrid_get_prefix() . '-post-settings' ) );
+	add_post_type_support( 'page', array( 'excerpts', hybrid_get_prefix() . '-post-settings' ) );
 	add_post_type_support( 'attachment', array( 'comments', 'trackbacks' ) );
 }
 
