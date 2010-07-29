@@ -308,6 +308,21 @@ function hybrid_entry_meta( $metadata = '' ) {
 }
 
 /**
+ * Default entry utility for posts.
+ *
+ * @since 0.9
+ */
+function hybrid_entry_utility( $utility = '' ) {
+
+	if ( $utility )
+		$utility = '<p class="entry-utility">' . $utility . '</p>';
+	else
+		$utility = '';
+
+	echo apply_atomic_shortcode( 'entry_utility', $utility );
+}
+
+/**
  * Displays the page's profile URI.
  * @link http://microformats.org/wiki/profile-uris
  *
