@@ -5,7 +5,7 @@
  * While not perfect, it attempts to fill in the gaps left by many other breadcrumb scripts.
  *
  * @copyright 2008 - 2010
- * @version 0.3
+ * @version 0.3.1
  * @author Justin Tadlock
  * @link http://justintadlock.com/archives/2009/04/05/breadcrumb-trail-wordpress-plugin
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -111,8 +111,8 @@ function breadcrumb_trail( $args = array() ) {
 				$trail = array_merge( $trail, breadcrumb_trail_get_parents( '', $path ) );
 		}
 
-		/* If the post type is hierarchical or is an attachment, get its parents. */
-		if ( is_post_type_hierarchical( $post_type ) || is_attachment() )
+		/* If the post type path returns nothing and there is a parent, get its parents. */
+		if ( !isset( $path ) && 0 !== $parent )
 			$trail = array_merge( $trail, breadcrumb_trail_get_parents( $parent, '' ) );
 
 		/* Display terms for specific post type taxonomy if requested. */
