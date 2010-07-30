@@ -120,7 +120,9 @@ function breadcrumb_trail( $args = array() ) {
 			$trail[] = $terms;
 
 		/* End with the post title. */
-		$trail['trail_end'] = get_the_title();
+		$post_title = get_the_title();
+		if ( !empty( $post_title ) )
+			$trail['trail_end'] = $post_title;
 	}
 
 	/* If we're viewing any type of archive. */
