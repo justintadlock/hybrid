@@ -212,8 +212,10 @@ class Hybrid {
 		add_action( "{$this->prefix}_footer", 'hybrid_footer_insert' );
 
 		/* Comments */
-		add_action( "{$this->prefix}_before_comment", 'hybrid_avatar' );
-		add_action( "{$this->prefix}_before_comment", 'hybrid_comment_meta' );
+		if ( 'hybrid' == get_template() ) {
+			add_action( "{$this->prefix}_before_comment", 'hybrid_avatar' );
+			add_action( "{$this->prefix}_before_comment", 'hybrid_comment_meta' );
+		}
 	}
 
 	/**
