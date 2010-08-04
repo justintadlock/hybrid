@@ -43,10 +43,11 @@ function hybrid_add_post_type_support() {
  */
 function hybrid_add_theme_support() {
 	add_theme_support( 'automatic-feed-links' );
-	add_theme_support( 'post-stylesheets' );
 
-	if ( 'hybrid' == get_template() )
+	if ( 'hybrid' == get_template() ) {
 		add_theme_support( 'custom-field-series' );
+		add_theme_support( 'post-stylesheets' );
+	}
 
 	if ( 'hybrid' == get_stylesheet() ) {
 		add_theme_support( 'post-layouts' );
