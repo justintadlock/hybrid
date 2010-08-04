@@ -63,7 +63,7 @@ function hybrid_post_meta_box_args( $type = '' ) {
 	}
 
 	/* Integrates with the custom field series extension. */
-	if ( function_exists( 'custom_field_series' ) )
+	if ( current_theme_supports( 'custom-field-series' ) )
 		$meta['series'] = array( 'name' => 'Series', 'title' => __( 'Series:', $domain ), 'type' => 'text' );
 
 	/* Input box for a custom thumbnail. */
