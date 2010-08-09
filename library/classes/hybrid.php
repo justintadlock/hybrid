@@ -45,7 +45,7 @@ class Hybrid {
 
 		/* Load theme textdomain. */
 		$domain = hybrid_get_textdomain();
-		$locale = get_locale();
+		$locale = apply_filters( 'theme_locale', get_locale(), $domain );
 		load_textdomain( $domain, locate_template( array( "languages/{$domain}-{$locale}.mo", "{$domain}-{$locale}.mo" ) ) );
 
 		/* Load locale-specific functions file. */
