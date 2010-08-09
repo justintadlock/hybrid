@@ -50,6 +50,25 @@ function hybrid_get_textdomain() {
 }
 
 /**
+ * Filters the 'load_textdomain_mofile' filter hook so that we can change the directory and file name 
+ * of the mofile for translations.  This allows child themes to have a folder called /languages with translations
+ * of their parent theme so that the translations aren't lost on a parent theme upgrade.
+ *
+ * @since 0.9
+ * @param string $mofile File name of the .mo file.
+ * @param string $domain The textdomain currently being filtered.
+ */
+function hybrid_load_textdomain( $mofile, $domain ) {
+
+	if ( $domain == hybrid_get_textdomain() ) {
+		$locale = get_locale();
+		$mofile = locate_template( array( "languages/{$domain}-{$locale}.mo", "{$domain}-{$locale}.mo" ) );
+	}
+
+	return $mofile;
+}
+
+/**
  * Adds contextual action hooks to the theme.  This allows users to easily add context-based content 
  * without having to know how to use WordPress conditional tags.  The theme handles the logic.
  *

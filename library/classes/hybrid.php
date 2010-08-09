@@ -43,21 +43,21 @@ class Hybrid {
 		/* Theme prefix for creating things such as filter hooks (i.e., "$prefix_hook_name"). */
 		$this->prefix = hybrid_get_prefix();
 
-		/* Load theme textdomain. */
-		$domain = hybrid_get_textdomain();
-		$locale = apply_filters( 'theme_locale', get_locale(), $domain );
-		load_textdomain( $domain, locate_template( array( "languages/{$domain}-{$locale}.mo", "{$domain}-{$locale}.mo" ) ) );
-
-		/* Load locale-specific functions file. */
-		$locale_functions = locate_template( array( "languages/{$locale}.php", "{$locale}.php" ) );
-		if ( !empty( $locale_functions ) && is_readable( $locale_functions ) )
-			require_once( $locale_functions );
-
 		/* Initialize the theme's default actions. */
 		$this->actions();
 
 		/* Initialize the theme's default filters. */
 		$this->filters();
+
+		/* Load theme textdomain. */
+		$domain = hybrid_get_textdomain();
+		$locale = get_locale();
+		load_theme_textdomain( $domain );
+
+		/* Load locale-specific functions file. */
+		$locale_functions = locate_template( array( "languages/{$locale}.php", "{$locale}.php" ) );
+		if ( !empty( $locale_functions ) && is_readable( $locale_functions ) )
+			require_once( $locale_functions );
 
 		/* Theme init hook. */
 		do_action( "{$this->prefix}_init" );
@@ -224,6 +224,9 @@ class Hybrid {
 	 * @since 0.7
 	 */
 	function filters() {
+		/* Filter the textdomain mofile to allow child themes to load the parent theme translation. */
+		add_filter( 'load_textdomain_mofile', 'hybrid_load_textdomain', 10, 2 );
+
 		/* Add same filters to user description as term descriptions. */
 		add_filter( 'get_the_author_description', 'wptexturize' );
 		add_filter( 'get_the_author_description', 'convert_chars' );
