@@ -31,8 +31,8 @@ class Hybrid {
 		/* Load theme functions. */
 		$this->functions();
 
-		/* Load theme extensions. */
-		$this->extensions();
+		/* Load theme extensions later since we need to check if they're supported. */
+		add_action( 'init', array( &$this, 'extensions' ), 11 );
 
 		/* Load legacy files and functions. */
 		$this->legacy();
@@ -107,16 +107,36 @@ class Hybrid {
 	}
 
 	/**
-	 * Load extensions (external projects).
+	 * Load extensions (external projects).  Themes must use add_theme_support( $extension ) to
+	 * use a specific extension within the theme.  This should be declared on 'after_theme_setup'.
 	 *
 	 * @since 0.7
 	 */
 	function extensions() {
-		require_once( THEME_EXTENSIONS . '/breadcrumb-trail.php' );
-		require_once( THEME_EXTENSIONS . '/custom-field-series.php' );
-		require_once( THEME_EXTENSIONS . '/get-the-image.php' );
-		require_once( THEME_EXTENSIONS . '/get-the-object.php' );
-		require_once( THEME_EXTENSIONS . '/pagination.php' );
+
+		/* Load the Breadcrumb Trail extension if supported. */
+		if ( current_theme_supports( 'breadcrumb-trail' ) )
+			require_once( THEME_EXTENSIONS . '/breadcrumb-trail.php' );
+
+		/* Load the Custom Field Series extension if supported. */
+		if ( current_theme_supports( 'custom-field-series' ) )
+			require_once( THEME_EXTENSIONS . '/custom-field-series.php' );
+
+		/* Load the Get the Image extension if supported. */
+		if ( current_theme_supports( 'get-the-image' ) )
+			require_once( THEME_EXTENSIONS . '/get-the-image.php' );
+
+		/* Load the Get the Object extension if supported. */
+		if ( current_theme_supports( 'get-the-object' ) )
+			require_once( THEME_EXTENSIONS . '/get-the-object.php' );
+
+		/* Load the Pagination extension if supported. */
+		if ( current_theme_supports( 'pagination' ) )
+			require_once( THEME_EXTENSIONS . '/pagination.php' );
+
+		/* Load the Entry Views extension if supported. */
+		if ( current_theme_supports( 'entry-views' ) )
+			require_once( THEME_EXTENSIONS . '/entry-views.php' );
 	}
 
 	/**
@@ -189,7 +209,8 @@ class Hybrid {
 		add_action( "{$this->prefix}_after_container", 'hybrid_get_secondary' );
 
 		/* Before content. */
-		add_action( "{$this->prefix}_before_content", 'hybrid_breadcrumb' );
+		if ( 'hybrid' == get_template() )
+			add_action( "{$this->prefix}_before_content", 'hybrid_breadcrumb' );
 		add_action( "{$this->prefix}_before_content", 'hybrid_get_utility_before_content' );
 
 		/* Entry actions. */
@@ -199,7 +220,8 @@ class Hybrid {
 
 		/* After singular views. */
 		add_action( "{$this->prefix}_after_singular", 'hybrid_get_utility_after_singular' );
-		add_action( "{$this->prefix}_after_singular", 'custom_field_series' );
+		if ( 'hybrid' == get_template() )
+			add_action( "{$this->prefix}_after_singular", 'custom_field_series' );
 
 		/* After content. */
 		add_action( "{$this->prefix}_after_content", 'hybrid_get_utility_after_content' );

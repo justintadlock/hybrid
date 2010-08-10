@@ -384,7 +384,8 @@ function hybrid_other_feed_link( $link ) {
  * @since 0.1
  */
 function hybrid_breadcrumb() {
-	breadcrumb_trail( array( 'front_page' => false, 'singular_post_taxonomy' => 'category' ) );
+	if ( current_theme_supports( 'breadcrumb-trail' ) )
+		breadcrumb_trail( array( 'front_page' => false, 'singular_post_taxonomy' => 'category' ) );
 }
 
 ?>

@@ -45,7 +45,9 @@ function hybrid_add_theme_support() {
 	add_theme_support( 'automatic-feed-links' );
 
 	if ( 'hybrid' == get_template() ) {
+		add_theme_support( 'breadcrumb-trail' );
 		add_theme_support( 'custom-field-series' );
+		add_theme_support( 'get-the-image' );
 		add_theme_support( 'post-stylesheets' );
 	}
 
