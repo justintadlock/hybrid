@@ -67,7 +67,8 @@ function hybrid_post_meta_box_args( $type = '' ) {
 		$meta['series'] = array( 'name' => 'Series', 'title' => __( 'Series:', $domain ), 'type' => 'text' );
 
 	/* Input box for a custom thumbnail. */
-	$meta['thumbnail'] = array( 'name' => 'Thumbnail', 'title' => __( 'Thumbnail:', $domain ), 'type' => 'text' );
+	if ( current_theme_supports( 'get-the-image' ) )
+		$meta['thumbnail'] = array( 'name' => 'Thumbnail', 'title' => __( 'Thumbnail:', $domain ), 'type' => 'text' );
 
 	/* Input box for a custom stylesheet. */
 	if ( current_theme_supports( 'post-stylesheets' ) )
