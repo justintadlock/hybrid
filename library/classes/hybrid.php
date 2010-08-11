@@ -32,7 +32,7 @@ class Hybrid {
 		$this->functions();
 
 		/* Load theme extensions later since we need to check if they're supported. */
-		add_action( 'init', array( &$this, 'extensions' ), 11 );
+		add_action( 'after_setup_theme', array( &$this, 'extensions' ), 12 );
 
 		/* Load legacy files and functions. */
 		$this->legacy();
@@ -64,15 +64,54 @@ class Hybrid {
 	}
 
 	/**
-	 * Defines the constant paths for use within the theme.
+	 * Defines the constant paths for use within the core framework, parent theme, and
+	 * child theme.  Constants prefixed with 'HYBRID_' are for use only within the core
+	 * framework and don't reference other areas of the theme.
 	 *
 	 * @since 0.7
 	 */
 	function constants() {
+		/* Sets the path to the parent theme directory. */
 		define( 'THEME_DIR', get_template_directory() );
+
+		/* Sets the path to the parent theme directory URI. */
 		define( 'THEME_URI', get_template_directory_uri() );
+
+		/* Sets the path to the child theme directory. */
 		define( 'CHILD_THEME_DIR', get_stylesheet_directory() );
+
+		/* Sets the path to the child theme directory URI. */
 		define( 'CHILD_THEME_URI', get_stylesheet_directory_uri() );
+
+		/* Sets the path to the theme framework directory. */
+		define( 'HYBRID_DIR', THEME_DIR . '/library' );
+
+		/* Sets the path to the theme framework directory URI. */
+		define( 'HYBRID_URI', THEME_URI . '/library' );
+
+		/* Sets the path to the theme framework admin directory. */
+		define( 'HYBRID_ADMIN', HYBRID_DIR . '/admin' );
+
+		/* Sets the path to the theme framework classes directory. */
+		define( 'HYBRID_CLASSES', HYBRID_DIR . '/classes' );
+
+		/* Sets the path to the theme framework extensions directory. */
+		define( 'HYBRID_EXTENSIONS', HYBRID_DIR . '/extensions' );
+
+		/* Sets the path to the theme framework functions directory. */
+		define( 'HYBRID_FUNCTIONS', HYBRID_DIR . '/functions' );
+
+		/* Sets the path to the theme framework legacy directory. */
+		define( 'HYBRID_LEGACY', HYBRID_DIR . '/legacy' );
+
+		/* Sets the path to the theme framework images directory URI. */
+		define( 'HYBRID_IMAGES', HYBRID_URI . '/images' );
+
+		/* Sets the path to the theme framework CSS directory URI. */
+		define( 'HYBRID_CSS', HYBRID_URI . '/css' );
+
+		/* Sets the path to the theme framework JavaScript directory URI. */
+		define( 'HYBRID_JS', HYBRID_URI . '/js' );
 
 		define( 'THEME_LIBRARY', THEME_DIR . '/library' );
 		define( 'THEME_ADMIN', THEME_LIBRARY . '/admin' );
@@ -91,24 +130,25 @@ class Hybrid {
 	 * @since 0.7
 	 */
 	function functions() {
-		require_once( THEME_FUNCTIONS . '/core.php' );
-		require_once( THEME_FUNCTIONS . '/hooks-actions.php' );
-		require_once( THEME_FUNCTIONS . '/hooks-filters.php' );
-		require_once( THEME_FUNCTIONS . '/comments.php' );
-		require_once( THEME_FUNCTIONS . '/context.php' );
-		require_once( THEME_FUNCTIONS . '/media.php' );
-		require_once( THEME_FUNCTIONS . '/shortcodes.php' );
-		require_once( THEME_FUNCTIONS . '/template.php' );
-		require_once( THEME_FUNCTIONS . '/widgets.php' );
+		require_once( HYBRID_FUNCTIONS . '/core.php' );
+		require_once( HYBRID_FUNCTIONS . '/hooks-actions.php' );
+		require_once( HYBRID_FUNCTIONS . '/hooks-filters.php' );
+		require_once( HYBRID_FUNCTIONS . '/comments.php' );
+		require_once( HYBRID_FUNCTIONS . '/context.php' );
+		require_once( HYBRID_FUNCTIONS . '/media.php' );
+		require_once( HYBRID_FUNCTIONS . '/shortcodes.php' );
+		require_once( HYBRID_FUNCTIONS . '/template.php' );
+		require_once( HYBRID_FUNCTIONS . '/widgets.php' );
 
 		/* Menus compatibility. */
 		if ( hybrid_get_setting( 'use_menus' ) || 'hybrid' !== get_template() )
-			require_once( THEME_FUNCTIONS . '/menus.php' );
+			require_once( HYBRID_FUNCTIONS . '/menus.php' );
 	}
 
 	/**
 	 * Load extensions (external projects).  Themes must use add_theme_support( $extension ) to
-	 * use a specific extension within the theme.  This should be declared on 'after_theme_setup'.
+	 * use a specific extension within the theme.  This should be declared on 'after_setup_theme' no
+	 * later than the default priority of 10.
 	 *
 	 * @since 0.7
 	 */
@@ -116,27 +156,27 @@ class Hybrid {
 
 		/* Load the Breadcrumb Trail extension if supported. */
 		if ( current_theme_supports( 'breadcrumb-trail' ) )
-			require_once( THEME_EXTENSIONS . '/breadcrumb-trail.php' );
+			require_once( HYBRID_EXTENSIONS . '/breadcrumb-trail.php' );
 
 		/* Load the Custom Field Series extension if supported. */
 		if ( current_theme_supports( 'custom-field-series' ) )
-			require_once( THEME_EXTENSIONS . '/custom-field-series.php' );
+			require_once( HYBRID_EXTENSIONS . '/custom-field-series.php' );
 
 		/* Load the Get the Image extension if supported. */
 		if ( current_theme_supports( 'get-the-image' ) )
-			require_once( THEME_EXTENSIONS . '/get-the-image.php' );
+			require_once( HYBRID_EXTENSIONS . '/get-the-image.php' );
 
 		/* Load the Get the Object extension if supported. */
 		if ( current_theme_supports( 'get-the-object' ) )
-			require_once( THEME_EXTENSIONS . '/get-the-object.php' );
+			require_once( HYBRID_EXTENSIONS . '/get-the-object.php' );
 
 		/* Load the Pagination extension if supported. */
 		if ( current_theme_supports( 'pagination' ) )
-			require_once( THEME_EXTENSIONS . '/pagination.php' );
+			require_once( HYBRID_EXTENSIONS . '/pagination.php' );
 
 		/* Load the Entry Views extension if supported. */
 		if ( current_theme_supports( 'entry-views' ) )
-			require_once( THEME_EXTENSIONS . '/entry-views.php' );
+			require_once( HYBRID_EXTENSIONS . '/entry-views.php' );
 	}
 
 	/**
@@ -145,7 +185,7 @@ class Hybrid {
 	 * @since 0.7
 	 */
 	function legacy() {
-		require_once( THEME_LEGACY . '/deprecated.php' );
+		require_once( HYBRID_LEGACY . '/deprecated.php' );
 	}
 
 	/**
@@ -155,9 +195,9 @@ class Hybrid {
 	 */
 	function admin() {
 		if ( is_admin() ) {
-			require_once( THEME_ADMIN . '/admin.php' );
-			require_once( THEME_ADMIN . '/meta-box.php' );
-			require_once( THEME_ADMIN . '/settings-page.php' );
+			require_once( HYBRID_ADMIN . '/admin.php' );
+			require_once( HYBRID_ADMIN . '/meta-box.php' );
+			require_once( HYBRID_ADMIN . '/settings-page.php' );
 		}
 	}
 

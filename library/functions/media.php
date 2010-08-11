@@ -48,7 +48,7 @@ function hybrid_enqueue_style() {
 
 	/* Load the print stylesheet. */
 	if ( hybrid_get_setting( 'print_style' ) )
-		wp_enqueue_style( "{$prefix}-print", esc_url( apply_atomic( 'print_style', THEME_CSS . '/print.css' ) ), false, 0.7, 'print' );
+		wp_enqueue_style( "{$prefix}-print", esc_url( apply_atomic( 'print_style', HYBRID_CSS . '/print.css' ) ), false, 0.7, 'print' );
 }
 
 /**
@@ -75,7 +75,7 @@ function hybrid_enqueue_script() {
 
 	/* Superfish drop-down menus. */
 	if ( hybrid_get_setting( 'superfish_js' ) )
-		wp_enqueue_script( 'drop-downs', esc_url( apply_atomic( 'drop_downs_script', THEME_JS . '/drop-downs.js' ) ), array( 'jquery' ), 1.4, true );
+		wp_enqueue_script( 'drop-downs', esc_url( apply_atomic( 'drop_downs_script', HYBRID_JS . '/drop-downs.js' ) ), array( 'jquery' ), 1.4, true );
 }
 
 /**

@@ -20,7 +20,7 @@ add_action( 'init', 'hybrid_add_post_type_support' );
  * Add theme support for feed links.
  * @since 0.8
  */
-add_action( 'init', 'hybrid_add_theme_support' );
+add_action( 'after_setup_theme', 'hybrid_add_theme_support' );
 
 /**
  * This function is for adding extra support for features not default to the core post types.
