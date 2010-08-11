@@ -156,6 +156,9 @@ function hybrid_entry_class( $class = '' ) {
 		$classes = array_merge( $classes, $class );
 	}
 
+	/* Apply the filters for WP's 'post_class'. */
+	$classes = apply_filters( 'post_class', $classes, $class, $post->ID );
+
 	/* Join all the classes into one string and echo them. */
 	$class = join( ' ', $classes );
 
@@ -171,11 +174,11 @@ function hybrid_entry_class( $class = '' ) {
  * @global $wpdb WordPress DB access object.
  * @global $comment The current comment's DB object.
  */
-function hybrid_comment_class() {
+function hybrid_comment_class( $class = '' ) {
 	global $post, $comment, $hybrid;
 
 	/* Gets default WP comment classes. */
-	$classes = get_comment_class();
+	$classes = get_comment_class( $class );
 
 	/* Get the comment type. */
 	$classes[] = get_comment_type();
@@ -298,6 +301,9 @@ function hybrid_body_class( $class = '' ) {
 			$class = preg_split( '#\s+#', $class );
 		$classes = array_merge( $classes, $class );
 	}
+
+	/* Apply the filters for WP's 'body_class'. */
+	$classes = apply_filters( 'body_class', $classes, $class );
 
 	/* Join all the classes into one string. */
 	$class = join( ' ', $classes );
