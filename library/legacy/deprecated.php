@@ -242,36 +242,6 @@ function hybrid_comment_author() {
 
 /* === Removed Functions === */
 
-/* Functions removed in the 0.4 branch. */
-
-function hybrid_theme_meta() {
-	hybrid_function_removed( 'hybrid_theme_meta' );
-}
-
-function hybrid_meta_other() {
-	hybrid_function_removed( 'hybrid_meta_other' );
-}
-
-function hybrid_load_SimplePie() {
-	hybrid_function_removed( 'hybrid_load_SimplePie' );
-}
-
-function hybrid_lifestream() {
-	hybrid_function_removed( 'hybrid_lifestream' );
-}
-
-function hybrid_admin_enqueue_style() {
-	hybrid_function_removed( 'hybrid_admin_enqueue_style' );
-}
-
-function hybrid_page_id() {
-	hybrid_function_removed( 'hybrid_page_id' );
-}
-
-function hybrid_page_class() {
-	hybrid_function_removed( 'hybrid_page_class' );
-}
-
 /* Functions removed in the 0.5 branch. */
 
 function hybrid_all_tags() {
