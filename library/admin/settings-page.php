@@ -304,6 +304,8 @@ function hybrid_settings_page() {
 
 	<div class="wrap">
 
+		<?php screen_icon(); ?>
+
 		<h2><?php printf( __( '%1$s Theme Settings', $domain ), $theme_data['Name'] ); ?></h2>
 
 		<?php if ( isset( $_GET['updated'] ) && 'true' == esc_attr( $_GET['updated'] ) ) echo '<p class="updated fade below-h2" style="padding: 5px 10px;"><strong>' . __( 'Settings saved.', $domain ) . '</strong></p>'; ?>
