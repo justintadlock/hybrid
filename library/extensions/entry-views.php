@@ -4,6 +4,14 @@
  * not a full-featured solution.  The idea is to allow theme/plugin authors to quickly load this file and 
  * build functions on top of it to suit their project needs.  The script supports all post types.
  *
+ * It should be noted that any links with rel="next" or rel="prefetch" will cause some browsers to prefetch
+ * the data for that particular page.  This can cause the view count to be skewed.  To try and avoid this 
+ * issue, this extension disables adjacent_posts_rel_link_wp_head().  However, this is not bullet-proof as 
+ * it cannot control links it doesn't know about.
+ * @link http://core.trac.wordpress.org/ticket/14568
+ *
+ * @todo Write an AJAX solution as JavaScript isn't prefetched.
+ *
  * @copyright 2010
  * @version 0.1
  * @author Justin Tadlock
@@ -20,7 +28,7 @@
 /* Add the update_entry_views function to the template_redirect hook. */
 add_action( 'template_redirect', 'entry_views_update' );
 
-/* Fix a WordPress bug that calls the entire template twice for this to work. */
+/* Disable prev/next links because some browsers prefetch them and skew the results. */
 remove_action( 'wp_head', 'adjacent_posts_rel_link_wp_head', 10 );
 
 /* Add the [entry-views] shortcode. */
