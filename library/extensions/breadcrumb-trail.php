@@ -92,6 +92,7 @@ function breadcrumb_trail( $args = array() ) {
 		$post_id = absint( $wp_query->post->ID );
 		$post_type = $wp_query->post->post_type;
 		$parent = $wp_query->post->post_parent;
+		$path = '';
 
 		/* If a custom post type, check if there are any pages in its hierarchy based on the slug. */
 		if ( 'page' !== $post_type ) {
@@ -100,7 +101,7 @@ function breadcrumb_trail( $args = array() ) {
 
 			/* If $front has been set, add it to the $path. */
 			if ( 'post' == $post_type || 'attachment' == $post_type || ( $post_type_object->rewrite['with_front'] && $wp_rewrite->front ) )
-				$path = trailingslashit( $wp_rewrite->front );
+				$path .= trailingslashit( $wp_rewrite->front );
 
 			/* If there's a slug, add it to the $path. */
 			if ( !empty( $post_type_object->rewrite['slug'] ) )
@@ -112,7 +113,7 @@ function breadcrumb_trail( $args = array() ) {
 		}
 
 		/* If the post type path returns nothing and there is a parent, get its parents. */
-		if ( !isset( $path ) && 0 !== $parent )
+		if ( empty( $path ) && 0 !== $parent || 'attachment' == $post_type )
 			$trail = array_merge( $trail, breadcrumb_trail_get_parents( $parent, '' ) );
 
 		/* Display terms for specific post type taxonomy if requested. */
