@@ -168,7 +168,7 @@ function hybrid_get_setting( $option = '' ) {
 	if ( !isset( $hybrid->settings ) )
 		$hybrid->settings = $hybrid_settings = get_option( hybrid_get_prefix() . '_theme_settings' );
 
-	return $hybrid->settings[$option];
+	return wp_kses_stripslashes( $hybrid->settings[$option] );
 }
 
 /**

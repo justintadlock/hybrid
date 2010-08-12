@@ -232,7 +232,7 @@ function hybrid_navigation_links() {
  * @uses hybrid_get_setting() Grabs the 'footer_insert' theme setting.
  */
 function hybrid_footer_insert() {
-	echo do_shortcode( stripslashes( hybrid_get_setting( 'footer_insert' ) ) );
+	echo do_shortcode( hybrid_get_setting( 'footer_insert' ) );
 }
 
 ?>
