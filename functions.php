@@ -13,6 +13,5 @@ require_once( TEMPLATEPATH . '/library/classes/hybrid.php' );
 
 /* Initialize the Hybrid framework. */
 $hybrid = new Hybrid();
-$hybrid->init();
 
 ?>
