@@ -17,6 +17,10 @@ class Hybrid {
 	 */
 	var $prefix;
 
+	function Hybrid() {
+		$this->init();
+	}
+
 	/**
 	 * Initializes the theme framework, loads the required files, and calls the
 	 * functions needed to run the theme.
