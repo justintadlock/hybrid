@@ -83,20 +83,25 @@ function hybrid_load_textdomain( $mofile, $domain ) {
  * @uses hybrid_get_prefix() Gets the theme prefix.
  * @uses hybrid_get_context() Gets the context of the current page.
  * @param string $tag Usually the location of the hook but defines what the base hook is.
+ * @param mixed $arg,... Optional additional arguments which are passed on to the functions hooked to the action.
  */
-function do_atomic( $tag = '' ) {
-	if ( !$tag )
+function do_atomic( $tag = '', $arg = '' ) {
+	if ( empty( $tag ) )
 		return false;
 
 	/* Get the theme prefix. */
 	$pre = hybrid_get_prefix();
 
+	/* Get the args passed into the function and remove $tag. */
+	$args = func_get_args();
+	array_splice( $args, 0, 1 );
+
 	/* Do actions on the basic hook. */
-	do_action( "{$pre}_{$tag}" );
+	do_action_ref_array( "{$pre}_{$tag}", $args );
 
 	/* Loop through context array and fire actions on a contextual scale. */
 	foreach ( (array)hybrid_get_context() as $context )
-		do_action( "{$pre}_{$context}_{$tag}" );
+		do_action_ref_array( "{$pre}_{$context}_{$tag}", $args );
 }
 
 /**
@@ -111,22 +116,27 @@ function do_atomic( $tag = '' ) {
  * @uses hybrid_get_prefix() Gets the theme prefix.
  * @uses hybrid_get_context() Gets the context of the current page.
  * @param string $tag Usually the location of the hook but defines what the base hook is.
- * @param mixed $value The value to be filtered.
+ * @param mixed $value The value on which the filters hooked to $tag are applied on.
+ * @param mixed $var,... Additional variables passed to the functions hooked to $tag.
  * @return mixed $value The value after it has been filtered.
  */
 function apply_atomic( $tag = '', $value = '' ) {
-	if ( !$tag )
+	if ( empty( $tag ) )
 		return false;
 
 	/* Get theme prefix. */
 	$pre = hybrid_get_prefix();
 
+	/* Get the args passed into the function and remove $tag. */
+	$args = func_get_args();
+	array_splice( $args, 0, 1 );
+
 	/* Apply filters on the basic hook. */
-	$value = apply_filters( "{$pre}_{$tag}", $value );
+	$value = $args[0] = apply_filters_ref_array( "{$pre}_{$tag}", $args );
 
 	/* Loop through context array and apply filters on a contextual scale. */
 	foreach ( (array)hybrid_get_context() as $context )
-		$value = apply_filters( "{$pre}_{$context}_{$tag}", $value );
+		$value = $args[0] = apply_filters_ref_array( "{$pre}_{$context}_{$tag}", $args );
 
 	/* Return the final value once all filters have been applied. */
 	return $value;
