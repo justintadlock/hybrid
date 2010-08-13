@@ -2,15 +2,19 @@
 /**
  * Entry views is a script for calculating the number of views a post gets.  It is meant to be basic and 
  * not a full-featured solution.  The idea is to allow theme/plugin authors to quickly load this file and 
- * build functions on top of it to suit their project needs.  The script supports all post types.
+ * build functions on top of it to suit their project needs.  This is an AJAX-based solution, so only visitors 
+ * to your site with JavaScript enabled in their browser will update the view count.  It is possible to do this
+ * without AJAX but not recommend (see notes below).
  *
- * It should be noted that any links with rel="next" or rel="prefetch" will cause some browsers to prefetch
+ * By default, no post types are supported.  You have to register support for 'entry-views' for the post types
+ * you wish to use this extension with.
+ *
+ * Not using AJAX: You can call up entry_views_update() at any time and pass it a post ID to update the 
+ * count, but this has problems.  Any links with rel="next" or rel="prefetch" will cause some browsers to prefetch
  * the data for that particular page.  This can cause the view count to be skewed.  To try and avoid this 
- * issue, this extension disables adjacent_posts_rel_link_wp_head().  However, this is not bullet-proof as 
- * it cannot control links it doesn't know about.
+ * issue, you need to disable/remove adjacent_posts_rel_link_wp_head().  However, this is not bullet-proof 
+ * as it cannot control links it doesn't know about.
  * @link http://core.trac.wordpress.org/ticket/14568
- *
- * @todo Write an AJAX solution as JavaScript isn't prefetched.
  *
  * @copyright 2010
  * @version 0.1
@@ -25,36 +29,61 @@
  * @package EntryViews
  */
 
-/* Add the update_entry_views function to the template_redirect hook. */
-add_action( 'template_redirect', 'entry_views_update' );
-
-/* Disable prev/next links because some browsers prefetch them and skew the results. */
-remove_action( 'wp_head', 'adjacent_posts_rel_link_wp_head', 10 );
-
 /* Add the [entry-views] shortcode. */
 add_shortcode( 'entry-views', 'entry_views_get' );
 
+/* Registers the entry views extension scripts if we're on the correct page. */
+add_action( 'template_redirect', 'entry_views_load' );
+
+/* Add the entry views AJAX actions to the appropriate hooks. */
+add_action( 'wp_ajax_entry_views', 'entry_views_update_ajax' );
+add_action( 'wp_ajax_nopriv_entry_views', 'entry_views_update_ajax' );
+
 /**
- * Updates the number of views when on a singular view of a post.  This function uses post meta to store
- * the number of views per post.  The meta key is 'Views'.
- *
- * Developers can filter which post types they want to show this on with the 'entry_views_post_types' filter
- * hook.  While it's okay to return a string, the recommendation is to return an array of post types.  If not 
- * filtered, all publicly-viewable posts will get a view count.
+ * Checks if we're on a singular post view and if the current post type supports the 'entry-views'
+ * extension.  If so, set the $post_id variable and load the needed JavaScript.
  *
  * @since 0.1
  */
-function entry_views_update() {
+function entry_views_load() {
+	global $wp_query, $entry_views;
+
+	/* Check if we're on a singular post view. */
+	if ( is_singular() ) {
+
+		/* Get the post object. */
+		$post = $wp_query->get_queried_object();
+
+		/* Check if the post type supports the 'entry-views' feature. */
+		if ( post_type_supports( $post->post_type, 'entry-views' ) ) {
+
+			/* Set the post ID for later use because we wouldn't want a custom query to change this. */
+			$entry_views->post_id = $post->ID;
+
+			/* Enqueue the jQuery library. */
+			wp_enqueue_script( 'jquery' );
+
+			/* Load the entry views JavaScript in the footer. */
+			add_action( 'wp_footer', 'entry_views_load_scripts' );
+		}
+	}
+}
+
+/**
+ * Updates the number of views when on a singular view of a post.  This function uses post meta to store
+ * the number of views per post.  By default, the meta key is 'Views', but you can filter this with the 
+ * 'entry_views_meta_key' hook.
+ *
+ * @since 0.1
+ */
+function entry_views_update( $post_id = '' ) {
 	global $wp_query;
 
 	/* If we're on a singular view of a post, calculate the number of views. */
-	if ( is_singular( apply_filters( 'entry_views_post_types', '' ) ) ) {
+	if ( !empty( $post_id ) ) {
 
 		/* Allow devs to override the meta key used. By default, this is 'Views'. */
 		$meta_key = apply_filters( 'entry_views_meta_key', 'Views' );
-
-		/* Get the ID of the current post being viewed. */
-		$post_id = $wp_query->get_queried_object_id();
 
 		/* Get the number of views the post currently has. */
 		$old_views = get_post_meta( $post_id, $meta_key, true );
@@ -88,6 +117,42 @@ function entry_views_get( $attr = '' ) {
 
 	/* Returns the formatted number of views. */
 	return $attr['before'] . number_format_i18n( $views ) . $attr['after'];
+}
+
+/**
+ * Callback function hooked to 'wp_ajax_entry_views' and 'wp_ajax_nopriv_entry_views'.  It checks the
+ * AJAX nonce and passes the given $post_id to the entry views update function.
+ *
+ * @since 0.1
+ */
+function entry_views_update_ajax() {
+
+	/* Check the AJAX nonce to make sure this is a valid request. */
+	check_ajax_referer( 'entry_views_ajax' );
+
+	/* If the post ID is set, set it to the $post_id variable and make sure it's an integer. */
+	if ( isset( $_POST['post_id'] ) )
+		$post_id = absint( $_POST['post_id'] );
+
+	/* If $post_id isn't empty, pass it to the entry_views_update() function to update the view count. */
+	if ( !empty( $post_id ) )
+		entry_views_update( $post_id );
+}
+
+/**
+ * Displays a small script that sends an AJAX request for the page.  It passes the $post_id to the AJAX 
+ * callback function for updating the meta.
+ *
+ * @since 0.1
+ */
+function entry_views_load_scripts() {
+	global $entry_views;
+
+	/* Create a nonce for the AJAX request. */
+	$nonce = wp_create_nonce( 'entry_views_ajax' );
+
+	/* Display the JavaScript needed. */
+	echo '<script type="text/javascript">/* <![CDATA[ */ jQuery(document).ready( function() { jQuery.post( "' . admin_url( 'admin-ajax.php' ) . '", { action : "entry_views", _ajax_nonce : "' . $nonce . '", post_id : ' . $entry_views->post_id . ' } ); } ); /* ]]> */</script>' . "\n";
 }
 
 ?>
