@@ -283,7 +283,7 @@ function breadcrumb_trail_get_parents( $post_id = '', $path = '' ) {
 					$path = str_replace( $match[0], '', $path );
 					$parent_page = get_page_by_path( trim( $path, '/' ) );
 
-					if ( $parent_page->ID > 0 ) {
+					if ( !empty( $parent_page ) && $parent_page->ID > 0 ) {
 						$post_id = $parent_page->ID;
 						break;
 					}
