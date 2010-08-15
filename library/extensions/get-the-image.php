@@ -326,7 +326,7 @@ function display_the_image( $args = array(), $image = false ) {
 	$class = join( ' ', array_unique( $classes ) );
 
 	/* If there is a $post_thumbnail_id, apply the WP filters normally associated with get_the_post_thumbnail(). */
-	if ( $image['post_thumbnail_id'] )
+	if ( !empty( $image['post_thumbnail_id'] ) )
 		do_action( 'begin_fetch_post_thumbnail_html', $post_id, $image['post_thumbnail_id'], $size );
 
 	/* Add the image attributes to the <img /> element. */
@@ -337,11 +337,11 @@ function display_the_image( $args = array(), $image = false ) {
 		$html = '<a href="' . get_permalink( $post_id ) . '" title="' . esc_attr( apply_filters( 'the_title', get_post_field( 'post_title', $post_id ) ) ) . '">' . $html . '</a>';
 
 	/* If there is a $post_thumbnail_id, apply the WP filters normally associated with get_the_post_thumbnail(). */
-	if ( $image['post_thumbnail_id'] )
+	if ( !empty( $image['post_thumbnail_id'] ) )
 		do_action( 'end_fetch_post_thumbnail_html', $post_id, $image['post_thumbnail_id'], $size );
 
 	/* If there is a $post_thumbnail_id, apply the WP filters normally associated with get_the_post_thumbnail(). */
-	if ( $image['post_thumbnail_id'] )
+	if ( !empty( $image['post_thumbnail_id'] ) )
 		$html = apply_filters( 'post_thumbnail_html', $html, $post_id, $image['post_thumbnail_id'], $size, '' );
 
 	return $html;
