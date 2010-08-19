@@ -36,6 +36,7 @@ function breadcrumb_trail( $args = array() ) {
 
 	/* Create an empty array for the trail. */
 	$trail = array();
+	$path = '';
 
 	/* Set up the default arguments for the breadcrumb. */
 	$defaults = array(
@@ -92,7 +93,6 @@ function breadcrumb_trail( $args = array() ) {
 		$post_id = absint( $wp_query->post->ID );
 		$post_type = $wp_query->post->post_type;
 		$parent = $wp_query->post->post_parent;
-		$path = '';
 
 		/* If a custom post type, check if there are any pages in its hierarchy based on the slug. */
 		if ( 'page' !== $post_type ) {
