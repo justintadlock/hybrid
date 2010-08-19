@@ -71,7 +71,7 @@ function hybrid_setup_theme() {
 	/* If no child theme is active, add support for the Post Layouts and Pagination extensions. */
 	if ( 'hybrid' == get_stylesheet() ) {
 		add_theme_support( 'post-layouts' );
-		add_theme_support( 'pagination' );
+		add_theme_support( 'loop-pagination' );
 	}
 
 	/* Header actions. */
