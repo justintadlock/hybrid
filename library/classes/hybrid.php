@@ -175,7 +175,7 @@ class Hybrid {
 
 		/* Load the Pagination extension if supported. */
 		if ( current_theme_supports( 'loop-pagination' ) )
-			require_once( HYBRID_EXTENSIONS . '/pagination.php' );
+			require_once( HYBRID_EXTENSIONS . '/loop-pagination.php' );
 
 		/* Load the Entry Views extension if supported. */
 		if ( current_theme_supports( 'entry-views' ) )
