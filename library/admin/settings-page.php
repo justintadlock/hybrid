@@ -362,7 +362,7 @@ function hybrid_settings_page_enqueue_script() {
  * @since 0.7
  */
 function hybrid_settings_page_enqueue_style() {
-	wp_enqueue_style( hybrid_get_prefix() . '-admin', THEME_CSS . '/admin.css', false, 0.7, 'screen' );
+	wp_enqueue_style( hybrid_get_prefix() . '-admin', HYBRID_CSS . '/admin.css', false, 0.7, 'screen' );
 }
 
 /**
