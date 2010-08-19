@@ -4,7 +4,7 @@
  * removed through child themes or plugins. The goal is to make it easier for the average end
  * user to update post metadata without having to understand how custom fields work.
  *
- * @package Hybrid
+ * @package HybridCore
  * @subpackage Admin
  */
 
@@ -30,12 +30,15 @@ function hybrid_create_post_meta_box() {
 
 	/* For each available post type, create a meta box on its edit page if it supports '$prefix-post-settings'. */
 	foreach ( $post_types as $type ) {
-		if ( post_type_supports( $type->name, "{$prefix}-post-settings" ) )
-			add_meta_box( "{$prefix}-{$type->name}-meta-box", sprintf( __( '%1$s Settings', $domain ), $type->labels->singular_name ), 'hybrid_post_meta_box', $type->name, 'normal', 'high' );
-	}
+		if ( post_type_supports( $type->name, "{$prefix}-post-settings" ) ) {
 
-	/* Saves the post meta box data. */
-	add_action( 'save_post', 'hybrid_save_post_meta_box' );
+			/* Add the meta box. */
+			add_meta_box( "{$prefix}-{$type->name}-meta-box", sprintf( __( '%1$s Settings', $domain ), $type->labels->singular_name ), 'hybrid_post_meta_box', $type->name, 'normal', 'high' );
+
+			/* Saves the post meta box data. */
+			add_action( 'save_post', 'hybrid_save_post_meta_box', 10, 2 );
+		}
+	}
 }
 
 /**
@@ -56,7 +59,7 @@ function hybrid_post_meta_box_args( $type = '' ) {
 		$type = 'post';
 
 	/* If the disable SEO plugin setting is not selected, allow the input of custom meta. */
-	if ( !hybrid_get_setting( 'seo_plugin' ) ) {
+	if ( current_theme_supports( 'hybrid-core-seo' ) ) {
 		$meta['title'] = array( 'name' => 'Title', 'title' => __( 'Title:', $domain ), 'type' => 'text' );
 		$meta['description'] = array( 'name' => 'Description', 'title' => __( 'Description:', $domain ), 'type' => 'textarea' );
 		$meta['keywords'] = array( 'name' => 'Keywords', 'title' => __( 'Keywords:', $domain ), 'type' => 'text' );
@@ -211,11 +214,14 @@ function hybrid_save_post_meta_box( $post_id ) {
 	$prefix = hybrid_get_prefix();
 
 	/* Verify the nonce before preceding. */
-	if ( !wp_verify_nonce( $_POST["{$prefix}_{$_POST['post_type']}_meta_box_nonce"], basename( __FILE__ ) ) )
+	if ( !post_type_supports( $post->post_type, "{$prefix}-post-settings" ) || !wp_verify_nonce( $_POST["{$prefix}_{$post->post_type}_meta_box_nonce"], basename( __FILE__ ) ) )
 		return $post_id;
 
+//	if ( !isset( $post->post_type ) || !isset( $_POST["{$prefix}_{$post->post_type}_meta_box_nonce"] ) || !wp_verify_nonce( $_POST["{$prefix}_{$post->post_type}_meta_box_nonce"], basename( __FILE__ ) ) )
+//		return $post_id;
+
 	/* Get the post type object. */
-	$post_type = get_post_type_object( $_POST['post_type'] );
+	$post_type = get_post_type_object( $post->post_type );
 
 	/* Make sure the post type supports the post settings meta box. */
 	if ( !post_type_supports( $post_type->name, "{$prefix}-post-settings" ) )
