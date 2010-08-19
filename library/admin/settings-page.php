@@ -8,7 +8,7 @@
  * and register the meta box for 'appearance_page-theme-settings'. If data needs to be saved, devs can 
  * use the '$prefix_update_settings_page' action hook to save their data.
  *
- * @package Hybrid
+ * @package HybridCore
  * @subpackage Admin
  */
 
@@ -168,10 +168,12 @@ function hybrid_create_settings_meta_boxes() {
 	}
 
 	/* Creates a meta box for the general theme settings. */
-	add_meta_box( "{$prefix}-general-settings-meta-box", __( 'General settings', $domain ), 'hybrid_general_settings_meta_box', $hybrid->settings_page, 'normal', 'high' );
+	if ( current_theme_supports( 'hybrid-core-meta-box-general' ) )
+		add_meta_box( "{$prefix}-general-settings-meta-box", __( 'General settings', $domain ), 'hybrid_general_settings_meta_box', $hybrid->settings_page, 'normal', 'high' );
 
 	/* Creates a meta box for the footer settings. */
-	add_meta_box( "{$prefix}-footer-settings-meta-box", __( 'Footer settings', $domain ), 'hybrid_footer_settings_meta_box', $hybrid->settings_page, 'normal', 'high' );
+	if ( current_theme_supports( 'hybrid-core-meta-box-footer' ) )
+		add_meta_box( "{$prefix}-footer-settings-meta-box", __( 'Footer settings', $domain ), 'hybrid_footer_settings_meta_box', $hybrid->settings_page, 'normal', 'high' );
 }
 
 /**
@@ -280,8 +282,11 @@ function hybrid_footer_settings_meta_box() {
 			<th><label for="footer_insert"><?php _e( 'Footer Insert:', $domain ); ?></label></th>
 			<td>
 				<?php _e( 'You can add custom <acronym title="Hypertext Markup Language">HTML</acronym> and/or shortcodes, which will be automatically inserted into your theme.', $domain ); ?><br />
-				<textarea id="footer_insert" name="footer_insert" cols="60" rows="5" style="width: 98%;"><?php echo wp_htmledit_pre( stripslashes( hybrid_get_setting( 'footer_insert' ) ) ); ?></textarea><br />
-				<?php _e( 'Shortcodes:', $domain ); ?> <code>[the-year]</code>, <code>[site-link]</code>, <code>[wp-link]</code>, <code>[theme-link]</code>, <code>[child-link]</code>, <code>[loginout-link]</code>, <code>[query-counter]</code>.
+				<textarea id="footer_insert" name="footer_insert" cols="60" rows="5" style="width: 98%;"><?php echo wp_htmledit_pre( stripslashes( hybrid_get_setting( 'footer_insert' ) ) ); ?></textarea>
+				<?php if ( current_theme_supports( 'hybrid-core-shortcodes' ) ) { ?>
+					<br />
+					<?php _e( 'Shortcodes:', $domain ); ?> <code>[the-year]</code>, <code>[site-link]</code>, <code>[wp-link]</code>, <code>[theme-link]</code>, <code>[child-link]</code>, <code>[loginout-link]</code>, <code>[query-counter]</code>.
+				<?php } ?>
 			</td>
 		</tr>
 	</table><!-- .form-table --><?php
