@@ -6,7 +6,7 @@
  *
  * Other functions in this file are for template-specific outputs, such as the page menu.
  *
- * @package Hybrid
+ * @package HybridCore
  * @subpackage Functions
  */
 
@@ -32,7 +32,7 @@ add_action( 'after_setup_theme', 'hybrid_add_theme_support' );
  */
 function hybrid_add_post_type_support() {
 	add_post_type_support( 'post', array( hybrid_get_prefix() . '-post-settings', 'entry-views' ) );
-	add_post_type_support( 'page', array( 'excerpts', hybrid_get_prefix() . '-post-settings', 'entry-views' ) );
+	add_post_type_support( 'page', array( 'excerpt', hybrid_get_prefix() . '-post-settings', 'entry-views' ) );
 	add_post_type_support( 'attachment', array( 'comments', 'trackbacks', 'entry-views' ) );
 }
 
@@ -43,18 +43,7 @@ function hybrid_add_post_type_support() {
  */
 function hybrid_add_theme_support() {
 	add_theme_support( 'automatic-feed-links' );
-
-	if ( 'hybrid' == get_template() ) {
-		add_theme_support( 'breadcrumb-trail' );
-		add_theme_support( 'custom-field-series' );
-		add_theme_support( 'get-the-image' );
-		add_theme_support( 'post-stylesheets' );
-	}
-
-	if ( 'hybrid' == get_stylesheet() ) {
-		add_theme_support( 'post-layouts' );
-		add_theme_support( 'pagination' );
-	}
+	add_theme_support( 'hybrid-core-theme-settings' );
 }
 
 /**
@@ -232,7 +221,10 @@ function hybrid_navigation_links() {
  * @uses hybrid_get_setting() Grabs the 'footer_insert' theme setting.
  */
 function hybrid_footer_insert() {
-	echo do_shortcode( hybrid_get_setting( 'footer_insert' ) );
+	$footer_insert = do_shortcode( hybrid_get_setting( 'footer_insert' ) );
+
+	if ( !empty( $footer_insert ) )
+		echo '<div class="footer-insert">' . $footer_insert . '</div>';
 }
 
 ?>
