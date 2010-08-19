@@ -4,9 +4,24 @@
  * displaying appropriate HTML element. Other media is handled through the theme 
  * extensions: get-the-image.php, get-the-object.php.
  *
- * @package Hybrid
+ * @package HybridCore
  * @subpackage Functions
  */
+
+add_filter( 'stylesheet_uri', 'hybrid_debug_stylesheet', 10, 2 );
+
+function hybrid_debug_stylesheet( $stylesheet_uri, $stylesheet_dir_uri ) {
+
+	if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
+		$stylesheet = str_replace( trailingslashit( $stylesheet_dir_uri ), '', $stylesheet_uri );
+		$stylesheet = str_replace( '.css', '.dev.css', $stylesheet );
+
+		if ( file_exists( trailingslashit( STYLESHEETPATH ) . $stylesheet ) )
+			$stylesheet_uri = trailingslashit( $stylesheet_dir_uri ) . $stylesheet;
+	}
+
+	return $stylesheet_uri;
+}
 
 /**
  * Checks for a custom field called 'Stylesheet' for a CSS file name in the form of 'example.css'.
@@ -47,7 +62,7 @@ function hybrid_enqueue_style() {
 	$prefix = hybrid_get_prefix();
 
 	/* Load the print stylesheet. */
-	if ( hybrid_get_setting( 'print_style' ) )
+	if ( current_theme_supports( 'hybrid-core-print-style' ) )
 		wp_enqueue_style( "{$prefix}-print", esc_url( apply_atomic( 'print_style', HYBRID_CSS . '/print.css' ) ), false, 0.7, 'print' );
 }
 
@@ -74,7 +89,7 @@ function hybrid_enqueue_script() {
 		wp_enqueue_script( 'comment-reply' );
 
 	/* Superfish drop-down menus. */
-	if ( hybrid_get_setting( 'superfish_js' ) )
+	if ( current_theme_supports( 'hybrid-core-drop-downs' ) )
 		wp_enqueue_script( 'drop-downs', esc_url( apply_atomic( 'drop_downs_script', HYBRID_JS . '/drop-downs.js' ) ), array( 'jquery' ), 1.4, true );
 }
 
