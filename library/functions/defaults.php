@@ -75,14 +75,14 @@ function hybrid_setup_theme() {
 	}
 
 	/* Header actions. */
-	add_action( "{$this->prefix}_header", 'hybrid_site_title' );
-	add_action( "{$this->prefix}_header", 'hybrid_site_description' );
+	add_action( "{$prefix}_header", 'hybrid_site_title' );
+	add_action( "{$prefix}_header", 'hybrid_site_description' );
 
 	/* Load the correct menu. */
 	if ( hybrid_get_setting( 'use_menus' ) )
-		add_action( "{$this->prefix}_after_header", 'hybrid_get_primary_menu' );
+		add_action( "{$prefix}_after_header", 'hybrid_get_primary_menu' );
 	else
-		add_action( "{$this->prefix}_after_header", 'hybrid_page_nav' );
+		add_action( "{$prefix}_after_header", 'hybrid_page_nav' );
 
 	/* Add the primary and secondary sidebars after the container. */
 	add_action( "{$prefix}_after_container", 'hybrid_get_primary' );
