@@ -4,7 +4,7 @@
  * unregistered. Hybrid menu items must be registered in their place. All menus are loaded 
  * and registered with WP.
  *
- * @package Hybrid
+ * @package HybridCore
  * @subpackage Functions
  */
 
@@ -28,7 +28,8 @@ add_action( 'init', 'hybrid_register_menus' );
  * @uses locate_template() Checks for template in child and parent theme.
  */
 function hybrid_register_menus() {
-	register_nav_menu( 'primary-menu', __( 'Primary Menu', hybrid_get_textdomain() ) );
+	if ( current_theme_supports( 'hybrid-core-menus' ) )
+		register_nav_menu( 'primary-menu', __( 'Primary Menu', hybrid_get_textdomain() ) );
 }
 
 /**
