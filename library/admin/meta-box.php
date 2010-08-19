@@ -208,17 +208,13 @@ function hybrid_post_meta_box_radio( $args = array(), $value = false ) {
  * @since 0.7
  * @param int $post_id
  */
-function hybrid_save_post_meta_box( $post_id ) {
-	global $post;
+function hybrid_save_post_meta_box( $post_id, $post ) {
 
 	$prefix = hybrid_get_prefix();
 
 	/* Verify the nonce before preceding. */
-	if ( !post_type_supports( $post->post_type, "{$prefix}-post-settings" ) || !wp_verify_nonce( $_POST["{$prefix}_{$post->post_type}_meta_box_nonce"], basename( __FILE__ ) ) )
+	if ( !post_type_supports( $post->post_type, "{$prefix}-post-settings" ) || !isset( $_POST["{$prefix}_{$post->post_type}_meta_box_nonce"] ) || !wp_verify_nonce( $_POST["{$prefix}_{$post->post_type}_meta_box_nonce"], basename( __FILE__ ) ) )
 		return $post_id;
-
-//	if ( !isset( $post->post_type ) || !isset( $_POST["{$prefix}_{$post->post_type}_meta_box_nonce"] ) || !wp_verify_nonce( $_POST["{$prefix}_{$post->post_type}_meta_box_nonce"], basename( __FILE__ ) ) )
-//		return $post_id;
 
 	/* Get the post type object. */
 	$post_type = get_post_type_object( $post->post_type );
