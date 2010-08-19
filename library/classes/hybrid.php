@@ -3,7 +3,7 @@
  * The Hybrid class launches the framework.  It's the organizational structure behind the
  * entire theme.  This class should be initialized before anything else in the theme is called.
  *
- * @package Hybrid
+ * @package HybridCore
  * @subpackage Classes
  */
 
@@ -17,6 +17,11 @@ class Hybrid {
 	 */
 	var $prefix;
 
+	/**
+	 * Constructor method for the Hybrid class.  Just calls the init() method.
+	 *
+	 * @since 0.9
+	 */
 	function Hybrid() {
 		$this->init();
 	}
@@ -35,9 +40,6 @@ class Hybrid {
 		/* Load theme functions. */
 		$this->functions();
 
-		/* Load theme extensions later since we need to check if they're supported. */
-		add_action( 'after_setup_theme', array( &$this, 'extensions' ), 12 );
-
 		/* Load legacy files and functions. */
 		$this->legacy();
 
@@ -52,6 +54,9 @@ class Hybrid {
 
 		/* Initialize the theme's default filters. */
 		$this->filters();
+
+		/* Load theme extensions later since we need to check if they're supported. */
+		add_action( 'after_setup_theme', array( &$this, 'extensions' ), 12 );
 
 		/* Load theme textdomain. */
 		$domain = hybrid_get_textdomain();
@@ -87,45 +92,35 @@ class Hybrid {
 		/* Sets the path to the child theme directory URI. */
 		define( 'CHILD_THEME_URI', get_stylesheet_directory_uri() );
 
-		/* Sets the path to the theme framework directory. */
+		/* Sets the path to the core framework directory. */
 		define( 'HYBRID_DIR', THEME_DIR . '/library' );
 
-		/* Sets the path to the theme framework directory URI. */
+		/* Sets the path to the core framework directory URI. */
 		define( 'HYBRID_URI', THEME_URI . '/library' );
 
-		/* Sets the path to the theme framework admin directory. */
+		/* Sets the path to the core framework admin directory. */
 		define( 'HYBRID_ADMIN', HYBRID_DIR . '/admin' );
 
-		/* Sets the path to the theme framework classes directory. */
+		/* Sets the path to the core framework classes directory. */
 		define( 'HYBRID_CLASSES', HYBRID_DIR . '/classes' );
 
-		/* Sets the path to the theme framework extensions directory. */
+		/* Sets the path to the core framework extensions directory. */
 		define( 'HYBRID_EXTENSIONS', HYBRID_DIR . '/extensions' );
 
-		/* Sets the path to the theme framework functions directory. */
+		/* Sets the path to the core framework functions directory. */
 		define( 'HYBRID_FUNCTIONS', HYBRID_DIR . '/functions' );
 
-		/* Sets the path to the theme framework legacy directory. */
+		/* Sets the path to the core framework legacy directory. */
 		define( 'HYBRID_LEGACY', HYBRID_DIR . '/legacy' );
 
-		/* Sets the path to the theme framework images directory URI. */
+		/* Sets the path to the core framework images directory URI. */
 		define( 'HYBRID_IMAGES', HYBRID_URI . '/images' );
 
-		/* Sets the path to the theme framework CSS directory URI. */
+		/* Sets the path to the core framework CSS directory URI. */
 		define( 'HYBRID_CSS', HYBRID_URI . '/css' );
 
-		/* Sets the path to the theme framework JavaScript directory URI. */
+		/* Sets the path to the core framework JavaScript directory URI. */
 		define( 'HYBRID_JS', HYBRID_URI . '/js' );
-
-		define( 'THEME_LIBRARY', THEME_DIR . '/library' );
-		define( 'THEME_ADMIN', THEME_LIBRARY . '/admin' );
-		define( 'THEME_CLASSES', THEME_LIBRARY . '/classes' );
-		define( 'THEME_EXTENSIONS', THEME_LIBRARY . '/extensions' );
-		define( 'THEME_FUNCTIONS', THEME_LIBRARY . '/functions' );
-		define( 'THEME_LEGACY', THEME_LIBRARY . '/legacy' );
-		define( 'THEME_IMAGES', THEME_URI . '/library/images' );
-		define( 'THEME_CSS', THEME_URI . '/library/css' );
-		define( 'THEME_JS', THEME_URI . '/library/js' );
 	}
 
 	/**
@@ -143,6 +138,10 @@ class Hybrid {
 		require_once( HYBRID_FUNCTIONS . '/shortcodes.php' );
 		require_once( HYBRID_FUNCTIONS . '/template.php' );
 		require_once( HYBRID_FUNCTIONS . '/widgets.php' );
+
+		/* Load the Hybrid theme functions if it's the parent theme. */
+		if ( 'hybrid' == get_template() )
+			require_once( HYBRID_FUNCTIONS . '/defaults.php' );
 
 		/* Menus compatibility. */
 		if ( hybrid_get_setting( 'use_menus' ) || 'hybrid' !== get_template() )
@@ -175,7 +174,7 @@ class Hybrid {
 			require_once( HYBRID_EXTENSIONS . '/get-the-object.php' );
 
 		/* Load the Pagination extension if supported. */
-		if ( current_theme_supports( 'pagination' ) )
+		if ( current_theme_supports( 'loop-pagination' ) )
 			require_once( HYBRID_EXTENSIONS . '/pagination.php' );
 
 		/* Load the Entry Views extension if supported. */
@@ -220,7 +219,7 @@ class Hybrid {
 		$actions[] = 'hybrid_meta_content_type';
 		$actions[] = 'wp_generator';
 		$actions[] = 'hybrid_meta_template';
-		if ( !hybrid_get_setting( 'seo_plugin' ) ) {
+		if ( current_theme_supports( 'hybrid-core-seo' ) ) {
 			$actions[] = 'hybrid_meta_robots';
 			$actions[] = 'hybrid_meta_author';
 			$actions[] = 'hybrid_meta_copyright';
@@ -237,51 +236,6 @@ class Hybrid {
 		/* WP print scripts and styles. */
 		add_action( 'template_redirect', 'hybrid_enqueue_style' );
 		add_action( 'template_redirect', 'hybrid_enqueue_script' );
-
-		/* Header. */
-		add_action( "{$this->prefix}_header", 'hybrid_site_title' );
-		add_action( "{$this->prefix}_header", 'hybrid_site_description' );
-
-		/* Load the correct menu. */
-		if ( hybrid_get_setting( 'use_menus' ) || 'hybrid' !== get_template() )
-			add_action( "{$this->prefix}_after_header", 'hybrid_get_primary_menu' );
-		else
-			add_action( "{$this->prefix}_after_header", 'hybrid_page_nav' );
-
-		/* After container. */
-		add_action( "{$this->prefix}_after_container", 'hybrid_get_primary' );
-		add_action( "{$this->prefix}_after_container", 'hybrid_get_secondary' );
-
-		/* Before content. */
-		if ( 'hybrid' == get_template() )
-			add_action( "{$this->prefix}_before_content", 'hybrid_breadcrumb' );
-		add_action( "{$this->prefix}_before_content", 'hybrid_get_utility_before_content' );
-
-		/* Entry actions. */
-		add_action( "{$this->prefix}_before_entry", 'hybrid_entry_title' );
-		add_action( "{$this->prefix}_before_entry", 'hybrid_byline' );
-		add_action( "{$this->prefix}_after_entry", 'hybrid_entry_meta' );
-
-		/* After singular views. */
-		add_action( "{$this->prefix}_after_singular", 'hybrid_get_utility_after_singular' );
-		if ( 'hybrid' == get_template() )
-			add_action( "{$this->prefix}_after_singular", 'custom_field_series' );
-
-		/* After content. */
-		add_action( "{$this->prefix}_after_content", 'hybrid_get_utility_after_content' );
-		add_action( "{$this->prefix}_after_content", 'hybrid_navigation_links' );
-
-		/* Before footer. */
-		add_action( "{$this->prefix}_before_footer", 'hybrid_get_subsidiary' );
-
-		/* Hybrid footer. */
-		add_action( "{$this->prefix}_footer", 'hybrid_footer_insert' );
-
-		/* Comments */
-		if ( 'hybrid' == get_template() ) {
-			add_action( "{$this->prefix}_before_comment", 'hybrid_avatar' );
-			add_action( "{$this->prefix}_before_comment", 'hybrid_comment_meta' );
-		}
 	}
 
 	/**
