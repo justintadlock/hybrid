@@ -4,7 +4,7 @@
  * unregistered. Hybrid widgets must be registered in their place. All sidebars are loaded 
  * and registered with WP.
  *
- * @package Hybrid
+ * @package HybridCore
  * @subpackage Functions
  */
 
@@ -46,6 +46,12 @@ add_filter( 'sidebars_widgets', 'remove_sidebars' );
  * @uses register_sidebar() Registers a widget area.
  */
 function hybrid_register_sidebars() {
+
+	/* If the current theme doesn't support the Hybrid Core sidebars, return. */
+	if ( !current_theme_supports( 'hybrid-core-sidebars' ) )
+		return;
+
+	/* Get the theme textdomain. */
 	$domain = hybrid_get_textdomain();
 
 	/* Register aside widget areas. */
@@ -54,15 +60,15 @@ function hybrid_register_sidebars() {
 	register_sidebar( array( 'name' => __( 'Subsidiary', $domain ), 'id' => 'subsidiary', 'description' => __( 'A widget area loaded in the footer of the site.', $domain ), 'before_widget' => '<div id="%1$s" class="widget %2$s widget-%2$s"><div class="widget-inside">', 'after_widget' => '</div></div>', 'before_title' => '<h3 class="widget-title">', 'after_title' => '</h3>' ) );
 
 	/* Register utility widget areas. */
-	register_sidebar( array( 'name' => __( 'Utility: Before Content', $domain ), 'id' => 'utility-before-content', 'description' => __( 'Loaded before the page\'s main content area.', $domain ), 'before_widget' => '<div id="%1$s" class="widget %2$s widget-%2$s"><div class="widget-inside">', 'after_widget' => '</div></div>', 'before_title' => '<h3 class="widget-title">', 'after_title' => '</h3>' ) );
-	register_sidebar( array( 'name' => __( 'Utility: After Content', $domain ), 'id' => 'utility-after-content', 'description' => __( 'Loaded after the page\'s main content area.', $domain ), 'before_widget' => '<div id="%1$s" class="widget %2$s widget-%2$s"><div class="widget-inside">', 'after_widget' => '</div></div>', 'before_title' => '<h3 class="widget-title">', 'after_title' => '</h3>' ) );
-	register_sidebar( array( 'name' => __( 'Utility: After Singular', $domain ), 'id' => 'utility-after-singular', 'description' => __( 'Loaded on singular post (page, attachment, etc.) views before the comments area.', $domain ), 'before_widget' => '<div id="%1$s" class="widget %2$s widget-%2$s"><div class="widget-inside">', 'after_widget' => '</div></div>', 'before_title' => '<h3 class="widget-title">', 'after_title' => '</h3>' ) );
+	register_sidebar( array( 'name' => __( 'Utility: Before Content', $domain ), 'id' => 'before-content', 'description' => __( 'Loaded before the page\'s main content area.', $domain ), 'before_widget' => '<div id="%1$s" class="widget %2$s widget-%2$s"><div class="widget-inside">', 'after_widget' => '</div></div>', 'before_title' => '<h3 class="widget-title">', 'after_title' => '</h3>' ) );
+	register_sidebar( array( 'name' => __( 'Utility: After Content', $domain ), 'id' => 'after-content', 'description' => __( 'Loaded after the page\'s main content area.', $domain ), 'before_widget' => '<div id="%1$s" class="widget %2$s widget-%2$s"><div class="widget-inside">', 'after_widget' => '</div></div>', 'before_title' => '<h3 class="widget-title">', 'after_title' => '</h3>' ) );
+	register_sidebar( array( 'name' => __( 'Utility: After Singular', $domain ), 'id' => 'after-singular', 'description' => __( 'Loaded on singular post (page, attachment, etc.) views before the comments area.', $domain ), 'before_widget' => '<div id="%1$s" class="widget %2$s widget-%2$s"><div class="widget-inside">', 'after_widget' => '</div></div>', 'before_title' => '<h3 class="widget-title">', 'after_title' => '</h3>' ) );
 
 	/* Register template widget areas only if the templates are available. */
 	if ( locate_template( array( 'page-widgets.php' ) ) )
-		register_sidebar( array( 'name' => __( 'Widgets Template', $domain ), 'id' => 'utility-widgets-template', 'description' => __( 'Used as the content of the Widgets page template.', $domain ), 'before_widget' => '<div id="%1$s" class="widget %2$s widget-%2$s"><div class="widget-inside">', 'after_widget' => '</div></div>', 'before_title' => '<h3 class="widget-title">', 'after_title' => '</h3>' ) );
+		register_sidebar( array( 'name' => __( 'Widgets Template', $domain ), 'id' => 'widgets-template', 'description' => __( 'Used as the content of the Widgets page template.', $domain ), 'before_widget' => '<div id="%1$s" class="widget %2$s widget-%2$s"><div class="widget-inside">', 'after_widget' => '</div></div>', 'before_title' => '<h3 class="widget-title">', 'after_title' => '</h3>' ) );
 	if ( locate_template( array( '404.php' ) ) )
-		register_sidebar( array( 'name' => __( '404 Template', $domain ), 'id' => 'utility-404', 'description' => __( 'Replaces the default 404 error page content.', $domain ), 'before_widget' => '<div id="%1$s" class="widget %2$s widget-%2$s"><div class="widget-inside">', 'after_widget' => '</div></div>', 'before_title' => '<h3 class="widget-title">', 'after_title' => '</h3>' ) );
+		register_sidebar( array( 'name' => __( '404 Template', $domain ), 'id' => '404-template', 'description' => __( 'Replaces the default 404 error page content.', $domain ), 'before_widget' => '<div id="%1$s" class="widget %2$s widget-%2$s"><div class="widget-inside">', 'after_widget' => '</div></div>', 'before_title' => '<h3 class="widget-title">', 'after_title' => '</h3>' ) );
 }
 
 /**
@@ -74,6 +80,10 @@ function hybrid_register_sidebars() {
  * @link http://codex.wordpress.org/WordPress_Widgets_Api
  */
 function hybrid_register_widgets() {
+
+	/* If the current theme doesn't support the Hybrid Core widgets, return. */
+	if ( !current_theme_supports( 'hybrid-core-widgets' ) )
+		return;
 
 	/* Load each widget file. */
 	require_once( THEME_CLASSES . '/widget-archives.php' );
@@ -107,6 +117,11 @@ function hybrid_register_widgets() {
  * @link http://codex.wordpress.org/WordPress_Widgets_Api
  */
 function hybrid_unregister_widgets() {
+
+	/* If the current theme doesn't support the Hybrid Core widgets, return. */
+	if ( !current_theme_supports( 'hybrid-core-widgets' ) )
+		return;
+
 	unregister_widget( 'WP_Widget_Archives' );
 	unregister_widget( 'WP_Widget_Calendar' );
 	unregister_widget( 'WP_Widget_Categories' );
