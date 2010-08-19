@@ -241,6 +241,9 @@ function image_by_attachment( $args = array() ) {
 	if ( empty( $attachments ) && empty( $image ) )
 		return false;
 
+	/* Set the default iterator to 0. */
+	$i = 0;
+
 	/* Loop through each attachment. Once the $order_of_image (default is '1') is reached, break the loop. */
 	foreach ( $attachments as $id => $attachment ) {
 		if ( ++$i == $args['order_of_image'] ) {
