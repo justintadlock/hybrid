@@ -3,7 +3,7 @@
  * Shortcodes bundled for use with the theme. These shortcodes can be used in any shortcode-ready
  * area, which includes posts, pages, and various Hybrid theme areas.
  *
- * @package Hybrid
+ * @package HybridCore
  * @subpackage Functions
  */
 
@@ -21,6 +21,10 @@ add_action( 'init', 'hybrid_add_shortcodes' );
  * @link http://codex.wordpress.org/Shortcode_API
  */
 function hybrid_add_shortcodes() {
+
+	/* If the current theme doesn't support core shortcodes, return. */
+	if ( !current_theme_supports( 'hybrid-core-shortcodes' ) )
+		return;
 
 	/* Add theme-specific shortcodes. */
 	add_shortcode( 'the-year', 'hybrid_the_year_shortcode' );
