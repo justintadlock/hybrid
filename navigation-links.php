@@ -26,7 +26,7 @@
 
 	<?php elseif ( !is_singular() && function_exists( 'wp_pagenavi' ) ) : wp_pagenavi(); ?>
 
-	<?php elseif ( !is_singular() && current_theme_supports( 'pagination' ) ) : pagination(); ?>
+	<?php elseif ( !is_singular() && current_theme_supports( 'loop-pagination' ) ) : loop_pagination(); ?>
 
 	<?php elseif ( !is_singular() && $nav = get_posts_nav_link( array( 'sep' => '', 'prelabel' => '<span class="previous">' . __( '&laquo; Previous', 'hybrid' ) . '</span>', 'nxtlabel' => '<span class="next">' . __( 'Next &raquo;', 'hybrid' ) . '</span>' ) ) ) : ?>
 
