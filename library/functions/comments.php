@@ -77,7 +77,7 @@ function hybrid_comments_end_callback() {
 
 /**
  * Displays the avatar for the comment author and wraps it in the comment author's URL if it is
- * available.  Adds a call to THEME_IMAGES . "/{$comment_type}.png" for the default avatars for
+ * available.  Adds a call to HYBRID_IMAGES . "/{$comment_type}.png" for the default avatars for
  * trackbacks and pingbacks.
  *
  * @since 0.2
