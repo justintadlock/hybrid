@@ -43,9 +43,9 @@ class Hybrid_Widget_Pages extends WP_Widget {
 		$args['child_of'] = intval( $instance['child_of'] );
 		$args['meta_key'] = $instance['meta_key'];
 		$args['meta_value'] = $instance['meta_value'];
-		$args['authors'] = ( is_array( $instance['authors'] ) ? join( ', ', $instance['authors'] ) : $instance['authors'] );
-		$args['include'] = ( is_array( $instance['include'] ) ? join( ', ', $instance['include'] ) : $instance['include'] );
-		$args['exclude'] = ( is_array( $instance['exclude'] ) ? join( ', ', $instance['exclude'] ) : $instance['exclude'] );
+		$args['authors'] = ( isset( $instance['authors'] ) ? join( ', ', $instance['authors'] ) : '' );
+		$args['include'] = ( isset( $instance['include'] ) ? join( ', ', $instance['include'] ) : '' );
+		$args['exclude'] = ( isset( $instance['exclude'] ) ? join( ', ', $instance['exclude'] ) : '' );
 		$args['exclude_tree'] = $instance['exclude_tree'];
 		$args['link_before'] = $instance['link_before'];
 		$args['link_after'] = $instance['link_after'];
@@ -102,6 +102,19 @@ class Hybrid_Widget_Pages extends WP_Widget {
 		//Defaults
 		$defaults = array(
 			'title' => __( 'Pages', $this->textdomain),
+			'depth' => 0,
+			'number' => '',
+			'offset' => '',
+			'child_of' => '',
+			'include' => array(),
+			'exclude' => array(),
+			'exclude_tree' => '',
+			'meta_key' => '',
+			'meta_value' => '',
+			'authors' => array(),
+			'link_before' => '',
+			'link_after' => '',
+			'show_date' => '',
 			'hierarchical' => true,
 			'sort_column' => 'post_title',
 			'sort_order' => 'ASC',

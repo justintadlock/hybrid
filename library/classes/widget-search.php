@@ -98,7 +98,13 @@ class Hybrid_Widget_Search extends WP_Widget {
 	function form( $instance ) {
 
 		//Defaults
-		$defaults = array( 'title' => __( 'Search', $this->textdomain ), 'theme_search' => false );
+		$defaults = array(
+			'title' => __( 'Search', $this->textdomain ),
+			'theme_search' => false,
+			'search_label' => '',
+			'search_text' => '',
+			'search_submit' => ''
+		);
 		$instance = wp_parse_args( (array) $instance, $defaults ); ?>
 
 		<div class="hybrid-widget-controls columns-2">

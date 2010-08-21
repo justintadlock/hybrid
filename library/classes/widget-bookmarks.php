@@ -42,12 +42,12 @@ class Hybrid_Widget_Bookmarks extends WP_Widget {
 		$args = array();
 
 		$args['title_li'] = apply_filters( 'widget_title',  $instance['title_li'], $instance, $this->id_base );
-		$args['category'] = ( is_array( $instance['category'] ) ? join( ', ', $instance['category'] ) : $instance['category'] );
-		$args['exclude_category'] = ( is_array( $instance['exclude_category'] ) ? join( ', ', $instance['exclude_category'] ) : $instance['exclude_category'] );
+		$args['category'] = ( isset( $instance['category'] ) ? join( ', ', $instance['category'] ) : '' );
+		$args['exclude_category'] = ( isset( $instance['exclude_category'] ) ? join( ', ', $instance['exclude_category'] ) : '' );
 		$args['category_order'] = $instance['category_order'];
 		$args['category_orderby'] = $instance['category_orderby'];
-		$args['include'] = ( is_array( $instance['include'] ) ? join( ', ', $instance['include'] ) : $instance['include'] );
-		$args['exclude'] = ( is_array( $instance['exclude'] ) ? join( ', ', $instance['exclude'] ) : $instance['exclude'] );
+		$args['include'] = ( isset( $instance['include'] ) ? join( ', ', $instance['include'] ) : '' );
+		$args['exclude'] = ( isset( $instance['exclude'] ) ? join( ', ', $instance['exclude'] ) : '' );
 		$args['order'] = $instance['order'];
 		$args['orderby'] = $instance['orderby'];
 		$args['limit'] = ( ( $instance['limit'] ) ? intval( $instance['limit'] ) : -1 );
@@ -123,16 +123,27 @@ class Hybrid_Widget_Bookmarks extends WP_Widget {
 		$defaults = array(
 			'title_li' => __( 'Bookmarks', $this->textdomain ),
 			'categorize' => true,
+			'category_order' => 'ASC',
+			'category_orderby' => 'name',
+			'category' => array(),
+			'exclude_category' => array(),
+			'limit' => '',
+			'order' => 'ASC',
+			'orderby' => 'name',
+			'include' => array(),
+			'exclude' => array(),
+			'search' => '',
 			'hide_invisible' => true,
 			'show_description' => false,
-			'show_image' => false,
+			'show_images' => false,
 			'show_rating' => false,
 			'show_updated' => false,
 			'show_private' => false,
 			'show_name' => false,
 			'class' => 'linkcat',
 			'link_before' => '<span>',
-			'link_after' => '</span>'
+			'link_after' => '</span>',
+			'between' => '<br />',
 		);
 		$instance = wp_parse_args( (array) $instance, $defaults );
 

@@ -125,7 +125,9 @@ class Hybrid_Widget_Authors extends WP_Widget {
 			'show_fullname' => true,
 			'hide_empty' => true,
 			'style' => 'list',
-			'html' => true
+			'html' => true,
+			'feed' => '',
+			'feed_image' => ''
 		);
 		$instance = wp_parse_args( (array) $instance, $defaults ); ?>
 

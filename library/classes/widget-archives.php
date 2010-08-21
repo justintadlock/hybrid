@@ -111,11 +111,12 @@ class Hybrid_Widget_Archives extends WP_Widget {
 		//Defaults
 		$defaults = array(
 			'title' => __( 'Archives', $this->textdomain ),
-			'limit' => '',
+			'limit' => 10,
 			'type' => 'monthly',
 			'format' => 'html',
 			'before' => '',
-			'after' => ''
+			'after' => '',
+			'show_post_count' => false
 		);
 		$instance = wp_parse_args( (array) $instance, $defaults );
 

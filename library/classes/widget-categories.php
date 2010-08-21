@@ -45,8 +45,8 @@ class Hybrid_Widget_Categories extends WP_Widget {
 		$args['style'] = $instance['style'];
 		$args['orderby'] = $instance['orderby'];
 		$args['order'] = $instance['order'];
-		$args['include'] = ( is_array( $instance['include'] ) ? join( ', ', $instance['include'] ) : $instance['include'] );
-		$args['exclude'] = ( is_array( $instance['exclude'] ) ? join( ', ', $instance['exclude'] ) : $instance['exclude'] );
+		$args['include'] = ( isset( $instance['include'] ) ? join( ', ', $instance['include'] ) : '' );
+		$args['exclude'] = ( isset( $instance['exclude'] ) ? join( ', ', $instance['exclude'] ) : '' );
 		$args['exclude_tree'] = $instance['exclude_tree'];
 		$args['depth'] = intval( $instance['depth'] );
 		$args['number'] = intval( $instance['number'] );
@@ -128,10 +128,22 @@ class Hybrid_Widget_Categories extends WP_Widget {
 			'style' => 'list',
 			'include' => array(),
 			'exclude' => array(),
+			'exclude_tree' => '',
+			'child_of' => '',
+			'current_category' => '',
+			'search' => '',
 			'hierarchical' => true,
 			'hide_empty' => true,
 			'order' => 'ASC',
-			'orderby' => 'name'
+			'orderby' => 'name',
+			'depth' => 0,
+			'number' => '',
+			'feed' => '',
+			'feed_type' => '',
+			'feed_image' => '',
+			'use_desc_for_title' => false,
+			'show_last_update' => false,
+			'show_count' => false,
 		);
 		$instance = wp_parse_args( (array) $instance, $defaults );
 

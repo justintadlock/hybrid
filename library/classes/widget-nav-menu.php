@@ -96,13 +96,19 @@ class Hybrid_Widget_Nav_Menu extends WP_Widget {
 		$defaults = array(
 			'title' => __( 'Navigation', $this->textdomain ),
 			'format' => 'div',
+			'menu' => '',
+			'container' => 'div',
+			'container_id' => '',
+			'container_class' => '',
+			'menu_id' => '',
 			'menu_class' => 'nav-menu',
 			'depth' => 0,
 			'before' => '',
 			'after' => '',
 			'link_before' => '',
 			'link_after' => '',
-			'fallback_cb' => 'wp_page_menu'
+			'fallback_cb' => 'wp_page_menu',
+			'walker' => ''
 		);
 		$instance = wp_parse_args( (array) $instance, $defaults );
 

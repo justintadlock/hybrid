@@ -52,8 +52,8 @@ class Hybrid_Widget_Tags extends WP_Widget {
 		$args['hide_empty'] = isset( $instance['hide_empty'] ) ? $instance['hide_empty'] : false;
 		$args['unit'] = $instance['unit'];
 		$args['format'] = $instance['format'];
-		$args['include'] = $instance['include'];
-		$args['exclude'] = $instance['exclude'];
+		$args['include'] = ( isset( $instance['include'] ) ? join( ', ', $instance['include'] ) : '' );
+		$args['exclude'] = ( isset( $instance['exclude'] ) ? join( ', ', $instance['exclude'] ) : '' );
 		$args['order'] = $instance['order'];
 		$args['orderby'] = $instance['orderby'];
 		$args['link'] = $instance['link'];
@@ -131,12 +131,21 @@ class Hybrid_Widget_Tags extends WP_Widget {
 			'order' => 'ASC',
 			'orderby' => 'name',
 			'format' => 'flat',
-			'unit' => 'pt', 'smallest' => 8,
+			'include' => array(),
+			'exclude' => array(),
+			'unit' => 'pt',
+			'smallest' => 8,
 			'largest' => 22,
 			'link' => 'view',
 			'number' => 45,
+			'separator' => '',
+			'child_of' => '',
+			'parent' => '',
 			'taxonomy' => 'post_tag',
-			'hide_empty' => 1
+			'hide_empty' => 1,
+			'pad_counts' => false,
+			'search' => '',
+			'name__like' => ''
 		);
 		$instance = wp_parse_args( (array) $instance, $defaults );
 
