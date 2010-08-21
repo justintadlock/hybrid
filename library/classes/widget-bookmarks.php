@@ -147,7 +147,7 @@ class Hybrid_Widget_Bookmarks extends WP_Widget {
 		);
 		$instance = wp_parse_args( (array) $instance, $defaults );
 
-		$terms = get_categories( array( 'type' => 'link' ) );
+		$terms = get_terms( 'link_category' );
 		$bookmarks = get_bookmarks( array( 'hide_invisible' => false ) );
 		$category_order = array( 'ASC' => __( 'Ascending', $this->textdomain ), 'DESC' => __( 'Descending', $this->textdomain ) );
 		$category_orderby = array( 'count' => __( 'Count', $this->textdomain ), 'ID' => __( 'ID', $this->textdomain ), 'name' => __( 'Name', $this->textdomain ), 'slug' => __( 'Slug', $this->textdomain ) );
