@@ -16,7 +16,7 @@ get_header(); ?>
 
 		<?php hybrid_before_content(); // Before content hook ?>
 
-		<?php dynamic_sidebar( 'utility-widgets-template' ); ?>
+		<?php dynamic_sidebar( 'widgets-template' ); ?>
 
 		<?php wp_reset_query(); ?>
 

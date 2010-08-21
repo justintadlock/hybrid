@@ -22,10 +22,10 @@ get_header(); ?>
 
 		<?php hybrid_before_content(); // Before content hook ?>
 
-		<?php if ( is_active_sidebar( 'utility-404' ) ) : ?>
+		<?php if ( is_active_sidebar( 'error-404-template' ) ) : ?>
 
 			<div id="utility-404" class="sidebar utility">
-				<?php dynamic_sidebar( 'utility-404' ); ?>
+				<?php dynamic_sidebar( 'error-404-template' ); ?>
 			</div><!-- #utility-404 .utility -->
 
 		<?php else: ?>

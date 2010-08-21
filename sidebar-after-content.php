@@ -10,11 +10,11 @@
  * @subpackage Template
  */
 
-	if ( is_active_sidebar( 'utility-after-content' ) ) : ?>
+	if ( is_active_sidebar( 'after-content' ) ) : ?>
 
 		<div id="utility-after-content" class="sidebar utility">
 
-			<?php dynamic_sidebar( 'utility-after-content' ); ?>
+			<?php dynamic_sidebar( 'after-content' ); ?>
 
 		</div><!-- #utility-after-content .utility -->
 
