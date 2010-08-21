@@ -68,7 +68,7 @@ function hybrid_register_sidebars() {
 	if ( locate_template( array( 'page-widgets.php' ) ) )
 		register_sidebar( array( 'name' => __( 'Widgets Template', $domain ), 'id' => 'widgets-template', 'description' => __( 'Used as the content of the Widgets page template.', $domain ), 'before_widget' => '<div id="%1$s" class="widget %2$s widget-%2$s"><div class="widget-inside">', 'after_widget' => '</div></div>', 'before_title' => '<h3 class="widget-title">', 'after_title' => '</h3>' ) );
 	if ( locate_template( array( '404.php' ) ) )
-		register_sidebar( array( 'name' => __( '404 Template', $domain ), 'id' => '404-template', 'description' => __( 'Replaces the default 404 error page content.', $domain ), 'before_widget' => '<div id="%1$s" class="widget %2$s widget-%2$s"><div class="widget-inside">', 'after_widget' => '</div></div>', 'before_title' => '<h3 class="widget-title">', 'after_title' => '</h3>' ) );
+		register_sidebar( array( 'name' => __( '404 Template', $domain ), 'id' => 'error-404-template', 'description' => __( 'Replaces the default 404 error page content.', $domain ), 'before_widget' => '<div id="%1$s" class="widget %2$s widget-%2$s"><div class="widget-inside">', 'after_widget' => '</div></div>', 'before_title' => '<h3 class="widget-title">', 'after_title' => '</h3>' ) );
 }
 
 /**
