@@ -14,8 +14,6 @@ require_once( TEMPLATEPATH . '/library/hybrid.php' );
 /* Initialize the Hybrid framework. */
 $hybrid = new Hybrid();
 
-require_once( HYBRID_LEGACY . '/hooks-actions.php' );
-
 /* Do theme setup on the 'after_setup_theme' hook. */
 add_action( 'after_setup_theme', 'hybrid_setup_theme' );
 
@@ -35,6 +33,9 @@ function hybrid_setup_theme() {
 
 	/* Add support for the core template hierarchy. */
 	add_theme_support( 'hybrid-core-template-hierarchy' );
+
+	/* Add support for deprecated functions. */
+	add_theme_support( 'hybrid-core-deprecated' );
 
 	/* Add support for the core sidebars. */
 	add_theme_support( 'hybrid-core-sidebars' );
