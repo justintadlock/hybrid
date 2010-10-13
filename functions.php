@@ -33,6 +33,9 @@ function hybrid_setup_theme() {
 	/* Add support for automatic feed links. */
 	add_theme_support( 'automatic-feed-links' );
 
+	/* Add support for the core template hierarchy. */
+	add_theme_support( 'hybrid-core-template-hierarchy' );
+
 	/* Add support for the core sidebars. */
 	add_theme_support( 'hybrid-core-sidebars' );
 
