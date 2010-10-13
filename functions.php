@@ -9,7 +9,7 @@
  */
 
 /* Load the Hybrid class. */
-require_once( TEMPLATEPATH . '/library/classes/hybrid.php' );
+require_once( TEMPLATEPATH . '/library/hybrid.php' );
 
 /* Initialize the Hybrid framework. */
 $hybrid = new Hybrid();
