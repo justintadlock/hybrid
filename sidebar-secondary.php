@@ -14,11 +14,11 @@ if ( is_active_sidebar( 'secondary' ) ) : ?>
 
 	<div id="secondary" class="sidebar aside">
 
-		<?php hybrid_before_secondary(); // Before Secondary hook ?>
+		<?php do_atomic( 'before_secondary' ); // Before Secondary hook ?>
 
 		<?php dynamic_sidebar( 'secondary' ); ?>
 
-		<?php hybrid_after_secondary(); // After Secondary hook ?>
+		<?php do_atomic( 'after_secondary' ); // After Secondary hook ?>
 
 	</div><!-- #secondary .aside -->
 

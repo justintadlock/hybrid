@@ -32,13 +32,13 @@
 
 			<h3 id="comments-number" class="comments-header"><?php comments_number( sprintf( __( 'No responses to %1$s', 'hybrid' ), the_title( '&#8220;', '&#8221;', false ) ), sprintf( __( 'One response to %1$s', 'hybrid' ), the_title( '&#8220;', '&#8221;', false ) ), sprintf( __( '%1$s responses to %2$s', 'hybrid' ), '%', the_title( '&#8220;', '&#8221;', false ) ) ); ?></h3>
 
-			<?php hybrid_before_comment_list(); // Before comment list hook ?>
+			<?php do_atomic( 'before_comment_list' ); // Before comment list hook ?>
 
 			<ol class="comment-list">
 				<?php wp_list_comments( hybrid_list_comments_args() ); ?>
 			</ol><!-- .comment-list -->
 
-			<?php hybrid_after_comment_list(); // After comment list hook ?>
+			<?php do_atomic( 'after_comment_list' ); // After comment list hook ?>
 
 			<?php if ( get_option( 'page_comments' ) ) : ?>
 				<div class="comment-navigation paged-navigation">

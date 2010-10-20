@@ -12,7 +12,7 @@ get_header(); ?>
 
 	<div id="content" class="hfeed content">
 
-		<?php hybrid_before_content(); // Before content hook ?>
+		<?php do_atomic( 'before_content' ); // Before content hook ?>
 
 		<div class="archive-info date-info time-info">
 			<h1 class="archive-title date-title time-title"><?php echo ( get_query_var( 'hour' ) ) ? get_the_time( __( 'g:i a', 'hybrid' ) ) : sprintf( __( 'Minute %1$s', 'hybrid' ), get_the_time( __( 'i', 'hybrid' ) ) ); ?></h1>
@@ -35,13 +35,13 @@ get_header(); ?>
 
 				<?php get_the_image( array( 'custom_key' => array( 'Thumbnail' ), 'size' => 'thumbnail' ) ); ?>
 
-				<?php hybrid_before_entry(); // Before entry hook ?>
+				<?php do_atomic( 'before_entry' ); // Before entry hook ?>
 
 				<div class="entry-summary">
 					<?php the_excerpt(); ?>
 				</div><!-- .entry-summary -->
 
-				<?php hybrid_after_entry(); // After entry hook ?>
+				<?php do_atomic( 'after_entry' ); // After entry hook ?>
 
 			</div><!-- .hentry -->
 
@@ -55,7 +55,7 @@ get_header(); ?>
 
 		<?php endif; ?>
 
-		<?php hybrid_after_content(); // After content hook ?>
+		<?php do_atomic( 'after_content' ); // After content hook ?>
 
 	</div><!-- .content .hfeed -->
 

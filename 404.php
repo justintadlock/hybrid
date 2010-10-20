@@ -20,7 +20,7 @@ get_header(); ?>
 
 	<div id="content" class="hfeed content">
 
-		<?php hybrid_before_content(); // Before content hook ?>
+		<?php do_atomic( 'before_content' ); // Before content hook ?>
 
 		<?php if ( is_active_sidebar( 'error-404-template' ) ) : ?>
 
@@ -48,7 +48,7 @@ get_header(); ?>
 
 		<?php endif; ?>
 
-		<?php hybrid_after_content(); // After content hook ?>
+		<?php do_atomic( 'after_content' ); // After content hook ?>
 
 	</div><!-- .content .hfeed -->
 

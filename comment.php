@@ -15,7 +15,7 @@
 
 	<li id="comment-<?php comment_ID(); ?>" class="<?php hybrid_comment_class(); ?>">
 
-		<?php hybrid_before_comment(); // Before comment hook ?>
+		<?php do_atomic( 'before_comment' ); // Before comment hook ?>
 
 		<div class="comment-text">
 			<?php if ( '0' == $comment->comment_approved ) : ?>
@@ -25,6 +25,6 @@
 			<?php comment_text( $comment->comment_ID ); ?>
 		</div><!-- .comment-text -->
 
-		<?php hybrid_after_comment(); // After comment hook ?>
+		<?php do_atomic( 'after_comment' ); // After comment hook ?>
 
 	<?php /* No closing </li> is needed.  WordPress will know where to add it. */ ?>

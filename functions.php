@@ -63,7 +63,7 @@ function hybrid_setup_theme() {
 
 	/* Add support for the core print stylesheet. */
 	if ( hybrid_get_setting( 'print_style' ) )
-		add_theme_support( 'hybrid-core-print-style' );
+		add_action( 'template_redirect', 'hybrid_theme_enqueue_style' );
 
 	/* Add support for core theme settings meta boxes. */
 	add_theme_support( 'hybrid-core-theme-settings' );
@@ -134,8 +134,8 @@ function hybrid_setup_theme() {
 	add_filter( 'body_class', 'hybrid_theme_body_class' );
 
 	/* Add elements to the <head> area. */
-	add_action( "{$prefix}_head", 'hybrid_meta_content_type' );
-	add_action( 'wp_head', 'hybrid_favicon' );
+	//add_action( "{$prefix}_head", 'hybrid_meta_content_type' );
+	//add_action( 'wp_head', 'hybrid_favicon' );
 
 	/* Feed links. */
 	add_filter( 'feed_link', 'hybrid_feed_link', 1, 2 );
@@ -148,6 +148,35 @@ function hybrid_setup_theme() {
 	add_action( 'wp_print_styles', 'hybrid_disable_styles' );
 
 	add_action( "load-appearance_page_theme-settings", 'hybrid_theme_create_settings_meta_boxes', 11 );
+
+		/* Add same filters to user description as term descriptions. */
+		add_filter( 'get_the_author_description', 'wptexturize' );
+		add_filter( 'get_the_author_description', 'convert_chars' );
+		add_filter( 'get_the_author_description', 'wpautop' );
+
+		//add_action( 'wp_head', 'hybrid_head_pingback' );
+}
+
+/**
+ * Function to load CSS at an appropriate time. Adds print.css if user chooses to use it. 
+ * Users should load their own CSS using wp_enqueue_style() in their child theme's 
+ * functions.php file.
+ *
+ * @since 0.9
+ * @link http://codex.wordpress.org/Function_Reference/wp_enqueue_style
+ */
+function hybrid_theme_enqueue_style() {
+	global $wp_query;
+
+	/* If is admin, don't load styles. */
+	if ( is_admin() )
+		return;
+
+	/* Get the theme prefix. */
+	$prefix = hybrid_get_prefix();
+
+	/* Load the print stylesheet. */
+	wp_enqueue_style( "{$prefix}-print", esc_url( apply_atomic( 'print_style', THEME_URI . '/css/print.css' ) ), false, 0.7, 'print' );
 }
 
 function hybrid_theme_create_settings_meta_boxes() {
@@ -377,6 +406,25 @@ function hybrid_entry_meta( $metadata = '' ) {
 }
 
 /**
+ * Function for displaying a comment's metadata.
+ *
+ * @since 0.7.0
+ * @param string $metadata Custom metadata to use.
+ * @global $comment The global comment object.
+ * @global $post The global post object.
+ */
+function hybrid_comment_meta( $metadata = '' ) {
+	global $comment, $post;
+
+	if ( !$metadata )
+		$metadata = '[comment-author] [comment-published] [comment-permalink before="| "] [comment-edit-link before="| "] [comment-reply-link before="| "]';
+
+	$metadata = '<div class="comment-meta comment-meta-data">' . $metadata . '</div>';
+
+	echo do_shortcode( apply_filters( hybrid_get_prefix() . '_comment_meta', $metadata ) );
+}
+
+/**
  * Disables stylesheets for particular plugins to allow the theme to easily write its own
  * styles for the plugins' features.
  *
@@ -412,6 +460,119 @@ function hybrid_favicon() {
  */
 function hybrid_navigation_links() {
 	get_template_part( 'navigation-links' );
+}
+
+/**
+ * Displays the footer insert from the theme settings page. Users can also use shortcodes in their footer 
+ * area, which will be displayed with this function.
+ *
+ * @since 0.2.1
+ * @uses do_shortcode() Allows users to add shortcodes to their footer.
+ * @uses stripslashes() Strips any slashes added from the admin form.
+ * @uses hybrid_get_setting() Grabs the 'footer_insert' theme setting.
+ */
+function hybrid_footer_insert() {
+	$footer_insert = do_shortcode( hybrid_get_setting( 'footer_insert' ) );
+
+	if ( !empty( $footer_insert ) )
+		echo '<div class="footer-insert">' . $footer_insert . '</div>';
+}
+
+/* Disables widget areas. */
+add_filter( 'sidebars_widgets', 'remove_sidebars' );
+
+/**
+ * Removes all widget areas on the No Widgets page template. We're only going to run 
+ * it on the No Widgets template. Users that need additional templates without widgets 
+ * should create a simliar function in their child theme.
+ *
+ * @since 0.5.0
+ * @uses sidebars_widgets Filter to remove all widget areas
+ */
+function remove_sidebars( $sidebars_widgets ) {
+	global $wp_query;
+
+	if ( is_singular() ) {
+		$template = get_post_meta( $wp_query->post->ID, "_wp_{$wp_query->post->post_type}_template", true );
+		if ( 'no-widgets.php' == $template || "{$wp_query->post->post_type}-no-widgets.php" == $template )
+			$sidebars_widgets = array( false );
+	}
+	return $sidebars_widgets;
+}
+
+/**
+ * Loads the Primary widget area. Users can overwrite 'sidebar-primary.php'.
+ *
+ * @since 0.2.2
+ * @uses get_sidebar() Checks for the template in the child and parent theme.
+ */
+function hybrid_get_primary() {
+	get_sidebar( 'primary' );
+}
+
+/**
+ * Loads the Secondary widget area. Users can overwrite 'sidebar-secondary.php'.
+ *
+ * @since 0.2.2
+ * @uses get_sidebar() Checks for the template in the child and parent theme.
+ */
+function hybrid_get_secondary() {
+	get_sidebar( 'secondary' );
+}
+
+/**
+ * Loads the Subsidiary widget area. Users can overwrite 'sidebar-subsidiary.php'.
+ *
+ * @since 0.3.1
+ * @uses get_sidebar() Checks for the template in the child and parent theme.
+ */
+function hybrid_get_subsidiary() {
+	get_sidebar( 'subsidiary' );
+}
+
+/**
+ * Loads the Utility: Before Content widget area. Users can overwrite 
+ * 'sidebar-before-content.php' in child themes.
+ *
+ * @since 0.4.0
+ * @uses get_sidebar() Checks for the template in the child and parent theme.
+ */
+function hybrid_get_utility_before_content() {
+	get_sidebar( 'before-content' );
+}
+
+/**
+ * Loads the Utility: After Content widget area. Users can overwrite 
+ * 'sidebar-after-content.php' in child themes.
+ *
+ * @since 0.4.0
+ * @uses get_sidebar() Checks for the template in the child and parent theme.
+ */
+function hybrid_get_utility_after_content() {
+	get_sidebar( 'after-content' );
+}
+
+/**
+ * Loads the Utility: After Singular widget area. Users can overwrite 
+ * 'sidebar-after-singular.php' in child themes.
+ *
+ * @since 0.7.0
+ * @uses get_sidebar() Checks for the template in the child and parent theme.
+ */
+function hybrid_get_utility_after_singular() {
+	get_sidebar( 'after-singular' );
+}
+
+/**
+ * Loads the 'Primary Menu' template file.  Users can overwrite menu-primary.php in their child
+ * theme folder.
+ *
+ * @since 0.8.0
+ * @uses get_template_part() Checks for template in child and parent theme.
+ * @link http://codex.wordpress.org/Function_Reference/get_template_part
+ */
+function hybrid_get_primary_menu() {
+	get_template_part( 'menu', 'primary' );
 }
 
 ?>

@@ -14,7 +14,7 @@ get_header(); ?>
 
 	<div id="content" class="hfeed content">
 
-		<?php hybrid_before_content(); // Before content hook ?>
+		<?php do_atomic( 'before_content' ); // Before content hook ?>
 
 		<?php dynamic_sidebar( 'widgets-template' ); ?>
 
@@ -24,7 +24,7 @@ get_header(); ?>
 
 			<?php edit_post_link( __( 'Edit', 'hybrid' ), '<p class="entry-meta"><span class="edit">', '</span></p>' ); ?>
 
-			<?php hybrid_after_singular(); // After singular hook ?>
+			<?php do_atomic( 'after_singular' ); // After singular hook ?>
 
 			<?php comments_template( '/comments.php', true ); ?>
 
@@ -38,7 +38,7 @@ get_header(); ?>
 
 		<?php endif; ?>
 
-		<?php hybrid_after_content(); // After content hook ?>
+		<?php do_atomic( 'after_content' ); // After content hook ?>
 
 	</div><!-- .content .hfeed -->
 

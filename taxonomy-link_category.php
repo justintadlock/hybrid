@@ -13,7 +13,7 @@ get_header(); ?>
 
 	<div id="content" class="hfeed content">
 
-		<?php hybrid_before_content(); // Before content hook ?>
+		<?php do_atomic( 'before_content' ); // Before content hook ?>
 
 		<div class="archive-info taxonomy-info">
 
@@ -27,7 +27,7 @@ get_header(); ?>
 
 		<div class="<?php hybrid_entry_class(); ?>">
 
-			<?php hybrid_before_entry(); // Before entry hook ?>
+			<?php do_atomic( 'before_entry' ); // Before entry hook ?>
 
 			<div class="entry-content">
 
@@ -50,11 +50,11 @@ get_header(); ?>
 
 			</div><!-- .entry-content -->
 
-			<?php hybrid_after_entry(); // After entry hook ?>
+			<?php do_atomic( 'after_entry' ); // After entry hook ?>
 
 		</div><!-- .hentry -->
 
-		<?php hybrid_after_content(); // After content hook ?>
+		<?php do_atomic( 'after_content' ); // After content hook ?>
 
 	</div><!-- .content .hfeed -->
 
