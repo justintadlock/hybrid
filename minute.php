@@ -15,14 +15,14 @@ get_header(); ?>
 		<?php do_atomic( 'before_content' ); // Before content hook ?>
 
 		<div class="archive-info date-info time-info">
-			<h1 class="archive-title date-title time-title"><?php echo ( get_query_var( 'hour' ) ) ? get_the_time( __( 'g:i a', 'hybrid' ) ) : sprintf( __( 'Minute %1$s', 'hybrid' ), get_the_time( __( 'i', 'hybrid' ) ) ); ?></h1>
+			<h1 class="archive-title date-title time-title"><?php echo ( get_query_var( 'hour' ) ) ? get_the_time( __( 'g:i a', hybrid_get_textdomain() ) ) : sprintf( __( 'Minute %1$s', hybrid_get_textdomain() ), get_the_time( __( 'i', hybrid_get_textdomain() ) ) ); ?></h1>
 
 			<div class="archive-description date-description time-description">
 				<p>
 				<?php if ( get_query_var( 'hour' ) ) : ?>
-					<?php printf( __( 'You are browsing the archive for %1$s.', 'hybrid' ), get_the_time( __( 'g:i a', 'hybrid' ) ) ); ?>
+					<?php printf( __( 'You are browsing the archive for %1$s.', hybrid_get_textdomain() ), get_the_time( __( 'g:i a', hybrid_get_textdomain() ) ) ); ?>
 				<?php else : ?>
-					<?php printf( __( 'You are browsing the archive for minute %1$s.', 'hybrid' ), get_the_time( __( 'i', 'hybrid' ) ) ); ?>
+					<?php printf( __( 'You are browsing the archive for minute %1$s.', hybrid_get_textdomain() ), get_the_time( __( 'i', hybrid_get_textdomain() ) ) ); ?>
 				<?php endif; ?>
 				</p>
 			</div><!-- .archive-description -->
@@ -50,7 +50,7 @@ get_header(); ?>
 		<?php else: ?>
 
 			<p class="no-data">
-				<?php _e( 'Apologies, but no results were found.', 'hybrid' ); ?>
+				<?php _e( 'Apologies, but no results were found.', hybrid_get_textdomain() ); ?>
 			</p><!-- .no-data -->
 
 		<?php endif; ?>

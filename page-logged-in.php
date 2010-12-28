@@ -26,7 +26,7 @@ get_header(); ?>
 
 				<div class="entry-content">
 					<?php the_content(); ?>
-					<?php wp_link_pages( array( 'before' => '<p class="page-links pages">' . __( 'Pages:', 'hybrid' ), 'after' => '</p>' ) ); ?>
+					<?php wp_link_pages( array( 'before' => '<p class="page-links pages">' . __( 'Pages:', hybrid_get_textdomain() ), 'after' => '</p>' ) ); ?>
 				</div><!-- .entry-content -->
 
 				<?php do_atomic( 'after_entry' ); // After entry hook ?>
@@ -48,9 +48,9 @@ get_header(); ?>
 				<div class="entry-content">
 
 					<p class="alert">
-						<?php printf( __( 'You must be <a href="%1$s" title="Log in">logged in</a> to view the content of this page.', 'hybrid' ), wp_login_url( get_permalink() ) ); ?>
+						<?php printf( __( 'You must be <a href="%1$s" title="Log in">logged in</a> to view the content of this page.', hybrid_get_textdomain() ), wp_login_url( get_permalink() ) ); ?>
 
-						<?php if ( get_option( 'users_can_register' ) ) printf( __( 'If you\'re not currently a member, please take a moment to <a href="%1$s" title="Register">register</a>.', 'hybrid' ), site_url( 'wp-login.php?action=register', 'login' ) ); ?>
+						<?php if ( get_option( 'users_can_register' ) ) printf( __( 'If you\'re not currently a member, please take a moment to <a href="%1$s" title="Register">register</a>.', hybrid_get_textdomain() ), site_url( 'wp-login.php?action=register', 'login' ) ); ?>
 					</p><!-- .alert -->
 
 				</div><!-- .entry-content -->
@@ -64,7 +64,7 @@ get_header(); ?>
 		<?php else: ?>
 
 			<p class="no-data">
-				<?php _e( 'Apologies, but no results were found.', 'hybrid' ); ?>
+				<?php _e( 'Apologies, but no results were found.', hybrid_get_textdomain() ); ?>
 			</p><!-- .no-data -->
 
 		<?php endif; ?>

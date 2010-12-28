@@ -14,21 +14,21 @@
 	<?php if ( is_attachment() ) : ?>
 
 		<div class="navigation-links">
-			<?php previous_post_link( '%link', '<span class="previous">' . __( '&laquo; Return to entry', 'hybrid' ) . '</span>' ); ?>
+			<?php previous_post_link( '%link', '<span class="previous">' . __( '&laquo; Return to entry', hybrid_get_textdomain() ) . '</span>' ); ?>
 		</div>
 
 	<?php elseif ( is_singular( 'post' ) ) : ?>
 
 		<div class="navigation-links">
-			<?php previous_post_link( '%link', '<span class="previous">' . __( '&laquo; Previous', 'hybrid' ) . '</span>' ); ?>
-			<?php next_post_link( '%link', '<span class="next">' . __( 'Next &raquo;', 'hybrid' ) . '</span>' ); ?>
+			<?php previous_post_link( '%link', '<span class="previous">' . __( '&laquo; Previous', hybrid_get_textdomain() ) . '</span>' ); ?>
+			<?php next_post_link( '%link', '<span class="next">' . __( 'Next &raquo;', hybrid_get_textdomain() ) . '</span>' ); ?>
 		</div><!-- .navigation-links -->
 
 	<?php elseif ( !is_singular() && function_exists( 'wp_pagenavi' ) ) : wp_pagenavi(); ?>
 
 	<?php elseif ( !is_singular() && current_theme_supports( 'loop-pagination' ) ) : loop_pagination(); ?>
 
-	<?php elseif ( !is_singular() && $nav = get_posts_nav_link( array( 'sep' => '', 'prelabel' => '<span class="previous">' . __( '&laquo; Previous', 'hybrid' ) . '</span>', 'nxtlabel' => '<span class="next">' . __( 'Next &raquo;', 'hybrid' ) . '</span>' ) ) ) : ?>
+	<?php elseif ( !is_singular() && $nav = get_posts_nav_link( array( 'sep' => '', 'prelabel' => '<span class="previous">' . __( '&laquo; Previous', hybrid_get_textdomain() ) . '</span>', 'nxtlabel' => '<span class="next">' . __( 'Next &raquo;', hybrid_get_textdomain() ) . '</span>' ) ) ) : ?>
 
 		<div class="navigation-links">
 			<?php echo $nav; ?>

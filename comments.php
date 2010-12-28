@@ -9,17 +9,17 @@
  * @subpackage Template
  */
 	if ( 'comments.php' == basename( $_SERVER['SCRIPT_FILENAME'] ) )
-		die( __( 'Please do not load this page directly. Thanks!', 'hybrid' ) );
+		die( __( 'Please do not load this page directly. Thanks!', hybrid_get_textdomain() ) );
 
 	if ( !post_type_supports( get_post_type(), 'comments' ) || ( !have_comments() && !comments_open() && !pings_open() ) )
 		return;
 
 	if ( post_password_required() ) : ?>
 
-		<h3 class="comments-header"><?php _e( 'Password Protected', 'hybrid' ); ?></h3>
+		<h3 class="comments-header"><?php _e( 'Password Protected', hybrid_get_textdomain() ); ?></h3>
 
 		<p class="alert password-protected">
-			<?php _e( 'Enter the password to view comments.', 'hybrid' ); ?>
+			<?php _e( 'Enter the password to view comments.', hybrid_get_textdomain() ); ?>
 		</p><!-- .alert .password-protected -->
 
 	<?php endif; ?>
@@ -30,7 +30,7 @@
 
 		<div id="comments">
 
-			<h3 id="comments-number" class="comments-header"><?php comments_number( sprintf( __( 'No responses to %1$s', 'hybrid' ), the_title( '&#8220;', '&#8221;', false ) ), sprintf( __( 'One response to %1$s', 'hybrid' ), the_title( '&#8220;', '&#8221;', false ) ), sprintf( __( '%1$s responses to %2$s', 'hybrid' ), '%', the_title( '&#8220;', '&#8221;', false ) ) ); ?></h3>
+			<h3 id="comments-number" class="comments-header"><?php comments_number( sprintf( __( 'No responses to %1$s', hybrid_get_textdomain() ), the_title( '&#8220;', '&#8221;', false ) ), sprintf( __( 'One response to %1$s', hybrid_get_textdomain() ), the_title( '&#8220;', '&#8221;', false ) ), sprintf( __( '%1$s responses to %2$s', hybrid_get_textdomain() ), '%', the_title( '&#8220;', '&#8221;', false ) ) ); ?></h3>
 
 			<?php do_atomic( 'before_comment_list' ); // Before comment list hook ?>
 
@@ -53,13 +53,13 @@
 		<?php if ( pings_open() && !comments_open() ) : ?>
 
 			<p class="comments-closed pings-open">
-				<?php printf( __( 'Comments are closed, but <a href="%1$s" title="Trackback URL for this post">trackbacks</a> and pingbacks are open.', 'hybrid' ), trackback_url( '0' ) ); ?>
+				<?php printf( __( 'Comments are closed, but <a href="%1$s" title="Trackback URL for this post">trackbacks</a> and pingbacks are open.', hybrid_get_textdomain() ), trackback_url( '0' ) ); ?>
 			</p><!-- .comments-closed .pings-open -->
 
 		<?php elseif ( !comments_open() ) : ?>
 
 			<p class="comments-closed">
-				<?php _e( 'Comments are closed.', 'hybrid' ); ?>
+				<?php _e( 'Comments are closed.', hybrid_get_textdomain() ); ?>
 			</p><!-- .comments-closed -->
 
 		<?php endif; ?>

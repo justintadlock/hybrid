@@ -48,7 +48,7 @@ get_header(); ?>
 		<?php else: ?>
 
 			<p class="no-data">
-				<?php _e( 'Apologies, but no results were found.', 'hybrid' ); ?>
+				<?php _e( 'Apologies, but no results were found.', hybrid_get_textdomain() ); ?>
 			</p><!-- .no-data -->
 
 		<?php endif; ?>

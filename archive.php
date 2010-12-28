@@ -18,11 +18,11 @@ get_header(); ?>
 
 		<div class="archive-info">
 
-			<h1 class="archive-title"><?php _e( 'Archives', 'hybrid' ); ?></h1>
+			<h1 class="archive-title"><?php _e( 'Archives', hybrid_get_textdomain() ); ?></h1>
 
 			<div class="archive-description">
 				<p>
-				<?php _e( 'You are browsing the site archives.', 'hybrid' ); ?>
+				<?php _e( 'You are browsing the site archives.', hybrid_get_textdomain() ); ?>
 				</p>
 			</div><!-- .archive-description -->
 
@@ -49,7 +49,7 @@ get_header(); ?>
 		<?php else: ?>
 
 			<p class="no-data">
-				<?php _e( 'Apologies, but no results were found.', 'hybrid' ); ?>
+				<?php _e( 'Apologies, but no results were found.', hybrid_get_textdomain() ); ?>
 			</p><!-- .no-data -->
 
 		<?php endif; ?>

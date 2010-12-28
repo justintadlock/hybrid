@@ -16,11 +16,11 @@ get_header(); ?>
 
 		<div class="archive-info date-info week-info">
 
-			<h1 class="archive-title date-title week-title"><?php printf( __( 'Week %1$s of %2$s', 'hybrid' ), get_the_time( __( 'W', 'hybrid' ) ), get_the_time( __( 'Y', 'hybrid' ) ) ); ?></h1>
+			<h1 class="archive-title date-title week-title"><?php printf( __( 'Week %1$s of %2$s', hybrid_get_textdomain() ), get_the_time( __( 'W', hybrid_get_textdomain() ) ), get_the_time( __( 'Y', hybrid_get_textdomain() ) ) ); ?></h1>
 
 			<div class="archive-description date-description week-description">
 				<p>
-				<?php printf( __( 'You are browsing the archive for week %1$s of %2$s.', 'hybrid' ), get_the_time( __( 'W', 'hybrid' ) ), get_the_time( __( 'Y', 'hybrid' ) ) ); ?>
+				<?php printf( __( 'You are browsing the archive for week %1$s of %2$s.', hybrid_get_textdomain() ), get_the_time( __( 'W', hybrid_get_textdomain() ) ), get_the_time( __( 'Y', hybrid_get_textdomain() ) ) ); ?>
 				</p>
 			</div><!-- .date-description .week-description -->
 
@@ -47,7 +47,7 @@ get_header(); ?>
 		<?php else: ?>
 
 			<p class="no-data">
-				<?php _e( 'Apologies, but no results were found.', 'hybrid' ); ?>
+				<?php _e( 'Apologies, but no results were found.', hybrid_get_textdomain() ); ?>
 			</p><!-- .no-data -->
 
 		<?php endif; ?>

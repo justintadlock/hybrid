@@ -11,14 +11,15 @@
  * @subpackage Template
  */
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" <?php language_attributes( 'xhtml' ); ?>>
-<head profile="http://gmpg.org/xfn/11">
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<!DOCTYPE html>
+<html <?php language_attributes(); ?>>
+<head>
+<meta http-equiv="Content-Type" content="<?php bloginfo( 'html_type' ); ?>; charset=<?php bloginfo( 'charset' ); ?>" />
 <title><?php hybrid_document_title(); ?></title>
 
-<link rel="stylesheet" href="<?php echo get_stylesheet_uri(); ?>" type="text/css" media="screen" />
-<link rel="pingback" href="http://localhost/xmlrpc.php" />
+<link rel="stylesheet" href="<?php echo get_stylesheet_uri(); ?>" type="text/css" media="all" />
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>" />
 
 <?php do_atomic( 'head' ); // @deprecated 0.9. Use 'wp_head'. ?>
 <?php wp_head(); // WP head hook ?>

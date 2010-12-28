@@ -19,7 +19,7 @@
 
 		<div class="comment-text">
 			<?php if ( '0' == $comment->comment_approved ) : ?>
-				<p class="alert moderation"><?php _e( 'Your comment is awaiting moderation.', 'hybrid' ); ?></p>
+				<p class="alert moderation"><?php _e( 'Your comment is awaiting moderation.', hybrid_get_textdomain() ); ?></p>
 			<?php endif; ?>
 
 			<?php comment_text( $comment->comment_ID ); ?>

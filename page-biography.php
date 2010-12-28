@@ -39,23 +39,23 @@ get_header(); ?>
 						<ul class="xoxo clear">
 
 						<?php if ( get_the_author_meta( 'nickname' ) ) : ?>
-							<li><strong><?php _e( 'Nickname:', 'hybrid' ); ?></strong> <span class="nickname"><?php the_author_meta( 'nickname' ); ?></span></li>
+							<li><strong><?php _e( 'Nickname:', hybrid_get_textdomain() ); ?></strong> <span class="nickname"><?php the_author_meta( 'nickname' ); ?></span></li>
 						<?php endif; ?>
 
 						<?php if ( get_the_author_meta( 'user_url' ) ) : ?>
-							<li><strong><?php _e( 'Website:', 'hybrid' ); ?></strong> <a class="url" href="<?php the_author_meta( 'user_url' ); ?>" title="<?php the_author_meta( 'user_url' ); ?>"><?php the_author_meta( 'user_url' ); ?></a></li>
+							<li><strong><?php _e( 'Website:', hybrid_get_textdomain() ); ?></strong> <a class="url" href="<?php the_author_meta( 'user_url' ); ?>" title="<?php the_author_meta( 'user_url' ); ?>"><?php the_author_meta( 'user_url' ); ?></a></li>
 						<?php endif; ?>
 
 						<?php if ( get_the_author_meta( 'aim' ) ) : ?>
-							<li><strong><?php _e( 'AIM:', 'hybrid' ); ?></strong> <a class="url" href="aim:goim?screenname=<?php the_author_meta( 'aim' ); ?>" title="<?php printf( __( 'IM with %1$s', 'hybrid' ), get_the_author_meta( 'aim' ) ); ?>"><?php the_author_meta( 'aim' ); ?></a></li>
+							<li><strong><?php _e( 'AIM:', hybrid_get_textdomain() ); ?></strong> <a class="url" href="aim:goim?screenname=<?php the_author_meta( 'aim' ); ?>" title="<?php printf( __( 'IM with %1$s', hybrid_get_textdomain() ), get_the_author_meta( 'aim' ) ); ?>"><?php the_author_meta( 'aim' ); ?></a></li>
 						<?php endif; ?>
 
 						<?php if ( get_the_author_meta( 'jabber' ) ) : ?>
-							<li><strong><?php _e( 'Jabber:', 'hybrid' ); ?></strong> <a class="url" href="xmpp:<?php the_author_meta( 'jabber' ); ?>@jabberservice.com" title="<?php printf( __( 'IM with %1$s', 'hybrid' ), get_the_author_meta( 'jabber' ) ); ?>"><?php the_author_meta( 'jabber' ); ?></a></li>
+							<li><strong><?php _e( 'Jabber:', hybrid_get_textdomain() ); ?></strong> <a class="url" href="xmpp:<?php the_author_meta( 'jabber' ); ?>@jabberservice.com" title="<?php printf( __( 'IM with %1$s', hybrid_get_textdomain() ), get_the_author_meta( 'jabber' ) ); ?>"><?php the_author_meta( 'jabber' ); ?></a></li>
 						<?php endif; ?>
 
 						<?php if ( get_the_author_meta( 'yim' ) ) : ?>
-							<li><strong><?php _e( 'Yahoo:', 'hybrid' ); ?></strong> <a class="url" href="ymsgr:sendIM?<?php the_author_meta( 'yim' ); ?>" title="<?php printf( __( 'IM with %1$s', 'hybrid' ), get_the_author_meta( 'yim' ) ); ?>"><?php the_author_meta( 'yim' ); ?></a></li>
+							<li><strong><?php _e( 'Yahoo:', hybrid_get_textdomain() ); ?></strong> <a class="url" href="ymsgr:sendIM?<?php the_author_meta( 'yim' ); ?>" title="<?php printf( __( 'IM with %1$s', hybrid_get_textdomain() ), get_the_author_meta( 'yim' ) ); ?>"><?php the_author_meta( 'yim' ); ?></a></li>
 						<?php endif; ?>
 
 						</ul><!-- .xoxo -->
@@ -65,7 +65,7 @@ get_header(); ?>
 				<?php endif; ?>
 
 					<?php the_content(); ?>
-					<?php wp_link_pages( array( 'before' => '<p class="page-links pages">' . __( 'Pages:', 'hybrid' ), 'after' => '</p>' ) ); ?>
+					<?php wp_link_pages( array( 'before' => '<p class="page-links pages">' . __( 'Pages:', hybrid_get_textdomain() ), 'after' => '</p>' ) ); ?>
 
 				</div><!-- .entry-content -->
 
@@ -82,7 +82,7 @@ get_header(); ?>
 		<?php else: ?>
 
 			<p class="no-data">
-				<?php _e( 'Apologies, but no results were found.', 'hybrid' ); ?>
+				<?php _e( 'Apologies, but no results were found.', hybrid_get_textdomain() ); ?>
 			</p><!-- .no-data -->
 
 		<?php endif; ?>

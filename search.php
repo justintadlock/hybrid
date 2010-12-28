@@ -20,7 +20,7 @@ get_header(); ?>
 			<h1 class="search-title"><?php echo esc_attr( get_search_query() ); ?></h1>
 
 			<div class="search-description">
-				<p><?php printf( __( 'You are browsing the search results for &quot;%1$s&quot;', 'hybrid' ), esc_attr( get_search_query() ) ); ?></p>
+				<p><?php printf( __( 'You are browsing the search results for &quot;%1$s&quot;', hybrid_get_textdomain() ), esc_attr( get_search_query() ) ); ?></p>
 			</div><!-- .search-description -->
 
 		</div><!-- .search-info -->
@@ -46,7 +46,7 @@ get_header(); ?>
 		<?php else: ?>
 
 			<p class="no-data">
-				<?php _e( 'Apologies, but no results were found.', 'hybrid' ); ?>
+				<?php _e( 'Apologies, but no results were found.', hybrid_get_textdomain() ); ?>
 			</p><!-- .no-data -->
 
 			<?php get_search_form(); ?>

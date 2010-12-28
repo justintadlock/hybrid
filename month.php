@@ -20,7 +20,7 @@ get_header(); ?>
 
 			<div class="archive-description date-description month-description">
 				<p>
-				<?php printf( __( 'You are browsing the archive for %1$s.', 'hybrid' ), single_month_title( ' ', false ) ); ?>
+				<?php printf( __( 'You are browsing the archive for %1$s.', hybrid_get_textdomain() ), single_month_title( ' ', false ) ); ?>
 				</p>
 			</div><!-- .archive-description -->
 
@@ -47,7 +47,7 @@ get_header(); ?>
 		<?php else: ?>
 
 			<p class="no-data">
-				<?php _e( 'Apologies, but no results were found.', 'hybrid' ); ?>
+				<?php _e( 'Apologies, but no results were found.', hybrid_get_textdomain() ); ?>
 			</p><!-- .no-data -->
 
 		<?php endif; ?>

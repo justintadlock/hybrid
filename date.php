@@ -17,11 +17,11 @@ get_header(); ?>
 		<?php do_atomic( 'before_content' ); // Before content hook ?>
 
 		<div class="archive-info date-info">
-			<h1 class="archive-title date-title"><?php the_time( __( 'F jS, Y', 'hybrid' ) ); ?></h1>
+			<h1 class="archive-title date-title"><?php the_time( __( 'F jS, Y', hybrid_get_textdomain() ) ); ?></h1>
 
 			<div class="archive-description date-description">
 				<p>
-				<?php printf( __( 'You are browsing the archive for %1$s.', 'hybrid' ), get_the_time( __( 'F jS, Y', 'hybrid' ) ) ); ?>
+				<?php printf( __( 'You are browsing the archive for %1$s.', hybrid_get_textdomain() ), get_the_time( __( 'F jS, Y', hybrid_get_textdomain() ) ) ); ?>
 				</p>
 			</div><!-- .archive-description .date-description -->
 
@@ -48,7 +48,7 @@ get_header(); ?>
 		<?php else: ?>
 
 			<p class="no-data">
-				<?php _e( 'Apologies, but no results were found.', 'hybrid' ); ?>
+				<?php _e( 'Apologies, but no results were found.', hybrid_get_textdomain() ); ?>
 			</p><!-- .no-data -->
 
 		<?php endif; ?>
