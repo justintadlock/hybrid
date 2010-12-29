@@ -2,16 +2,15 @@
 /**
  * Template Name: Archives
  *
- * This will list your categories and monthly archives by default.
- * @link http://themehybrid.com/themes/hybrid/page-templates/archives
- *
- * Alternately, you can activate an archives plugin.
- * @link http://justinblanton.com/projects/smartarchives
- * @link http://wordpress.org/extend/plugins/clean-archives-reloaded
- * @link http://www.geekwithlaptop.com/projects/clean-archives
+ * This will list your categories and monthly archives by default.  Alternatively, you can activate 
+ * an archives plugin.
  *
  * @package Hybrid
  * @subpackage Template
+ * @link http://themehybrid.com/themes/hybrid/page-templates/archives
+ * @link http://justinblanton.com/projects/smartarchives
+ * @link http://wordpress.org/extend/plugins/clean-archives-reloaded
+ * @link http://www.geekwithlaptop.com/projects/clean-archives
  */
 
 get_header(); // Loads the header.php template. ?>
@@ -62,7 +61,7 @@ get_header(); // Loads the header.php template. ?>
 
 			<?php do_atomic( 'after_singular' ); // hybrid_after_singular ?>
 
-			<?php comments_template( '/comments.php', true ); ?>
+			<?php comments_template( '/comments.php', true ); // Loads the comments.php template ?>
 
 			<?php endwhile; ?>
 

@@ -3,10 +3,10 @@
  * Primary Menu Template
  *
  * Displays the Primary Menu if it has active menu items.
- * @link http://themehybrid.com/themes/hybrid/menus
  *
  * @package Hybrid
  * @subpackage Template
+ * @link http://themehybrid.com/themes/hybrid/menus
  */
 
 if ( has_nav_menu( 'primary' ) ) : ?>

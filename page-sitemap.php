@@ -4,10 +4,11 @@
  *
  * The Sitemap template is a page template that creates and HTML-based sitemap of your
  * site, listing nearly every page of your site. It lists your feeds, pages, archives, and posts.
- * @link http://themehybrid.com/themes/hybrid/page-templates/sitemap
  *
  * @package Hybrid
  * @subpackage Template
+ * @link http://themehybrid.com/themes/hybrid/page-templates/sitemap
+ * @deprecated 0.9.0 This template will eventually be moved to the Hybrid page templates pack.
  */
 
 get_header(); // Loads the header.php template. ?>
@@ -100,7 +101,7 @@ get_header(); // Loads the header.php template. ?>
 
 			<?php do_atomic( 'after_singular' ); // hybrid_after_singular ?>
 
-			<?php comments_template( '/comments.php', true ); ?>
+			<?php comments_template( '/comments.php', true ); // Loads the comments.php template ?>
 
 			<?php endwhile; ?>
 

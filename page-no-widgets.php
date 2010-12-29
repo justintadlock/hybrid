@@ -3,10 +3,11 @@
  * Template Name: No Widgets
  *
  * A template to use on pages that disables widgets in all widget areas.
- * @link http://themehybrid.com/themes/hybrid/page-templates/no-widgets
  *
  * @package Hybrid
  * @subpackage Template
+ * @deprecated 0.9.0 This template will eventually be moved to the Hybrid page templates pack.
+ * @link http://themehybrid.com/themes/hybrid/page-templates/no-widgets
  */
 
 get_header(); // Loads the header.php template. ?>
@@ -32,7 +33,7 @@ get_header(); // Loads the header.php template. ?>
 
 			<?php do_atomic( 'after_singular' ); // hybrid_after_singular ?>
 
-			<?php comments_template( '/comments.php', true ); ?>
+			<?php comments_template( '/comments.php', true ); // Loads the comments.php template ?>
 
 			<?php endwhile; ?>
 

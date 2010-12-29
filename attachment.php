@@ -5,11 +5,11 @@
  * The attachment template is a general template that displays attachments if no other 
  * attachment-type template is found.  Also see application.php, audio.php, image.php, 
  * text.php, and video.php.
- * @link http://themehybrid.com/themes/hybrid/attachments
- * @link http://codex.wordpress.org/Using_Image_and_File_Attachments
  *
  * @package Hybrid
  * @subpackage Template
+ * @link http://themehybrid.com/themes/hybrid/attachments
+ * @link http://codex.wordpress.org/Using_Image_and_File_Attachments
  */
 
 get_header(); // Loads the header.php template. ?>
@@ -44,10 +44,6 @@ get_header(); // Loads the header.php template. ?>
 
 					<?php the_content( sprintf( __( 'Continue reading %1$s', hybrid_get_textdomain() ), the_title( ' "', '"', false ) ) ); ?>
 
-					<p class="download">
-						<a href="<?php echo wp_get_attachment_url(); ?>" title="<?php the_title_attribute(); ?>" rel="enclosure" type="<?php echo get_post_mime_type(); ?>"><?php printf( __( 'Download &quot;%1$s&quot;', hybrid_get_textdomain() ), the_title( '<span class="fn">', '</span>', false) ); ?></a>
-					</p><!-- .download -->
-
 					<?php wp_link_pages( array( 'before' => '<p class="page-links pages">' . __( 'Pages:', hybrid_get_textdomain() ), 'after' => '</p>' ) ); ?>
 
 				</div><!-- .entry-content -->
@@ -65,7 +61,7 @@ get_header(); // Loads the header.php template. ?>
 
 			<?php do_atomic( 'after_singular' ); // hybrid_after_singular ?>
 
-			<?php comments_template( '/comments.php', true ); ?>
+			<?php comments_template( '/comments.php', true ); // Loads the comments.php template ?>
 
 			<?php endwhile; ?>
 

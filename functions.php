@@ -23,7 +23,7 @@
  * @version 0.9.0
  * @author Justin Tadlock <justin@justintadlock.com>
  * @copyright Copyright (c) 2008 - 2011, Justin Tadlock
- * @link http://themehybrid.com/themes/retro_fitted
+ * @link http://themehybrid.com/themes/hybrid
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  */
 

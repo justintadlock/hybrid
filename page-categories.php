@@ -4,10 +4,11 @@
  *
  * The categories template is a page template that lists your categories along with a link 
  * to the each category's RSS feed and post count.
- * @link http://themehybrid.com/themes/hybrid/page-templates/categories
  *
  * @package Hybrid
  * @subpackage Template
+ * @link http://themehybrid.com/themes/hybrid/page-templates/categories
+ * @deprecated 0.9.0 This template will eventually be moved to the Hybrid page templates pack.
  */
 
 get_header(); // Loads the header.php template. ?>
@@ -40,7 +41,7 @@ get_header(); // Loads the header.php template. ?>
 
 			<?php do_atomic( 'after_singular' ); // hybrid_after_singular ?>
 
-			<?php comments_template( '/comments.php', true ); ?>
+			<?php comments_template( '/comments.php', true ); // Loads the comments.php template ?>
 
 			<?php endwhile; ?>
 

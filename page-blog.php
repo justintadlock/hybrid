@@ -4,10 +4,10 @@
  *
  * If you want to set up an alternate blog page, just use this template for your page.
  * This template shows your latest posts.
- * @link http://themehybrid.com/themes/hybrid/page-templates/blog
  *
  * @package Hybrid
  * @subpackage Template
+ * @link http://themehybrid.com/themes/hybrid/page-templates/blog
  * @deprecated 0.9.0 Users should no longer be using this template. 'home.php' is used to show posts.
  */
 

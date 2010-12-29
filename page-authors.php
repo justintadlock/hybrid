@@ -4,10 +4,11 @@
  *
  * The Authors page template is for listing the authors of your site.  It shows each author's 
  * biographical information and avatar while linking the author's archive page.
- * @link http://themehybrid.com/themes/hybrid/page-templates/authors
  *
  * @package Hybrid
  * @subpackage Template
+ * @link http://themehybrid.com/themes/hybrid/page-templates/authors
+ * @deprecated 0.9.0 This template will eventually be moved to the Hybrid page templates pack.
  */
 
 get_header(); // Loads the header.php template. ?>
@@ -60,7 +61,7 @@ get_header(); // Loads the header.php template. ?>
 
 			<?php do_atomic( 'after_singular' ); // hybrid_after_singular ?>
 
-			<?php comments_template( '/comments.php', true ); ?>
+			<?php comments_template( '/comments.php', true ); // Loads the comments.php template ?>
 
 			<?php endwhile; ?>
 

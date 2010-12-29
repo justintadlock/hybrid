@@ -7,11 +7,9 @@
  * is active, its widgets will be displayed instead. This allows users to customize their error
  * pages in any way they want.
  *
- * For more information on how WordPress handles 404 errors:
- * @link http://codex.wordpress.org/Creating_an_Error_404_Page
- *
  * @package Hybrid
  * @subpackage Template
+ * @link http://codex.wordpress.org/Creating_an_Error_404_Page
  */
 
 @header( 'HTTP/1.1 404 Not found', true, 404 );

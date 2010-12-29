@@ -4,10 +4,10 @@
  *
  * The bookmarks template is a page template that displays a list of all your bookmarks/links
  * by link category below the main content of the page.
- * @link http://themehybrid.com/themes/hybrid/page-templates/bookmarks
  *
  * @package Hybrid
  * @subpackage Template
+ * @link http://themehybrid.com/themes/hybrid/page-templates/bookmarks
  */
 
 get_header(); // Loads the header.php template. ?>
@@ -50,7 +50,7 @@ get_header(); // Loads the header.php template. ?>
 
 			<?php do_atomic( 'after_singular' ); // hybrid_after_singular ?>
 
-			<?php comments_template( '/comments.php', true ); ?>
+			<?php comments_template( '/comments.php', true ); // Loads the comments.php template ?>
 
 			<?php endwhile; ?>
 

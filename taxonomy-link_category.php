@@ -15,15 +15,7 @@ get_header(); // Loads the header.php template. ?>
 
 		<?php do_atomic( 'before_content' ); // hybrid_before_content ?>
 
-		<div class="archive-info taxonomy-info">
-
-			<h1 class="archive-title taxonomy-title"><?php $term = get_term_by( 'slug', get_query_var( 'term' ), get_query_var( 'taxonomy' ) ); echo $term->name; ?></h1>
-
-			<div class="archive-description taxonomy-description">
-				<?php echo term_description( '', get_query_var( 'taxonomy' ) ); ?>
-			</div><!-- .archive-description -->
-
-		</div><!-- .archive-info -->
+		<?php get_template_part( 'loop-meta' ); // Loads the loop-meta.php template. ?>
 
 		<div class="<?php hybrid_entry_class(); ?>">
 
@@ -31,7 +23,9 @@ get_header(); // Loads the header.php template. ?>
 
 			<div class="entry-content">
 
-				<?php $args = array(
+				<?php $term = get_term_by( 'slug', get_query_var( 'term' ), get_query_var( 'taxonomy' ) );
+
+				$args = array(
 					'title_li' => false,
 					'title_before' => false,
 					'title_after' => false,

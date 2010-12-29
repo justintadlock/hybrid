@@ -18,7 +18,7 @@
 			<h1 class="loop-title"><?php echo get_post_field( 'post_title', $wp_query->get_queried_object_id() ); ?></h1>
 		</div><!-- .loop-meta -->
 
-	<?php if ( is_category() ) : ?>
+	<?php elseif ( is_category() ) : ?>
 
 		<div class="loop-meta archive-info category-info">
 

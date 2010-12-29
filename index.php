@@ -2,12 +2,12 @@
 /**
  * Index Template
  *
- * This template should not be shown.  It is a placeholder.
- * Specific templates for each type of content are available.
- * @link http://themehybrid.com/themes/hybrid/template-hierarchy
+ * This template should not be shown.  It is a placeholder. Specific templates for each type 
+ * of content are available.
  *
  * @package Hybrid
  * @subpackage Template
+ * @link http://themehybrid.com/themes/hybrid/template-hierarchy
  */
 
 get_header(); // Loads the header.php template. ?>
@@ -35,7 +35,7 @@ get_header(); // Loads the header.php template. ?>
 
 				<?php do_atomic( 'after_singular' ); // hybrid_after_singular ?>
 
-				<?php comments_template( '/comments.php', true ); ?>
+				<?php comments_template( '/comments.php', true ); // Loads the comments.php template ?>
 
 			<?php } ?>
 

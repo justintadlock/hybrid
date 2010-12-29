@@ -4,10 +4,11 @@
  *
  * The Widgets template is a page template that is completely widgetized. It houses the 
  * 'Widgets Template' widget area. Customizations to this page should be done through widgets.
- * @link http://themehybrid.com/themes/hybrid/page-templates/widgets
  *
  * @package Hybrid
  * @subpackage Template
+ * @link http://themehybrid.com/themes/hybrid/page-templates/widgets
+ * @deprecated 0.9.0 This template will eventually be moved to the Hybrid page templates pack.
  */
 
 get_header(); // Loads the header.php template. ?>
@@ -26,7 +27,7 @@ get_header(); // Loads the header.php template. ?>
 
 			<?php do_atomic( 'after_singular' ); // hybrid_after_singular ?>
 
-			<?php comments_template( '/comments.php', true ); ?>
+			<?php comments_template( '/comments.php', true ); // Loads the comments.php template ?>
 
 			<?php endwhile; ?>
 

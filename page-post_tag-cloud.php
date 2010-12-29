@@ -4,10 +4,11 @@
  *
  * The Tags template is a page template that displays a tag cloud of your post_tag (taxonomy)
  * terms, linking to each term's archive.
- * @link http://themehybrid.com/themes/hybrid/page-templates/tags
  *
  * @package Hybrid
  * @subpackage Template
+ * @link http://themehybrid.com/themes/hybrid/page-templates/tags
+ * @deprecated 0.9.0 This template will eventually be moved to the Hybrid page templates pack.
  */
 
 get_header(); // Loads the header.php template. ?>
@@ -40,7 +41,7 @@ get_header(); // Loads the header.php template. ?>
 
 			<?php do_atomic( 'after_singular' ); // hybrid_after_singular ?>
 
-			<?php comments_template( '/comments.php', true ); ?>
+			<?php comments_template( '/comments.php', true ); // Loads the comments.php template ?>
 
 			<?php endwhile; ?>
 
