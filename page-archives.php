@@ -14,17 +14,17 @@
  * @subpackage Template
  */
 
-get_header(); ?>
+get_header(); // Loads the header.php template. ?>
 
 	<div id="content" class="hfeed content">
 
-		<?php do_atomic( 'before_content' ); // Before content hook ?>
+		<?php do_atomic( 'before_content' ); // hybrid_before_content ?>
 
 		<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
 
 			<div id="post-<?php the_ID(); ?>" class="<?php hybrid_entry_class(); ?>">
 
-				<?php do_atomic( 'before_entry' ); // Before entry hook ?>
+				<?php do_atomic( 'before_entry' ); // hybrid_before_entry ?>
 
 				<div class="entry-content">
 
@@ -56,11 +56,11 @@ get_header(); ?>
 
 				</div><!-- .entry-content -->
 
-				<?php do_atomic( 'after_entry' ); // After entry hook ?>
+				<?php do_atomic( 'after_entry' ); // hybrid_after_entry ?>
 
 			</div><!-- .hentry -->
 
-			<?php do_atomic( 'after_singular' ); // After singular hook ?>
+			<?php do_atomic( 'after_singular' ); // hybrid_after_singular ?>
 
 			<?php comments_template( '/comments.php', true ); ?>
 
@@ -68,14 +68,12 @@ get_header(); ?>
 
 		<?php else: ?>
 
-			<p class="no-data">
-				<?php _e( 'Apologies, but no results were found.', hybrid_get_textdomain() ); ?>
-			</p><!-- .no-data -->
+			<?php get_template_part( 'loop-error' ); // Loads the loop-error.php template. ?>
 
 		<?php endif; ?>
 
-		<?php do_atomic( 'after_content' ); // After content hook ?>
+		<?php do_atomic( 'after_content' ); // hybrid_after_content ?>
 
 	</div><!-- .content .hfeed -->
 
-<?php get_footer(); ?>
+<?php get_footer(); // Loads the footer.php template. ?>

@@ -12,21 +12,35 @@
  * @subpackage Template
  */
 
-get_header(); ?>
+get_header(); // Loads the header.php template. ?>
 
 	<div id="content" class="hfeed content">
 
-		<?php do_atomic( 'before_content' ); // Before content hook ?>
+		<?php do_atomic( 'before_content' ); // hybrid_before_content ?>
 
 		<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
 
 			<div id="post-<?php the_ID(); ?>" class="<?php hybrid_entry_class(); ?>">
 
-				<?php do_atomic( 'before_entry' ); // Before entry hook ?>
+				<?php do_atomic( 'before_entry' ); // hybrid_before_entry ?>
 
 				<div class="entry-content">
 
-					<?php hybrid_attachment(); ?>
+					<?php if ( wp_attachment_is_image( get_the_ID() ) ) : ?>
+
+						<p class="attachment-image">
+							<?php echo wp_get_attachment_image( get_the_ID(), 'full', false, array( 'class' => 'aligncenter' ) ); ?>
+						</p><!-- .attachment-image -->
+
+					<?php else : ?>
+
+						<?php hybrid_attachment(); // Function for handling non-image attachments. ?>
+
+						<p class="download">
+							<a href="<?php echo wp_get_attachment_url(); ?>" title="<?php the_title_attribute(); ?>" rel="enclosure" type="<?php echo get_post_mime_type(); ?>"><?php printf( __( 'Download &quot;%1$s&quot;', hybrid_get_textdomain() ), the_title( '<span class="fn">', '</span>', false) ); ?></a>
+						</p><!-- .download -->
+
+					<?php endif; ?>
 
 					<?php the_content( sprintf( __( 'Continue reading %1$s', hybrid_get_textdomain() ), the_title( ' "', '"', false ) ) ); ?>
 
@@ -38,11 +52,18 @@ get_header(); ?>
 
 				</div><!-- .entry-content -->
 
-				<?php do_atomic( 'after_entry' ); // After entry hook ?>
+				<?php if ( wp_attachment_is_image( get_the_ID() ) ) : ?>
+					<p class="navigation-attachment">
+						<span class="alignleft"><?php previous_image_link(); ?></span>
+						<span class="alignright"><?php next_image_link(); ?></span>
+					</p><!-- .navigation-attachment -->
+				<?php endif; ?>
+
+				<?php do_atomic( 'after_entry' ); // hybrid_after_entry ?>
 
 			</div><!-- .hentry -->
 
-			<?php do_atomic( 'after_singular' ); // After singular hook ?>
+			<?php do_atomic( 'after_singular' ); // hybrid_after_singular ?>
 
 			<?php comments_template( '/comments.php', true ); ?>
 
@@ -56,8 +77,8 @@ get_header(); ?>
 
 		<?php endif; ?>
 
-		<?php do_atomic( 'after_content' ); // After content hook ?>
+		<?php do_atomic( 'after_content' ); // hybrid_after_content ?>
 
 	</div><!-- .content .hfeed -->
 
-<?php get_footer(); ?>
+<?php get_footer(); // Loads the footer.php template. ?>

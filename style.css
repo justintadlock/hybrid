@@ -54,7 +54,7 @@ a:hover, a:active {
 
 /* Headers */
 h2, h3, h4, h5, h6 {
-	font-family: Georgia, Times, "Times New Roman", serif;
+	font-family: Arial, Verdana, sans-serif;
 	color: #000;
 	font-weight: bold;
 	}
@@ -179,10 +179,10 @@ th {
 	}
 
 /* Images */
-.post img {
-	max-width: 568px;
+.hentry img {
+	max-width: 610px;
 	height: auto;
-	padding: 5px;
+	padding: 4px;
 	border: 1px solid #ccc;
 	}
 img.alignleft, img.alignright {
@@ -206,9 +206,9 @@ img.wp-smiley {
 
 /* Captions [caption] */
 .wp-caption {
-	max-width: 576px;
+	max-width: 616px;
 	margin-top: 6px;
-	padding: 6px 1px 0 1px;
+	padding: 6px 1px 3px 1px;
 	border: 1px solid #ccc;
 	text-align: center;
 	}
@@ -221,7 +221,7 @@ img.wp-smiley {
 	color: #666;
 	}
 .wp-caption img {
-	max-width: 564px;
+	max-width: 604px;
 	margin: 0 auto;
 	padding: 0;
 	border: 1px solid #666;
@@ -249,7 +249,7 @@ img.wp-smiley {
 
 /* Blog title */
 #site-title {
-	font: italic normal normal 35px/35px Georgia, Times, "Times New Roman", serif;
+	font: normal normal bold 35px/35px Arial, Verdana, sans-serif;
 	margin: 0 0 10px 0;
 	}
 #site-title a {
@@ -333,11 +333,8 @@ img.wp-smiley {
 
 /* Entry title */
 .entry-title {
-	font-size: 24px;
-	line-height: 24px;
+	font: normal normal bold 24px/24px Arial, Verdana, sans-serif;
 	margin: 0 0 12px 0;
-	font-weight: normal;
-	font-style: italic;
 	}
 .archive .entry-title, .search .entry-title {
 	font-size: 21px;
@@ -421,8 +418,6 @@ p.page-links a {
 /* Widget titles */
 .widget-title {
 	font-size: 18px;
-	font-weight: normal;
-	font-style: italic;
 	color: #111;
 	}
 

@@ -11,28 +11,28 @@
  * @subpackage Template
  */
 ?>
-		<?php do_atomic( 'after_container' ); // After container hook ?>
+		<?php do_atomic( 'after_container' ); // hybrid_after_container ?>
 
 	</div><!-- #container -->
 
 	<div id="footer-container">
 
-		<?php do_atomic( 'before_footer' ); // Before footer hook ?>
+		<?php do_atomic( 'before_footer' ); // hybrid_before_footer ?>
 
 		<div id="footer">
 
-			<?php do_atomic( 'footer' ); // Hybrid footer hook ?>
+			<?php do_atomic( 'footer' ); // hybrid_footer ?>
 
 		</div><!-- #footer -->
 
-		<?php do_atomic( 'after_footer' ); // After footer hook ?>
+		<?php do_atomic( 'after_footer' ); // hybrid_after_footer ?>
 
 	</div><!-- #footer-container -->
 
 </div><!-- #body-container -->
 
-<?php do_atomic( 'after_html' ); // After HTML hook ?>
-<?php wp_footer(); // WordPress footer hook ?>
+<?php do_atomic( 'after_html' ); // hybrid_after_html ?>
+<?php wp_footer(); // wp_footer ?>
 
 </body>
 </html>

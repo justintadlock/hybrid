@@ -10,11 +10,11 @@
  * @subpackage Template
  */
 
-get_header(); ?>
+get_header(); // Loads the header.php template. ?>
 
 	<div id="content" class="hfeed content">
 
-		<?php do_atomic( 'before_content' ); // Before content hook ?>
+		<?php do_atomic( 'before_content' ); // hybrid_before_content ?>
 
 		<?php dynamic_sidebar( 'widgets-template' ); ?>
 
@@ -24,7 +24,7 @@ get_header(); ?>
 
 			<?php edit_post_link( __( 'Edit', hybrid_get_textdomain() ), '<p class="entry-meta"><span class="edit">', '</span></p>' ); ?>
 
-			<?php do_atomic( 'after_singular' ); // After singular hook ?>
+			<?php do_atomic( 'after_singular' ); // hybrid_after_singular ?>
 
 			<?php comments_template( '/comments.php', true ); ?>
 
@@ -32,14 +32,12 @@ get_header(); ?>
 
 		<?php else: ?>
 
-			<p class="no-data">
-				<?php _e( 'Apologies, but no results were found.', hybrid_get_textdomain() ); ?>
-			</p><!-- .no-data -->
+			<?php get_template_part( 'loop-error' ); // Loads the loop-error.php template. ?>
 
 		<?php endif; ?>
 
-		<?php do_atomic( 'after_content' ); // After content hook ?>
+		<?php do_atomic( 'after_content' ); // hybrid_after_content ?>
 
 	</div><!-- .content .hfeed -->
 
-<?php get_footer(); ?>
+<?php get_footer(); // Loads the footer.php template. ?>

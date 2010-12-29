@@ -8,21 +8,15 @@
  * @package Hybrid
  * @subpackage Template
  */
-	if ( 'comments.php' == basename( $_SERVER['SCRIPT_FILENAME'] ) )
-		die( __( 'Please do not load this page directly. Thanks!', hybrid_get_textdomain() ) );
 
-	if ( !post_type_supports( get_post_type(), 'comments' ) || ( !have_comments() && !comments_open() && !pings_open() ) )
-		return;
+/* Kill the page if trying to access this template directly. */
+if ( 'comments.php' == basename( $_SERVER['SCRIPT_FILENAME'] ) )
+	die( __( 'Please do not load this page directly. Thanks!', hybrid_get_textdomain() ) );
 
-	if ( post_password_required() ) : ?>
-
-		<h3 class="comments-header"><?php _e( 'Password Protected', hybrid_get_textdomain() ); ?></h3>
-
-		<p class="alert password-protected">
-			<?php _e( 'Enter the password to view comments.', hybrid_get_textdomain() ); ?>
-		</p><!-- .alert .password-protected -->
-
-	<?php endif; ?>
+/* If a post password is required or no comments are given and comments/pings are closed, return. */
+if ( post_password_required() || ( !have_comments() && !comments_open() && !pings_open() ) )
+	return;
+?>
 
 <div id="comments-template">
 
@@ -41,7 +35,7 @@
 			<?php do_atomic( 'after_comment_list' ); // After comment list hook ?>
 
 			<?php if ( get_option( 'page_comments' ) ) : ?>
-				<div class="comment-navigation paged-navigation">
+				<div class="comment-navigation comment-pagination paged-navigation">
 					<?php paginate_comments_links(); ?>
 				</div><!-- .comment-navigation -->
 			<?php endif; ?>

@@ -11,11 +11,11 @@
  * @deprecated 0.9.0 Users should no longer be using this template. 'home.php' is used to show posts.
  */
 
-get_header(); ?>
+get_header(); // Loads the header.php template. ?>
 
 	<div id="content" class="hfeed content">
 
-		<?php do_atomic( 'before_content' ); // Before content hook ?>
+		<?php do_atomic( 'before_content' ); // hybrid_before_content ?>
 
 		<?php
 			$wp_query = new WP_Query();
@@ -27,31 +27,29 @@ get_header(); ?>
 
 			<div id="post-<?php the_ID(); ?>" class="<?php hybrid_entry_class(); ?>">
 
-				<?php do_atomic( 'before_entry' ); // Before entry hook ?>
+				<?php do_atomic( 'before_entry' ); // hybrid_before_entry ?>
 
 				<div class="entry-content">
 					<?php the_content( sprintf( __( 'Continue reading %1$s', hybrid_get_textdomain() ), the_title( ' "', '"', false ) ) ); ?>
 					<?php wp_link_pages( array( 'before' => '<p class="page-links pages">' . __( 'Pages:', hybrid_get_textdomain() ), 'after' => '</p>' ) ); ?>
 				</div><!-- .entry-content -->
 
-				<?php do_atomic( 'after_entry' ); // After entry hook ?>
+				<?php do_atomic( 'after_entry' ); // hybrid_after_entry ?>
 
 			</div><!-- .hentry -->
 
 			<?php endwhile; ?>
 
-			<?php do_atomic( 'after_singular' ); // After singular hook ?>
+			<?php do_atomic( 'after_singular' ); // hybrid_after_singular ?>
 
 		<?php else: ?>
 
-			<p class="no-data">
-				<?php _e( 'Apologies, but no results were found.', hybrid_get_textdomain() ); ?>
-			</p><!-- .no-data -->
+			<?php get_template_part( 'loop-error' ); // Loads the loop-error.php template. ?>
 
 		<?php endif; ?>
 
-		<?php do_atomic( 'after_content' ); // After content hook ?>
+		<?php do_atomic( 'after_content' ); // hybrid_after_content ?>
 
 	</div><!-- .content .hfeed -->
 
-<?php get_footer(); ?>
+<?php get_footer(); // Loads the footer.php template. ?>

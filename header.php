@@ -22,30 +22,30 @@
 <link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>" />
 
 <?php do_atomic( 'head' ); // @deprecated 0.9. Use 'wp_head'. ?>
-<?php wp_head(); // WP head hook ?>
+<?php wp_head(); // wp_head ?>
 
 </head>
 
 <body class="<?php hybrid_body_class(); ?>">
 
-<?php do_atomic( 'before_html' ); // Before HTML hook ?>
+<?php do_atomic( 'before_html' ); // hybrid_before_html ?>
 
 <div id="body-container">
 
-	<?php do_atomic( 'before_header' ); // Before header hook ?>
+	<?php do_atomic( 'before_header' ); // hybrid_before_header ?>
 
 	<div id="header-container">
 
 		<div id="header">
 
-			<?php do_atomic( 'header' ); // Header hook ?>
+			<?php do_atomic( 'header' ); // hybrid_header ?>
 
 		</div><!-- #header -->
 
 	</div><!-- #header-container -->
 
-	<?php do_atomic( 'after_header' ); // After header hook ?>
+	<?php do_atomic( 'after_header' ); // hybrid_after_header ?>
 
 	<div id="container">
 
-		<?php do_atomic( 'before_container' ); // Before container hook ?>
+		<?php do_atomic( 'before_container' ); // hybrid_before_container ?>

@@ -10,37 +10,27 @@
  * @subpackage Template
  */
 
-get_header(); ?>
+get_header(); // Loads the header.php template. ?>
 
 	<div id="content" class="hfeed content">
 
-		<?php do_atomic( 'before_content' ); // Before content hook ?>
+		<?php do_atomic( 'before_content' ); // hybrid_before_content ?>
 
-		<div class="archive-info">
-
-			<h1 class="archive-title"><?php _e( 'Archives', hybrid_get_textdomain() ); ?></h1>
-
-			<div class="archive-description">
-				<p>
-				<?php _e( 'You are browsing the site archives.', hybrid_get_textdomain() ); ?>
-				</p>
-			</div><!-- .archive-description -->
-
-		</div><!-- .archive-info -->
+		<?php get_template_part( 'loop-meta' ); // Loads the loop-meta.php template. ?>
 
 		<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
 
 			<div id="post-<?php the_ID(); ?>" class="<?php hybrid_entry_class(); ?>">
 
-				<?php get_the_image( array( 'custom_key' => array( 'Thumbnail' ), 'size' => 'thumbnail' ) ); ?>
+				<?php get_the_image( array( 'meta_key' => 'Thumbnail', 'size' => 'thumbnail' ) ); ?>
 
-				<?php do_atomic( 'before_entry' ); // Before entry hook ?>
+				<?php do_atomic( 'before_entry' ); // hybrid_before_entry ?>
 
 				<div class="entry-summary">
 					<?php the_excerpt(); ?>
 				</div><!-- .entry-summary -->
 
-				<?php do_atomic( 'after_entry' ); // After entry hook ?>
+				<?php do_atomic( 'after_entry' ); // hybrid_after_entry ?>
 
 			</div><!-- .hentry -->
 
@@ -48,14 +38,12 @@ get_header(); ?>
 
 		<?php else: ?>
 
-			<p class="no-data">
-				<?php _e( 'Apologies, but no results were found.', hybrid_get_textdomain() ); ?>
-			</p><!-- .no-data -->
+			<?php get_template_part( 'loop-error' ); // Loads the loop-error.php template. ?>
 
 		<?php endif; ?>
 
-		<?php do_atomic( 'after_content' ); // After content hook ?>
+		<?php do_atomic( 'after_content' ); // hybrid_after_content ?>
 
 	</div><!-- .content .hfeed -->
 
-<?php get_footer(); ?>
+<?php get_footer(); // Loads the footer.php template. ?>

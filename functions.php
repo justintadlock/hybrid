@@ -38,7 +38,7 @@ add_action( 'after_setup_theme', 'hybrid_theme_setup_theme' );
  * Theme setup function.  This function adds support for theme features and defines the default theme
  * actions and filters.
  *
- * @since 0.9
+ * @since 0.9.0
  */
 function hybrid_theme_setup_theme() {
 	global $content_width;

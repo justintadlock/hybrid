@@ -9,11 +9,11 @@
  * @subpackage Template
  */
 
-get_header(); ?>
+get_header(); // Loads the header.php template. ?>
 
 	<div id="content" class="hfeed content">
 
-		<?php do_atomic( 'before_content' ); // Before content hook ?>
+		<?php do_atomic( 'before_content' ); // hybrid_before_content ?>
 
 		<div class="archive-info taxonomy-info">
 
@@ -27,7 +27,7 @@ get_header(); ?>
 
 		<div class="<?php hybrid_entry_class(); ?>">
 
-			<?php do_atomic( 'before_entry' ); // Before entry hook ?>
+			<?php do_atomic( 'before_entry' ); // hybrid_before_entry ?>
 
 			<div class="entry-content">
 
@@ -50,12 +50,12 @@ get_header(); ?>
 
 			</div><!-- .entry-content -->
 
-			<?php do_atomic( 'after_entry' ); // After entry hook ?>
+			<?php do_atomic( 'after_entry' ); // hybrid_after_entry ?>
 
 		</div><!-- .hentry -->
 
-		<?php do_atomic( 'after_content' ); // After content hook ?>
+		<?php do_atomic( 'after_content' ); // hybrid_after_content ?>
 
 	</div><!-- .content .hfeed -->
 
-<?php get_footer(); ?>
+<?php get_footer(); // Loads the footer.php template. ?>
