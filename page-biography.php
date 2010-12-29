@@ -25,8 +25,6 @@ get_header(); // Loads the header.php template. ?>
 
 				<div class="entry-content">
 
-				<?php if ( $page != $wp_query->get( 'page' ) ) : ?>
-
 					<div id="hcard-<?php the_author_meta( 'user_nicename' ); ?>" class="author-profile vcard">
 
 						<a href="<?php echo get_author_posts_url( get_the_author_meta( 'ID' ) ); ?>" title="<?php the_author_meta( 'display_name' ); ?>">
@@ -62,8 +60,6 @@ get_header(); // Loads the header.php template. ?>
 						</ul><!-- .xoxo -->
 
 					</div><!-- .author-profile .vcard -->
-
-				<?php endif; ?>
 
 					<?php the_content(); ?>
 					<?php wp_link_pages( array( 'before' => '<p class="page-links pages">' . __( 'Pages:', hybrid_get_textdomain() ), 'after' => '</p>' ) ); ?>
