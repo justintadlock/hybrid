@@ -6,7 +6,6 @@
  *
  * @package Hybrid
  * @subpackage Template
- * @deprecated 0.9.0 This template will eventually be moved to the Hybrid page templates pack.
  * @link http://themehybrid.com/themes/hybrid/page-templates/no-widgets
  */
 
