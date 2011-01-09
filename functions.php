@@ -177,7 +177,7 @@ function hybrid_theme_body_class( $classes ) {
  */
 function hybrid_breadcrumb() {
 	if ( current_theme_supports( 'breadcrumb-trail' ) )
-		breadcrumb_trail( array( 'front_page' => false, 'singular_post_taxonomy' => 'category' ) );
+		breadcrumb_trail( array( 'front_page' => false ) );
 }
 
 /**
