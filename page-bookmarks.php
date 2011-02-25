@@ -8,6 +8,7 @@
  * @package Hybrid
  * @subpackage Template
  * @link http://themehybrid.com/themes/hybrid/page-templates/bookmarks
+ * @deprecated 0.9.0 Template will be renamed page-template-bookmarks.php to comply with theme repo guidelines.
  */
 
 get_header(); // Loads the header.php template. ?>

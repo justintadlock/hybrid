@@ -27,7 +27,9 @@ get_header(); // Loads the header.php template. ?>
 
 					<?php the_content(); ?>
 
-					<?php foreach ( get_users_of_blog() as $author ) : ?>
+					<?php $users = get_users(); ?>
+
+					<?php foreach ( $users as $author ) : ?>
 
 						<?php $user = new WP_User( $author->ID ); ?>
 

@@ -7,10 +7,7 @@
  *
  * @package Hybrid
  * @subpackage Template
- * @link http://themehybrid.com/themes/hybrid/page-templates/archives
- * @link http://justinblanton.com/projects/smartarchives
- * @link http://wordpress.org/extend/plugins/clean-archives-reloaded
- * @link http://www.geekwithlaptop.com/projects/clean-archives
+ * @deprecated 0.9.0 Template will be renamed page-template-archives.php to comply with theme repo guidelines.
  */
 
 get_header(); // Loads the header.php template. ?>

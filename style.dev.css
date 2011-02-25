@@ -46,26 +46,17 @@ a:hover, a:active {
 	}
 
 /* Headers */
-h2, h3, h4, h5, h6 {
+h1, h2, h3, h4, h5, h6 {
 	font-family: Arial, Verdana, sans-serif;
 	color: #000;
 	font-weight: bold;
 	}
-h2 {
-	font-size: 21px;
-	}
-h3 {
-	font-size: 19px;
-	}
-h4 {
-	font-size: 17px;
-	}
-h5 {
-	font-size: 15px;
-	}
-h6 {
-	font-size: 13px;
-	}
+h1 { font-size: 24px; }
+h2 { font-size: 21px; }
+h3 { font-size: 19px; }
+h4 { font-size: 17px; }
+h5 { font-size: 15px; }
+h6 { font-size: 13px; }
 
 /* Lists */
 ul {
@@ -178,6 +169,9 @@ th {
 	padding: 4px;
 	border: 1px solid #ccc;
 	}
+.no-widgets .hentry img {
+	max-width: 950px;
+	}
 img.alignleft, img.alignright {
 	margin-bottom: 10px;
 	}
@@ -219,6 +213,12 @@ img.wp-smiley {
 	padding: 0;
 	border: 1px solid #666;
 	}
+.no-widgets .wp-caption {
+	max-width: 956px;
+	}
+.no-widgets .wp-caption img {
+	max-width: 946px;
+	}
 
 /* Gallery [gallery] */
 .gallery img {
@@ -231,7 +231,7 @@ img.wp-smiley {
 	width: 100px;
 	height: 100px;
 	margin: 5px 15px 0 0;
-	padding: 5px;
+	padding: 4px;
 	border: 1px solid #ccc;
 	}
 

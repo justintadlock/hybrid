@@ -50,12 +50,6 @@ if ( post_password_required() || ( !have_comments() && !comments_open() && !ping
 				<?php printf( __( 'Comments are closed, but <a href="%1$s" title="Trackback URL for this post">trackbacks</a> and pingbacks are open.', hybrid_get_textdomain() ), trackback_url( '0' ) ); ?>
 			</p><!-- .comments-closed .pings-open -->
 
-		<?php elseif ( !comments_open() ) : ?>
-
-			<p class="comments-closed">
-				<?php _e( 'Comments are closed.', hybrid_get_textdomain() ); ?>
-			</p><!-- .comments-closed -->
-
 		<?php endif; ?>
 
 	<?php endif; ?>

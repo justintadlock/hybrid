@@ -64,7 +64,10 @@ function hybrid_theme_setup_theme() {
 	add_theme_support( 'custom-field-series' );
 	add_theme_support( 'get-the-image' );
 	add_theme_support( 'post-stylesheets' );
-	add_theme_support( 'cleaner-gallery' );
+
+	/* Only add cleaner gallery support if not using child theme. Eventually, all child themes should support this. */
+	if ( 'hybrid' == get_template() )
+		add_theme_support( 'cleaner-gallery' );
 
 	/* Add support for WordPress features. */
 	add_theme_support( 'automatic-feed-links' );
@@ -122,13 +125,38 @@ function hybrid_theme_setup_theme() {
 }
 
 /**
- * Function for adding extra sidebars.
+ * Register additional sidebars that are not a part of the core framework and are exclusive to this
+ * theme.
  *
  * @since 0.9.0
  */
 function hybrid_theme_register_sidebars() {
-	register_sidebar( array( 'id' => 'widgets-template', 'name' => __( 'Widgets Template', hybrid_get_textdomain() ), 'description' => __( 'Used as the content of the Widgets page template.', hybrid_get_textdomain() ), 'before_widget' => '<div id="%1$s" class="widget %2$s widget-%2$s"><div class="widget-inside">', 'after_widget' => '</div></div>', 'before_title' => '<h3 class="widget-title">', 'after_title' => '</h3>' ) );
-	register_sidebar( array( 'id' => 'error-404-template', 'name' => __( '404 Template', hybrid_get_textdomain() ), 'description' => __( 'Replaces the default 404 error page content.', hybrid_get_textdomain() ), 'before_widget' => '<div id="%1$s" class="widget %2$s widget-%2$s"><div class="widget-inside">', 'after_widget' => '</div></div>', 'before_title' => '<h3 class="widget-title">', 'after_title' => '</h3>' ) );
+
+	/* Register the widgets template sidebar. */
+	register_sidebar(
+		array(
+			'id' => 'widgets-template',
+			'name' => __( 'Widgets Template', hybrid_get_textdomain() ),
+			'description' => __( 'Used as the content of the Widgets page template.', hybrid_get_textdomain() ),
+			'before_widget' => '<div id="%1$s" class="widget %2$s widget-%2$s"><div class="widget-inside">',
+			'after_widget' => '</div></div>',
+			'before_title' => '<h3 class="widget-title">',
+			'after_title' => '</h3>'
+		)
+	);
+
+	/* Register the 404 template sidebar. */
+	register_sidebar(
+		array(
+			'id' => 'error-404-template',
+			'name' => __( '404 Template', hybrid_get_textdomain() ),
+			'description' => __( 'Replaces the default 404 error page content.', hybrid_get_textdomain() ),
+			'before_widget' => '<div id="%1$s" class="widget %2$s widget-%2$s"><div class="widget-inside">',
+			'after_widget' => '</div></div>',
+			'before_title' => '<h3 class="widget-title">',
+			'after_title' => '</h3>'
+		)
+	);
 }
 
 /**
@@ -165,15 +193,14 @@ function hybrid_theme_body_class( $classes ) {
 	if ( in_array( 'primary-inactive', $classes ) && in_array( 'secondary-inactive', $classes ) && in_array( 'subsidiary-inactive', $classes ) )
 		$classes[] = 'no-widgets';
 
+	/* Return the array of classes. */
 	return $classes;
 }
 
 /**
- * Displays the breadcrumb trail.
+ * Displays the breadcrumb trail extension if it's supported.
  *
  * @since 0.1.0
- * @deprecated 0.5.0
- * @todo Find an elegant way to transition to breadcrumb_trail().
  */
 function hybrid_breadcrumb() {
 	if ( current_theme_supports( 'breadcrumb-trail' ) )
@@ -254,7 +281,9 @@ function hybrid_footer_insert() {
 }
 
 /**
- * Removes all widget areas on the No Widgets page template.
+ * Removes all widget areas on the No Widgets page/post template.  No widget templates should come in
+ * the form of $post_type-no-widgets.php.  This function also provides backwards compatibility with the old
+ * no-widgets.php template.
  *
  * @since 0.9.0
  */
@@ -263,9 +292,11 @@ function hybrid_theme_remove_sidebars( $sidebars_widgets ) {
 
 	if ( is_singular() ) {
 		$template = get_post_meta( $wp_query->post->ID, "_wp_{$wp_query->post->post_type}_template", true );
+
 		if ( 'no-widgets.php' == $template || "{$wp_query->post->post_type}-no-widgets.php" == $template )
 			$sidebars_widgets = array( false );
 	}
+
 	return $sidebars_widgets;
 }
 

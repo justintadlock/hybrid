@@ -2,31 +2,31 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
-<title>A guide to the Hybrid theme framework</title>
+<title>A guide to the Hybrid theme</title>
 
-<link rel="stylesheet" href="library/css/25px.css" type="text/css" media="screen" />
-<link rel="stylesheet" href="library/css/readme.css" type="text/css" media="screen" />
+<style type="text/css">body{width:750px;margin:36px auto 60px auto;font:16px/25px Georgia,Times,'Times New Roman',serif}a:link,a:visited{color:#2f6eb9;text-decoration:none}a:hover,a:active{text-decoration:underline}h1,h2,h3,h4,h5,h6{margin:40px 0 30px 0;color:#000;font-weight:bold;font-family:Arial,sans-serif}h1{margin-top:80px;font-size:2.2em}code{padding:0 3px;background:#eee}pre code{padding:0}pre{padding:9px;background:#eee;border:1px solid #ccc}ul{list-style:square}p.first{font-size:21px}p.second{font-size:15px}ul.space li{margin-bottom:10px}.section{overflow:hidden}.columns-2{float:left;width:350px;margin:0 0 21px 25px}.columns-3{float:left;width:230px;margin:0 0 21px 20px}</style>
 
 </head>
 <body>
 
 <h1>A guide to the Hybrid theme</h1>
 
-<p class="first"><em>Hybrid</em> is a user-friendly, search-engine optimized <em>theme framework</em>, featuring 15 custom page templates and 8 widget-ready areas, allowing you to create any type of site you want.</p>
+<p class="first"><em>Hybrid</em> is a user-friendly, search-engine optimized <em>parent theme</em>, featuring 15 custom page templates and 8 widget-ready areas, allowing you to create any type of site you want.</p>
 
-<p class="second">What this means is that the possibilities are endless.  It is about rethinking how WordPress themes <em>should</em> work.  It looks simple on the outside, but you can do nearly anything with enough creativity.  Everyone from first-time WordPress users to advanced developers and designers can take advantage of this theme framework.</p>
+<p class="second">What this means is that the possibilities are endless.  It is about rethinking how WordPress themes <em>should</em> work.  It looks simple on the outside, but you can do nearly anything with enough creativity.  Everyone from first-time WordPress users to advanced developers and designers can take advantage of this theme.</p>
 
 <h2>What is Hybrid?</h2>
 
-<p>I've been dabbling in the art of creating WordPress themes since 2005 and website design a couple of years longer than that. In that time, I've come to realize that the reuse of code is a cornerstone of good development practice. Why code the same things over and over when I can build off the same codebase, continually making it better?</p>
+<p>I've been dabbling in the art of creating WordPress themes since 2005 and Web site design a couple of years longer than that. In that time, I've come to realize that the reuse of code is a cornerstone of good development practice. Why code the same things over and over when I can build off the same codebase, continually making it better?</p>
 
-<p><em>Hybrid</em> is a parent theme that focuses on code reuse and upgradability.  What this means is that all of the core functionality is housed within a single theme.  And, anytime one wants to make a modification, it should be done within a child theme.  By doing this, the <em>Hybrid</em> parent theme can be upgraded (just like WordPress) without any loss of customizations.</p>
+<p><em>Hybrid</em> is a parent theme that focuses on code reuse and upgradability.  What this means is that all of the core functionality is housed within a single theme.  And, any time one wants to make a modification, it should be done within a child theme.  By doing this, the <em>Hybrid</em> parent theme can be upgraded (just like WordPress) without any loss of customizations.</p>
 
 <h2>Features</h2>
 
 <p>The theme has everything you need to get started building your site. Here's a list of some of the features:</p>
 
 <ul>
+	<li>Runs off the brilliant <a href="http://themehybrid.com/hybrid-core" title="Hybrid Core theme framework">Hybrid Core framework</a>.</li>
 	<li>Makes use of standard WordPress functions so that plugins will integrate easily.</li>
 	<li>Dynamic global, post, and comment <acronym title="Cascading Style Sheets">CSS</acronym> classes.</li>
 	<li>Fully localized, so you can run <em>Hybrid</em> in any language.</li>
@@ -36,8 +36,6 @@
 	<li>Theme settings page that allows you to add custom meta boxes and settings.</li>
 	<li>A redefined template hierarchy that makes larger sites easier to design for.</li>
 	<li>Ability to create custom templates for any post type in multiple ways.</li>
-	<li>Comes loaded with 15 custom page templates and an extra post template.</li>
-	<li>Easily add post-specific settings and not make users learn how to use custom fields.</li>
 	<li>Highly-configurable widgets that give you full control over their display.</li>
 	<li>Has the <a href="http://wordpress.org/extend/plugins/get-the-image" title="Get the Image WordPress plugin">Get the Image</a> plugin built in.</li>
 	<li>Has the <a href="http://wordpress.org/extend/plugins/breadcrumb-trail" title="Breadcrumb Trail WordPress plugin">Breadcrumb Trail</a> plugin built-in.</li>
@@ -51,7 +49,7 @@
 
 <h2>Child Themes</h2>
 
-<p>When I call <em>Hybrid</em> a theme framework, I mean it.  It is <em><strong>meant</strong></em> to be used as a base theme to build from.  What this allows us to do is extend it through child themes.</p>
+<p>When I call <em>Hybrid</em> a parent theme, I mean it.  It is <em><strong>meant</strong></em> to be used as a base theme to build from.  What this allows us to do is extend it through child themes.</p>
 
 <p>Yes, you can create your own theme.  Even if you're a total <em>noob</em> to WordPress!</p>
 
@@ -70,24 +68,10 @@
 
 <p>Now, you have your own theme!  Of course, you might want to style it.</p>
 
-<p>Here are a few stylesheets that will help you get started.  Just add this to your new <code>style.css</code> file.</p>
+<p>You can import the parent theme's (<em>Hybrid's</em>) default <acronym title="Cascading Style Sheets">CSS</acronym> by adding the following code and modifying from there.  Alternatively, you can start completely from scratch.</p>
 
-<pre><code>/* Get base 21px CSS */
-@import url('../hybrid/library/css/21px.css');
-
-/* Get a layout CSS */
-@import url('../hybrid/library/css/2c-l-fixed.css');
-
-/* Get the plugins CSS */
-@import url('../hybrid/library/css/plugins.css');
-
-/* Get the drop-downs CSS */
-@import url('../hybrid/library/css/drop-downs.css');
-
-/* Get default Hybrid CSS */
-@import url('../hybrid/library/css/screen.css');</code></pre>
-
-<p>The <code>21px.css</code> resets all browser defaults, gives you <code>21px</code> margins, and sets up some nice typography for you to start with.  The <code>2c-l-fixed.css</code> sets up a two-column layout with the content on the left.  The <code>plugins.css</code> sets some default styling for supported plugins.  The <code>drop-downs.css</code> gives you some base styling for drop-down menus.  The <code>screen.css</code> is the default theme <acronym title="Cascading Style Sheets">CSS</acronym> that you can overwrite.</p>
+<pre><code>/* Import the Hybrid parent theme styles. */
+@import url( '../hybrid/style.css' );</code></pre>
 
 <h2>Theme Support</h2>
 
@@ -95,44 +79,15 @@
 
 <p>We also have a vibrant community at the <a href="http://themehybrid.com/support" title="Theme Hybrid support forums">Theme Hybrid Support Forums</a> where you can get help with <em>Hybrid</em>-related issues.</p>
 
-<div class="section">
-	<h2>Frameworks &amp; Other Code</h2>
+<h2>Important Notes</h2>
 
-	<p>Hybrid owes a lot of thanks to several <acronym title="Cascading Style Sheets">CSS</acronym> frameworks and code other people have worked hard at putting together.  The default styles and extra stylesheets take ideas and code from many different frameworks and stylesheets.</p>
+<p><strong>Page Templates:</strong>  Many of the page templates currently begin with the prefix <code>page-</code>.  This may conflict with your pages by overwriting the default template.  For example, if you have a page named <em>Bookmarks</em>, the <code>page-bookmarks.php</code> template will be used.  Unfortunately, this was a feature added to WordPress <em>after</em> the establishment of a standard template-naming scheme for the theme.  These templates will eventually be renamed to have a prefix of <code>page-template-</code> to avoid the rare conflict.  Right now, the templates exist for backwards compatibility for the 1,000s of current theme users.</p>
 
-	<ul class="columns-2">
-		<li><a href="http://960.gs" title="960 Grid System">960 Grid System</a> (License: <a href="http://www.gnu.org/licenses/gpl.html" title="GNU GPL">GPL</a> &amp; <a href="http://www.opensource.org/licenses/mit-license.php" title="MIT License">MIT</a>)</li>
-		<li><a href="http://www.blueprintcss.org/" title="Blueprint CSS: Google Code">Blueprint</a> (License: <a href="http://www.opensource.org/licenses/mit-license.php" title="MIT License">MIT</a>)</li>
-		<li><a href="http://devkick.com/lab/tripoli" title="Tripoli: A CSS standard for HTML rendering">Tripoli</a> (License: <a href="http://www.gnu.org/licenses/gpl.html" title="GNU GPL">GPL</a>)</li>
-	</ul>
+<h2>Not enough flexibility?</h2>
 
-	<ul class="columns-2">
-		<li><a href="http://users.tpg.com.au/j_birch/plugins/superfish" title="Superfish: Suckerfish on 'roids">Superfish</a> (License: <a href="http://www.gnu.org/licenses/gpl.html" title="GNU GPL">GPL</a> &amp; <a href="http://www.opensource.org/licenses/mit-license.php" title="MIT License">MIT</a>)</li>
-		<li><a href="http://users.tpg.com.au/j_birch/plugins/superfish" title="Supersubs">Supersubs</a> (License: <a href="http://www.gnu.org/licenses/gpl.html" title="GNU GPL">GPL</a> &amp; <a href="http://www.opensource.org/licenses/mit-license.php" title="MIT License">MIT</a>)</li>
-	</ul>
-</div>
+<p>The <em>Hybrid</em> theme isn't the greatest invention ever.  It has limitations for more experienced developers, the biggest being the lack of control over the theme structure.  It is a good base for people looking to just use <acronym title="Cascading Style Sheets">CSS</acronym> to quickly put out sites though.</p>
 
-<div class="section">
-	<h2>Credit</h2>
-
-	<p>I don't know if I can come close to naming all the people that should be credited, but I'll list some of the main folks.</p>
-
-	<ul class="columns-2">
-		<li><a href="http://themeshaper.com" title="Theme Shaper">Ian Stewart</a></li>
-		<li><a href="http://prologuetheme.org" title="Prologue Theme">Prologue</a></li>
-		<li><a href="http://www.plaintxt.org/themes/sandbox" title="The Sandbox theme">Sandbox</a></li>
-		<li><a href="http://tarskitheme.com" title="Tarski: An elegant, flexible WordPress theme">Tarski</a></li>
-		<li><a href="http://wpframework.com" title="WP Framework">WP Framework</a></li>
-	</ul>
-
-	<ul class="columns-2">
-		<li><a href="http://microformats.org" title="Microformats">Microformats</a></li>
-		<li><a href="http://microid.org" title="MicroID">MicroID</a></li>
-		<li><a href="http://ottodestruct.com/blog/2008/09/29/wordpress-27-comments-enhancements" title="WordPress 2.7 comments enhancements">Otto's WP 2.7 comments enhancements</a></li>
-		<li><a href="http://www.nathanrice.net/blog/wordpress-seo-the-ultimate-guide-to-wordpress-theme-search-engine-optimization" title="The ultimate guide to WordPress theme search engine optimization">Nathan Rice's SEO for WordPress guide</a></li>
-		<li><a href="http://wordpress.org" title="WordPress: A state-of-the-art publishing platform">WordPress</a>, of course!</li>
-	</ul>
-</div>
+<p>If you're looking for more control than just being able to modify the design, you should definitely check out <a href="http://themehybrid.com/hybrid-core" title="Hybrid Core theme framework">Hybrid Core</a>, which is the theme development framework <em>Hybrid</em> and many other themes are built from.  It gives you full control over the markup, design, and scripts for your theme projects.</p>
 
 <h2>Copyright &amp; License</h2>
 
@@ -140,7 +95,7 @@
 
 <p>This theme is copyrighted to <a href="http://justintadlock.com" title="Justin Tadlock">Justin Tadlock</a> and <a href="http://themehybrid.com" title="Theme Hybrid">Theme Hybrid</a>.</p>
 
-<p>2008&thinsp;&ndash;&thinsp;2010 &copy; Justin Tadlock.  All rights reserved.</p>
+<p>2008&thinsp;&ndash;&thinsp;2011 &copy; Justin Tadlock.  All rights reserved.</p>
 
 </body>
 </html>
