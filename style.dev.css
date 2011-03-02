@@ -440,18 +440,27 @@ p.page-links a, .comment-pagination .page-numbers {
 	}
 
 /* Comment list */
-#comments-template ol {
+ol.comment-list, ol.comment-list ol.children {
 	list-style: none;
 	margin: 0 0 21px 0;
 	}
-#comments li, #comments li li li, #comments li li li li li {
+li.comment, 
+li li li.comment, 
+li li li li li.comment, 
+li li li li li li li.comment, 
+li li li li li li li li li.comment, 
+li.pingback, li.trackback {
 	overflow: hidden;
-	margin: 0 0 15px 0;
-	padding: 15px 15px 0 15px;
+	margin: 0 0 21px 0;
+	padding: 21px 21px 0 21px;
 	background: #fff;
 	border: 1px solid #ccc;
 	}
-#comments li li, #comments li li li li {
+li li.comment, 
+li li li li.comment, 
+li li li li li li.comment, 
+li li li li li li li li.comment, 
+li li li li li li li li li li.comment {
 	background: #f9f9f9;
 	}
 
@@ -502,14 +511,14 @@ textarea {
 	}
 
 /* Submit and rest buttons */
-.button, .submit, .reset {
-	width: 100px;
+#submit {
+	display: inline-block;
 	margin-right: 15px;
 	padding: 7px 15px 8px 15px;
 	background: #fff;
 	border: 1px solid #ccc;
 	}
-.button:hover, .submit:hover, .reset:hover {
+#submit:hover {
 	cursor: pointer;
 	background: #f9f9f9;
 	}
