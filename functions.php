@@ -66,7 +66,7 @@ function hybrid_theme_setup_theme() {
 	add_theme_support( 'post-stylesheets' );
 
 	/* Only add cleaner gallery support if not using child theme. Eventually, all child themes should support this. */
-	if ( 'hybrid' == get_template() )
+	if ( 'hybrid' == get_stylesheet() )
 		add_theme_support( 'cleaner-gallery' );
 
 	/* Add support for WordPress features. */
