@@ -67,9 +67,7 @@ get_header(); // Loads the header.php template. ?>
 
 		<?php else: ?>
 
-			<p class="no-data">
-				<?php _e( 'Apologies, but no results were found.', hybrid_get_textdomain() ); ?>
-			</p><!-- .no-data -->
+			<?php get_template_part( 'loop-error' ); // Loads the loop-error.php template. ?>
 
 		<?php endif; ?>
 

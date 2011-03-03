@@ -1,7 +1,7 @@
 <?php
 /**
  * Template Name: Monthly
- **
+ *
  * The Monthly page template is used to show a list of your post archives by month. For each month a 
  * post has been made, the month is listed along with the number of posts for that particular month.
  *

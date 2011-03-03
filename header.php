@@ -21,7 +21,7 @@
 <link rel="profile" href="http://gmpg.org/xfn/11" />
 <link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>" />
 
-<?php do_atomic( 'head' ); // @deprecated 0.9. Use 'wp_head'. ?>
+<?php do_atomic( 'head' ); // @deprecated 0.9.0. Use 'wp_head'. ?>
 <?php wp_head(); // wp_head ?>
 
 </head>
