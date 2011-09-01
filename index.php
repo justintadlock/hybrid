@@ -2,8 +2,8 @@
 /**
  * Index Template
  *
- * This template should not be shown.  It is a placeholder. Specific templates for each type 
- * of content are available.
+ * The index template is the "fallback" template. What this means is that it will be used if a more specific 
+ * template is not found to display the content of a page.
  *
  * @package Hybrid
  * @subpackage Template
