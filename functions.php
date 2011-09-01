@@ -20,7 +20,7 @@
  *
  * @package Hybrid
  * @subpackage Functions
- * @version 0.9.0
+ * @version 1.0.0
  * @author Justin Tadlock <justin@justintadlock.com>
  * @copyright Copyright (c) 2008 - 2011, Justin Tadlock
  * @link http://themehybrid.com/themes/hybrid
@@ -51,9 +51,7 @@ function hybrid_theme_setup_theme() {
 	add_theme_support( 'hybrid-core-sidebars', array( 'primary', 'secondary', 'subsidiary', 'before-content', 'after-content', 'after-singular' ) );
 	add_theme_support( 'hybrid-core-widgets' );
 	add_theme_support( 'hybrid-core-shortcodes' );
-	add_theme_support( 'hybrid-core-post-meta-box' );
-	add_theme_support( 'hybrid-core-theme-settings' );
-	add_theme_support( 'hybrid-core-meta-box-footer' );
+	add_theme_support( 'hybrid-core-theme-settings', array( 'about', 'footer' ) );
 	add_theme_support( 'hybrid-core-drop-downs' );
 	add_theme_support( 'hybrid-core-seo' );
 	add_theme_support( 'hybrid-core-template-hierarchy' );
