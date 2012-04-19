@@ -16,6 +16,8 @@ get_header(); // Loads the header.php template. ?>
 
 		<?php do_atomic( 'before_content' ); // hybrid_before_content ?>
 
+		<?php get_template_part( 'loop-meta' ); // Loads the loop-meta.php template. ?>
+
 		<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
 
 			<div id="post-<?php the_ID(); ?>" class="<?php hybrid_entry_class(); ?>">
