@@ -20,7 +20,7 @@
  *
  * @package Hybrid
  * @subpackage Functions
- * @version 1.0.0
+ * @version 1.1.0
  * @author Justin Tadlock <justin@justintadlock.com>
  * @copyright Copyright (c) 2008 - 2011, Justin Tadlock
  * @link http://themehybrid.com/themes/hybrid
