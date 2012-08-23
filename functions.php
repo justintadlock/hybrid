@@ -28,8 +28,8 @@
  */
 
 /* Load the core theme framework. */
-require_once( trailingslashit( TEMPLATEPATH ) . 'library/hybrid.php' );
-$theme = new Hybrid();
+require_once( trailingslashit( get_template_directory() ) . 'library/hybrid.php' );
+new Hybrid();
 
 /* Do theme setup on the 'after_setup_theme' hook. */
 add_action( 'after_setup_theme', 'hybrid_theme_setup_theme' );
