@@ -13,7 +13,7 @@
 		<div class="entry-content">
 
 			<p class="no-data">
-				<?php _e( 'Apologies, but no results were found.', hybrid_get_textdomain() ); ?>
+				<?php _e( 'Apologies, but no results were found.', 'hybrid' ); ?>
 			</p><!-- .no-data -->
 
 		</div><!-- .entry-content -->

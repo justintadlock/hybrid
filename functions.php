@@ -134,8 +134,8 @@ function hybrid_theme_register_sidebars() {
 	register_sidebar(
 		array(
 			'id' => 'widgets-template',
-			'name' => __( 'Widgets Template', hybrid_get_textdomain() ),
-			'description' => __( 'Used as the content of the Widgets page template.', hybrid_get_textdomain() ),
+			'name' => __( 'Widgets Template', 'hybrid' ),
+			'description' => __( 'Used as the content of the Widgets page template.', 'hybrid' ),
 			'before_widget' => '<div id="%1$s" class="widget %2$s widget-%2$s"><div class="widget-inside">',
 			'after_widget' => '</div></div>',
 			'before_title' => '<h3 class="widget-title">',
@@ -147,8 +147,8 @@ function hybrid_theme_register_sidebars() {
 	register_sidebar(
 		array(
 			'id' => 'error-404-template',
-			'name' => __( '404 Template', hybrid_get_textdomain() ),
-			'description' => __( 'Replaces the default 404 error page content.', hybrid_get_textdomain() ),
+			'name' => __( '404 Template', 'hybrid' ),
+			'description' => __( 'Replaces the default 404 error page content.', 'hybrid' ),
 			'before_widget' => '<div id="%1$s" class="widget %2$s widget-%2$s"><div class="widget-inside">',
 			'after_widget' => '</div></div>',
 			'before_title' => '<h3 class="widget-title">',
@@ -224,7 +224,7 @@ function hybrid_byline() {
 	$byline = '';
 
 	if ( 'post' == get_post_type() && 'link_category' !== get_query_var( 'taxonomy' ) )
-		$byline = '<p class="byline">' . __( 'By [entry-author] on [entry-published] [entry-edit-link before=" | "]', hybrid_get_textdomain() ) . '</p>';
+		$byline = '<p class="byline">' . __( 'By [entry-author] on [entry-published] [entry-edit-link before=" | "]', 'hybrid' ) . '</p>';
 
 	echo apply_atomic_shortcode( 'byline', $byline );
 }
@@ -239,7 +239,7 @@ function hybrid_entry_meta() {
 	$meta = '';
 
 	if ( 'post' == get_post_type() )
-		$meta = '<p class="entry-meta">' . __( '[entry-terms taxonomy="category" before="Posted in "] [entry-terms taxonomy="post_tag" before="| Tagged "] [entry-comments-link before="| "]', hybrid_get_textdomain() ) . '</p>';
+		$meta = '<p class="entry-meta">' . __( '[entry-terms taxonomy="category" before="Posted in "] [entry-terms taxonomy="post_tag" before="| Tagged "] [entry-comments-link before="| "]', 'hybrid' ) . '</p>';
 
 	elseif ( is_page() && current_user_can( 'edit_page', get_the_ID() ) )
 		$meta = '<p class="entry-meta">[entry-edit-link]</p>';

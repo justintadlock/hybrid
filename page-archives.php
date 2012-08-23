@@ -34,13 +34,13 @@ get_header(); // Loads the header.php template. ?>
 
 					<?php else : ?>
 
-						<h2><?php _e( 'Archives by category', hybrid_get_textdomain() ); ?></h2>
+						<h2><?php _e( 'Archives by category', 'hybrid' ); ?></h2>
 
 						<ul class="xoxo category-archives">
-							<?php wp_list_categories( array( 'feed' => __( 'RSS', hybrid_get_textdomain() ), 'show_count' => true, 'use_desc_for_title' => false, 'title_li' => false ) ); ?>
+							<?php wp_list_categories( array( 'feed' => __( 'RSS', 'hybrid' ), 'show_count' => true, 'use_desc_for_title' => false, 'title_li' => false ) ); ?>
 						</ul><!-- .xoxo .category-archives -->
 
-						<h2><?php _e( 'Archives by month', hybrid_get_textdomain() ); ?></h2>
+						<h2><?php _e( 'Archives by month', 'hybrid' ); ?></h2>
 
 						<ul class="xoxo monthly-archives">
 							<?php wp_get_archives( array( 'show_post_count' => true, 'type' => 'monthly' ) ); ?>
@@ -48,7 +48,7 @@ get_header(); // Loads the header.php template. ?>
 
 					<?php endif; ?>
 
-					<?php wp_link_pages( array( 'before' => '<p class="page-links pages">' . __( 'Pages:', hybrid_get_textdomain() ), 'after' => '</p>' ) ); ?>
+					<?php wp_link_pages( array( 'before' => '<p class="page-links pages">' . __( 'Pages:', 'hybrid' ), 'after' => '</p>' ) ); ?>
 
 				</div><!-- .entry-content -->
 

@@ -80,7 +80,7 @@
 
 			<div class="loop-description search-description">
 				<p>
-				<?php printf( __( 'You are browsing the search results for &quot;%1$s&quot;', hybrid_get_textdomain() ), esc_attr( get_search_query() ) ); ?>
+				<?php printf( __( 'You are browsing the search results for &quot;%1$s&quot;', 'hybrid' ), esc_attr( get_search_query() ) ); ?>
 				</p>
 			</div><!-- .loop-description -->
 
@@ -89,11 +89,11 @@
 	<?php elseif ( is_date() ) : ?>
 
 		<div class="loop-meta archive-info date-info">
-			<h1 class="loop-title archive-title date-title"><?php _e( 'Archives by date', hybrid_get_textdomain() ); ?></h1>
+			<h1 class="loop-title archive-title date-title"><?php _e( 'Archives by date', 'hybrid' ); ?></h1>
 
 			<div class="loop-description archive-description date-description">
 				<p>
-				<?php _e( 'You are browsing the site archives by date.', hybrid_get_textdomain() ); ?>
+				<?php _e( 'You are browsing the site archives by date.', 'hybrid' ); ?>
 				</p>
 			</div><!-- .loop-description -->
 
@@ -117,11 +117,11 @@
 
 		<div class="loop-meta archive-info">
 
-			<h1 class="loop-title archive-title"><?php _e( 'Archives', hybrid_get_textdomain() ); ?></h1>
+			<h1 class="loop-title archive-title"><?php _e( 'Archives', 'hybrid' ); ?></h1>
 
 			<div class="loop-description archive-description">
 				<p>
-				<?php _e( 'You are browsing the site archives.', hybrid_get_textdomain() ); ?>
+				<?php _e( 'You are browsing the site archives.', 'hybrid' ); ?>
 				</p>
 			</div><!-- .loop-description -->
 

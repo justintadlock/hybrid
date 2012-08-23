@@ -23,7 +23,7 @@ get_header(); // Loads the header.php template. ?>
 
 		<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
 
-			<?php edit_post_link( __( 'Edit', hybrid_get_textdomain() ), '<p class="entry-meta"><span class="edit">', '</span></p>' ); ?>
+			<?php edit_post_link( __( 'Edit', 'hybrid' ), '<p class="entry-meta"><span class="edit">', '</span></p>' ); ?>
 
 			<?php do_atomic( 'after_singular' ); // hybrid_after_singular ?>
 

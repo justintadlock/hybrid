@@ -22,7 +22,7 @@ get_header(); // Loads the header.php template. ?>
 
 				<div class="entry-content">
 					<?php the_content(); ?>
-					<?php wp_link_pages( array( 'before' => '<p class="page-links pages">' . __( 'Pages:', hybrid_get_textdomain() ), 'after' => '</p>' ) ); ?>
+					<?php wp_link_pages( array( 'before' => '<p class="page-links pages">' . __( 'Pages:', 'hybrid' ), 'after' => '</p>' ) ); ?>
 				</div><!-- .entry-content -->
 
 				<?php do_atomic( 'after_entry' ); // hybrid_after_entry ?>

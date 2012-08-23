@@ -31,7 +31,7 @@ get_header(); // Loads the header.php template. ?>
 						<?php wp_tag_cloud( array( 'number' => 0 ) ); ?>
 					</p><!-- .term-cloud .post_tag-cloud -->
 
-					<?php wp_link_pages( array( 'before' => '<p class="page-links pages">' . __( 'Pages:', hybrid_get_textdomain() ), 'after' => '</p>' ) ); ?>
+					<?php wp_link_pages( array( 'before' => '<p class="page-links pages">' . __( 'Pages:', 'hybrid' ), 'after' => '</p>' ) ); ?>
 
 				</div><!-- .entry-content -->
 
