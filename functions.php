@@ -275,7 +275,7 @@ function hybrid_footer_insert() {
 	$footer_insert = hybrid_get_setting( 'footer_insert' );
 
 	if ( !empty( $footer_insert ) )
-		echo '<div class="footer-insert">' . do_shortcode( $footer_insert ) . '</div>';
+		echo '<div class="footer-content footer-insert">' . do_shortcode( $footer_insert ) . '</div>';
 }
 
 /**
