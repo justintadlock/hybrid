@@ -284,12 +284,11 @@ function hybrid_footer_insert() {
  * @since 0.9.0
  */
 function hybrid_theme_remove_sidebars( $sidebars_widgets ) {
-	global $wp_query;
 
 	if ( is_singular() ) {
-		$template = get_post_meta( $wp_query->post->ID, "_wp_{$wp_query->post->post_type}_template", true );
+		$post = get_queried_object();
 
-		if ( 'no-widgets.php' == $template || "{$wp_query->post->post_type}-no-widgets.php" == $template )
+		if ( hybrid_has_post_template( 'no-widgets.php' ) || hybrid_has_post_template( "{$post->post_type}-no-widgets.php" ) )
 			$sidebars_widgets = array( false );
 	}
 
