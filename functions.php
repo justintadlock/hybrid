@@ -271,10 +271,9 @@ function hybrid_navigation_links() {
  * @since 0.2.1
  */
 function hybrid_footer_insert() {
-	$footer_insert = hybrid_get_setting( 'footer_insert' );
-
-	if ( !empty( $footer_insert ) )
-		echo '<div class="footer-content footer-insert">' . do_shortcode( $footer_insert ) . '</div>';
+	echo '<div class="footer-content footer-insert">';
+	hybrid_footer_content();
+	echo '</div>';
 }
 
 /**
