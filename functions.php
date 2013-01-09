@@ -53,6 +53,7 @@ function hybrid_theme_setup_theme() {
 	add_theme_support( 'hybrid-core-shortcodes' );
 	add_theme_support( 'hybrid-core-theme-settings', array( 'about', 'footer' ) );
 	add_theme_support( 'hybrid-core-scripts', array( 'drop-downs' ) );
+	add_theme_support( 'hybrid-core-styles' );
 	add_theme_support( 'hybrid-core-template-hierarchy' );
 	add_theme_support( 'hybrid-core-deprecated' );
 
