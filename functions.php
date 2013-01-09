@@ -162,16 +162,16 @@ function hybrid_theme_register_sidebars() {
  * @since 0.9.0
  */
 function hybrid_theme_body_class( $classes ) {
-	global $wp_query, $is_lynx, $is_gecko, $is_IE, $is_opera, $is_NS4, $is_safari, $is_chrome;
+	global $is_lynx, $is_gecko, $is_IE, $is_opera, $is_NS4, $is_safari, $is_chrome;
 
 	/* Singular post classes (deprecated). */
 	if ( is_singular() ) {
 
 		if ( is_page() )
-			$classes[] = "page-{$wp_query->post->ID}"; // Use singular-page-ID
+			$classes[] = 'page-' . get_queried_object_id(); // Use singular-page-ID
 
 		elseif ( is_singular( 'post' ) )
-			$classes[] = "single-{$wp_query->post->ID}"; // Use singular-post-ID
+			$classes[] = 'single-' . get_queried_object_id(); // Use singular-post-ID
 	}
 
 	/* Browser detection. */
