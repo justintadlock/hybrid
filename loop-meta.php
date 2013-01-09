@@ -12,10 +12,8 @@
 
 	<?php if ( is_home() && !is_front_page() ) : ?>
 
-		<?php global $wp_query; ?>
-
 		<div class="loop-meta">
-			<h1 class="loop-title"><?php echo get_post_field( 'post_title', $wp_query->get_queried_object_id() ); ?></h1>
+			<h1 class="loop-title"><?php echo get_post_field( 'post_title', get_queried_object_id() ); ?></h1>
 		</div><!-- .loop-meta -->
 
 	<?php elseif ( is_category() ) : ?>
